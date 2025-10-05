@@ -1,10 +1,13 @@
 const API_BASE_URL = "https://guangfu250923.pttapp.cc";
+const isProd = process.env.NODE_ENV === "production";
 
 export async function fetchAPI<T>(
   endpoint: string,
   params?: Record<string, string | number>
 ): Promise<T> {
-  const url = new URL(`${API_BASE_URL}${endpoint}`);
+  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const path = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  const url = new URL(`${base}${path}`);
 
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
@@ -12,7 +15,13 @@ export async function fetchAPI<T>(
     });
   }
 
-  const response = await fetch(url.toString());
+  const response = await fetch(url.toString(), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
 
   if (!response.ok) {
     throw new Error(`API Error: ${response.status} ${response.statusText}`);
@@ -346,17 +355,23 @@ export interface ReportResponse {
   updated_at: number;
 }
 
-export async function submitReport(data: ReportRequest): Promise<ReportResponse> {
-  const response = await fetch(`${API_BASE_URL}/reports`, {
-    method: 'POST',
+export async function submitReport(
+  data: ReportRequest
+): Promise<ReportResponse> {
+  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const url = `${base}/reports`;
+
+  const response = await fetch(url, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(data),
   });
 
   if (!response.ok) {
-    throw new Error('提交失敗,請稍後再試');
+    throw new Error("提交失敗，請稍後再試");
   }
 
   return response.json();

@@ -8,6 +8,17 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  async rewrites() {
+    if (!isProd) {
+      return [
+        {
+          source: "/api/:path*",
+          destination: "https://guangfu250923.pttapp.cc/:path*",
+        },
+      ];
+    }
+    return [];
+  },
 };
 
 export default nextConfig;
