@@ -13,7 +13,7 @@ export default function ResourcesPage() {
           className="w-full border-0"
           title="物資媒合"
           allow="geolocation"
-          style={{ height: "calc(100vh - 160px)" }}
+          style={{ height: "calc(100vh - 250px)" }} // header 4 rem + footer 140 px
         />
       </main>
       <Footer />

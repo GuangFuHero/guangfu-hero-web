@@ -13,7 +13,7 @@ export default function VolunteerRegisterPage() {
           className="w-full border-0"
           title="志工媒合"
           allow="geolocation"
-          style={{ height: "calc(100vh - 160px)" }}
+          style={{ height: "calc(100vh - 180px)" }}
         />
       </main>
       <Footer />
