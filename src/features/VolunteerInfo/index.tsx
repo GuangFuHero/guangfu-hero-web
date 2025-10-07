@@ -29,11 +29,12 @@ interface VolunteerInfoProps {
 
 const VolunteerSteps = [
   { title: "確認資訊", text: "查詢災區天氣、交通、人力需求等，評估自身情況" },
-  { title: "加入志工", text: "加入個人志工／國際志工說明？" },
+  { title: "加入志工", text: "加入個人志工，如 Line 社群、本平台媒合、或至光復車站前接受調度" },
   { title: "行前準備", text: "確認交通資訊、裝備（下滑有裝備清單喔）" },
-  { title: "出發光復", text: "切勿勉強赴災！最好回程車票、連絡嚮導" },
+  { title: "出發光復", text: "切勿勉強赴災！建議訂好回程車票、聯絡嚮導" },
   { title: "進入災區", text: "抵達災區後，尋找聯絡人，帶你抵達受困區的地點" },
-  { title: "替換衣物再離開", text: "至臨時救衣點，避免染病、也不造成他人困擾" },
+  { title: "若身體不適", text: "及早至就醫點就醫，災區內醫治不宜拖延至緊急時刻！"},
+  { title: "替換衣物", text: "返家前，將髒污衣物裝進垃圾袋中隔離丟棄，替換成乾淨衣物離開災區" },
 ];
 
 export default function VolunteerInfo({
