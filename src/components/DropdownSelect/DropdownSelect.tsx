@@ -43,10 +43,10 @@ export default function DropdownSelect({
   }, [open]);
 
   return (
-    <div ref={dropdownRef} className="relative inline-block text-sm">
+    <div ref={dropdownRef} className="dropdown-select">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between gap-2 px-3 py-2 w-max bg-white border border-[var(--gray-3)] rounded-md"
+        className="dropdown-select-button"
       >
         <span>{selectedLabel}</span>
         <Image
@@ -62,7 +62,7 @@ export default function DropdownSelect({
       </button>
 
       {open && (
-        <div className="w-[93px] absolute left-0 z-10 mt-1 bg-[var(--gray-4)] rounded-md">
+        <div className="dropdown-select-options">
           {options.map(({ value, label }) => (
             <button
               key={value}
@@ -70,7 +70,7 @@ export default function DropdownSelect({
                 onChange(value);
                 setOpen(false);
               }}
-              className={`block w-full px-3 py-2 text-left hover:bg-[var(--gray-3)] ${
+              className={`dropdown-select-option ${
                 value === valueProp && "bg-[#e6e6e9]"
               }`}
             >
