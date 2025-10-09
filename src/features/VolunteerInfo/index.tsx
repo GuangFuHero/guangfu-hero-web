@@ -162,61 +162,66 @@ export default function VolunteerInfo({
               </div>
             </div>
 
-            {/* 專才志工識別證 */}
+            {/* 專才志工識別證與車輛識別卡 */}
             <div className="mt-8">
               <div className="flex items-center gap-3 mb-3">
                 <StepNumber number={3} />
-                <h3 className="font-bold text-xl">專才志工識別證</h3>
-              </div>
-              <div className="mb-4">
-                別上志工專才辨識證，讓大家一眼就能快速辨識你的專業能力，立馬派遣工作，成為災區即戰力！
-              </div>
-              <a
-                href="https://drive.google.com/drive/folders/1B9y7Rl56xpG0vjLrV37h0CqqUNrLHr_d?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-block text-white bg-[var(--primary)] hover:bg-[#e06d00] rounded-[12px] px-8 py-4 font-medium transition-colors text-center"
-              >
-                下載識別證
-              </a>
-            </div>
-
-            {/* 車輛辨識卡 */}
-            <div className="mt-8">
-              <div className="flex items-center gap-3 mb-3">
-                <StepNumber number={4} />
-                <h3 className="font-bold text-xl">車輛辨識卡</h3>
+                <h3 className="font-bold text-xl">識別證/卡</h3>
               </div>
               <div className="text-[var(--secondary)] mb-1 text-lg font-bold">
                 使用原因
               </div>
               <div className="mb-4">
-                災區的交通非常珍貴，希望每個進度災區的車輛可以藉由識別證提高辨識度，增加執行效率。
+                讓大家一眼就能快速辨識，增加執行效率。
+                <br /><br />
+                <span className="text-[var(--primary)]">
+                  專業志工辨別證
+                </span>
+                表明專業能力，立馬和需求連結，成為災區即戰力！
+                <br />
+                <span className="text-[var(--primary)]">
+                  車輛辨識卡
+                </span>
+                表明物資內容，讓災區交通更順暢！
               </div>
               <div className="text-[var(--secondary)] mb-1 text-lg font-bold">
                 使用說明
               </div>
               <div className="mb-4">
-                1. 至超商 ibon下載
+                1.點擊按鈕下載
                 <br />
-                2. 將識別卡貼在車窗前
+                2.將識別證掛胸前/背後,卡貼在車窗前
               </div>
-              <div className="w-full flex flex-col gap-2">
-                <Image
-                  src={getAssetPath("/car_card_1.svg")}
-                  alt="車輛辨識卡1"
-                  width={400}
-                  height={300}
-                  className="w-full h-auto"
-                />
-                <Image
-                  src={getAssetPath("/car_card_2.svg")}
-                  alt="車輛辨識卡2"
-                  width={400}
-                  height={300}
-                  className="w-full h-auto"
-                />
-              </div>
+              <Image
+                src={getAssetPath("/volunteer_card-1.svg")}
+                alt="車輛辨識卡1"
+                width={400}
+                height={300}
+                className="w-full h-auto"
+              />
+              <a
+                href="https://drive.google.com/drive/folders/1B9y7Rl56xpG0vjLrV37h0CqqUNrLHr_d?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="my-6 w-full inline-block text-white bg-[var(--primary)] hover:bg-[#e06d00] rounded-[12px] px-8 py-4 font-medium transition-colors text-center"
+              >
+                下載專才識別證
+              </a>
+              <Image
+                src={getAssetPath("/car_card-4.svg")}
+                alt="車輛辨識卡1"
+                width={400}
+                height={300}
+                className="w-full h-auto"
+              />
+              <a
+                href="https://drive.google.com/drive/folders/1uvZSz3l7M-CnEctqU3t5QhBF60nw0YHT?usp=drive_link"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="my-6 w-full inline-block text-white bg-[var(--primary)] hover:bg-[#e06d00] rounded-[12px] px-8 py-4 font-medium transition-colors text-center"
+              >
+                下載車輛識別卡
+              </a>
             </div>
 
             {/* 注意事項 */}
