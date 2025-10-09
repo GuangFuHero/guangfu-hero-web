@@ -79,6 +79,7 @@ const getMapUrl = (station: {
 
   return undefined;
 };
+
 export default function SiteMap() {
   const searchParams = useSearchParams();
   const [showMode, setShowMode] = useState<ShowMode>("mapShow");
@@ -103,6 +104,20 @@ export default function SiteMap() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // 快取，避免重複 API 呼叫
+  const [dataCache, setDataCache] = useState<{
+    water_refill_stations?: WaterRefillStations[];
+    shower_stations?: ShowerStations[];
+    restrooms?: RestRooms[];
+    medical_stations?: MedicalStation[];
+    accommodations?: Accommodations[];
+    all?: any[];
+  }>({});
+
+  const [loadedCategories, setLoadedCategories] = useState<
+    Set<LocationCategory>
+  >(new Set());
+
   // 處理 URL 參數
   useEffect(() => {
     const view = searchParams.get("view");
@@ -117,7 +132,42 @@ export default function SiteMap() {
     }
   }, [searchParams]);
 
+  // 每 5 分鐘清空快取
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("自動清空快取 - 5分鐘到期");
+      setDataCache({});
+      setLoadedCategories(new Set());
+      if (showMode === "listShow") {
+        if (selectedCategory === "all") {
+          fetchAll();
+        } else if (selectedCategory === "water_refill_stations") {
+          fetchWaterRefillStations();
+        } else if (selectedCategory === "shower_stations") {
+          fetchShowerStations();
+        } else if (selectedCategory === "restrooms") {
+          fetchRestRooms();
+        } else if (selectedCategory === "medical_stations") {
+          fetchMedicalStations();
+        } else if (selectedCategory === "accommodations") {
+          fetchAccommodations();
+        }
+      }
+    }, 5 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, [showMode, selectedCategory]);
+
   async function fetchWaterRefillStations() {
+    // 快取
+    if (
+      loadedCategories.has("water_refill_stations") &&
+      dataCache.water_refill_stations
+    ) {
+      setWaterRefillStations(dataCache.water_refill_stations);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -126,14 +176,30 @@ export default function SiteMap() {
         (station) => !!station.coordinates || !!station.location
       );
       setWaterRefillStations(filteredStations);
+
+      // 存入快取
+      setDataCache((prev) => ({
+        ...prev,
+        water_refill_stations: filteredStations,
+      }));
+      setLoadedCategories((prev) => new Set(prev).add("water_refill_stations"));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入失敗");
+      setError("載入失敗，請稍後再試");
+      console.error("fetchWaterRefillStations error:", err);
     } finally {
       setLoading(false);
     }
   }
 
   async function fetchShowerStations() {
+    if (
+      loadedCategories.has("shower_stations") &&
+      dataCache.shower_stations
+    ) {
+      setShowerStations(dataCache.shower_stations);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -142,14 +208,26 @@ export default function SiteMap() {
         (station) => !!station.coordinates || !!station.location
       );
       setShowerStations(filteredStations);
+
+      setDataCache((prev) => ({
+        ...prev,
+        shower_stations: filteredStations,
+      }));
+      setLoadedCategories((prev) => new Set(prev).add("shower_stations"));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入失敗");
+      setError("載入失敗，請稍後再試");
+      console.error("fetchShowerStations error:", err);
     } finally {
       setLoading(false);
     }
   }
 
   async function fetchRestRooms() {
+    if (loadedCategories.has("restrooms") && dataCache.restrooms) {
+      setRestRooms(dataCache.restrooms);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -158,14 +236,29 @@ export default function SiteMap() {
         (station) => !!station.coordinates || !!station.location
       );
       setRestRooms(filteredStations);
+
+      setDataCache((prev) => ({
+        ...prev,
+        restrooms: filteredStations,
+      }));
+      setLoadedCategories((prev) => new Set(prev).add("restrooms"));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入失敗");
+      setError("載入失敗，請稍後再試");
+      console.error("fetchRestRooms error:", err);
     } finally {
       setLoading(false);
     }
   }
 
   async function fetchMedicalStations() {
+    if (
+      loadedCategories.has("medical_stations") &&
+      dataCache.medical_stations
+    ) {
+      setMedicalStations(dataCache.medical_stations);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -174,14 +267,26 @@ export default function SiteMap() {
         (station) => !!station.coordinates || !!station.location
       );
       setMedicalStations(filteredStations);
+
+      setDataCache((prev) => ({
+        ...prev,
+        medical_stations: filteredStations,
+      }));
+      setLoadedCategories((prev) => new Set(prev).add("medical_stations"));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入失敗");
+      setError("載入失敗，請稍後再試");
+      console.error("fetchMedicalStations error:", err);
     } finally {
       setLoading(false);
     }
   }
 
   async function fetchAccommodations() {
+    if (loadedCategories.has("accommodations") && dataCache.accommodations) {
+      setAccommodations(dataCache.accommodations);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -190,14 +295,34 @@ export default function SiteMap() {
         (station) => !!station.coordinates || !!station.location
       );
       setAccommodations(filteredStations);
+
+      setDataCache((prev) => ({
+        ...prev,
+        accommodations: filteredStations,
+      }));
+      setLoadedCategories((prev) => new Set(prev).add("accommodations"));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入失敗");
+      setError("載入失敗，請稍後再試");
+      console.error("fetchAccommodations error:", err);
     } finally {
       setLoading(false);
     }
   }
 
   async function fetchAll() {
+    if (loadedCategories.has("all") && dataCache.all) {
+      setAllData(dataCache.all);
+      if (dataCache.water_refill_stations)
+        setWaterRefillStations(dataCache.water_refill_stations);
+      if (dataCache.shower_stations)
+        setShowerStations(dataCache.shower_stations);
+      if (dataCache.restrooms) setRestRooms(dataCache.restrooms);
+      if (dataCache.medical_stations)
+        setMedicalStations(dataCache.medical_stations);
+      if (dataCache.accommodations) setAccommodations(dataCache.accommodations);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
@@ -232,8 +357,28 @@ export default function SiteMap() {
       );
       filteredStations.sort((a, b) => a.created_at - b.created_at);
       setAllData(filteredStations);
+
+      setDataCache({
+        all: filteredStations,
+        water_refill_stations: responseWaterRefillStations.member,
+        shower_stations: responseShowerStations.member,
+        restrooms: responseRestrooms.member,
+        medical_stations: responseMedicalStations.member,
+        accommodations: responseAccommodations.member,
+      });
+      setLoadedCategories(
+        new Set([
+          "all",
+          "water_refill_stations",
+          "shower_stations",
+          "restrooms",
+          "medical_stations",
+          "accommodations",
+        ])
+      );
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入失敗");
+      setError("載入失敗，請稍後再試");
+      console.error("fetchAll error:", err);
     } finally {
       setLoading(false);
     }
@@ -258,7 +403,33 @@ export default function SiteMap() {
 
   const handleModeChange = (value: ShowMode) => {
     setShowMode(value);
-    fetchAll();
+
+    // Lazy Loading
+    if (value === "listShow" && !loadedCategories.has(selectedCategory)) {
+      if (selectedCategory === "all") {
+        fetchAll();
+      } else if (selectedCategory === "water_refill_stations") {
+        fetchWaterRefillStations();
+      } else if (selectedCategory === "shower_stations") {
+        fetchShowerStations();
+      } else if (selectedCategory === "restrooms") {
+        fetchRestRooms();
+      } else if (selectedCategory === "medical_stations") {
+        fetchMedicalStations();
+      } else if (selectedCategory === "accommodations") {
+        fetchAccommodations();
+      }
+    }
+  };
+
+  const handleRetry = () => {
+    setError(null);
+    setLoadedCategories((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(selectedCategory);
+      return newSet;
+    });
+    handleCategoryClick(selectedCategory);
   };
 
   const options = [
@@ -289,7 +460,7 @@ export default function SiteMap() {
         )}
       </div>
       <div>
-        {showMode === 'mapShow' && (
+        {showMode === "mapShow" && (
           <iframe
             src={MAP_URL}
             title="地圖顯示"
@@ -311,7 +482,15 @@ export default function SiteMap() {
             )}
 
             {error && (
-              <div className="text-center py-8 text-red-500">錯誤: {error}</div>
+              <div className="text-center py-8 space-y-3">
+                <div className="text-red-500">{error}</div>
+                <button
+                  onClick={handleRetry}
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                >
+                  重新載入
+                </button>
+              </div>
             )}
 
             {!loading && !error && selectedCategory === "all" && (
