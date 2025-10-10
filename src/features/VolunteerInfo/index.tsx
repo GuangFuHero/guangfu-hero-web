@@ -373,7 +373,7 @@ export default function VolunteerInfo({
               <>
                 <div>
                   <h3 className="text-xl font-bold mb-3">
-                    一、如何到花蓮：台鐵/遊覽車
+                    一、如何到花蓮：台鐵
                   </h3>
                   <a
                     href="https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip112/gobytime"
@@ -390,14 +390,6 @@ export default function VolunteerInfo({
                     rel="noopener noreferrer"
                   >
                     台鐵訂票來這邊
-                  </a>
-                  <a
-                    href="https://gobus.moushih.com/"
-                    className="flex text-[var(--gray)] underline text-sm"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    遊覽車媒合去Gobus
                   </a>
                 </div>
 
@@ -602,7 +594,32 @@ export default function VolunteerInfo({
                       資料來源：2025/09/26 花蓮縣政府公告
                     </div>
                   </div>
-                  <p className="rounded-lg bg-[var(--light-primary)] text-center text-md mb-2">
+                  <div className="text-md py-4">
+                    <div className="flex justify-center mb-3">
+                      <a
+                        href="https://gobus.moushih.com/"
+                        className="flex text-[var(--secondary)] underline text-md"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        遊覽車媒合去Gobus
+                      </a>
+                    </div>
+                    <Image
+                      src={getAssetPath("/go_bus_banner.svg")}
+                      alt="go-bus-banner"
+                      width={335}
+                      height={335}
+                      className="w-full h-auto"
+                    />
+                    <h3 className="font-semibold mb-0 mt-3">
+                      關於 Gobus —— 讓愛心接送，更簡單。
+                    </h3>
+                    <p>
+                      召集人可以輕鬆發布車次、管理名單；志工則能一鍵報名、快速參加活動。讓每一次出發，都更有效率，也更有溫度。
+                    </p>
+                  </div>
+                  <p className="rounded-lg bg-[var(--light-primary)] text-center text-md mb-2 mt-4">
                     各區共乘資訊
                   </p>
                   <p className="m-2">

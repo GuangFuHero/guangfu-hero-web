@@ -8,7 +8,7 @@ import Sidebar from "@/components/Sidebar";
 import Link from "next/link";
 import Toast2 from "@/components/Toast2";
 
-export default function Header() {
+export default function Header({ hideShare = false }: { hideShare?: boolean }) {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -101,14 +101,16 @@ export default function Header() {
             </div>
 
             {/* Right: Share icon */}
-            <button className="p-2" aria-label="分享" onClick={handleShare}>
-              <Image
-                src={getAssetPath("/share.svg")}
-                alt="分享"
-                width={24}
-                height={24}
-              />
-            </button>
+            {!hideShare && (
+              <button className="p-2" aria-label="分享" onClick={handleShare}>
+                <Image
+                  src={getAssetPath("/share.svg")}
+                  alt="分享"
+                  width={24}
+                  height={24}
+                />
+              </button>
+            )}
           </div>
         </div>
       </header>

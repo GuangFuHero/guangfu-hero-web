@@ -6,17 +6,19 @@ import Banner from "@/features/Banner";
 interface WrapperProps {
   hideBanner?: boolean;
   hideFooter?: boolean;
+  hideShare?: boolean;
   children: React.ReactNode;
 }
 
 const Wrapper = ({
   hideBanner = false,
   hideFooter = false,
+  hideShare = false,
   children,
 }: WrapperProps) => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <Header hideShare={hideShare} />
       <main
         className={`flex-1 mt-[65px] mb-[85px] overflow-y-auto ${
           hideFooter
