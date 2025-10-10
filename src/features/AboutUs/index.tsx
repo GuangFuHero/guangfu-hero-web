@@ -8,7 +8,7 @@ export default function AboutUs() {
       id: 1,
       groupName: "網站更新組",
       personNames: [
-        "王璟恆",
+        "王◯恆",
         "Zack",
         "audery1011",
         "施宇",
@@ -29,14 +29,14 @@ export default function AboutUs() {
         "Pink Li",
         "ppqq",
         "Yukay",
-        "彭一珍",
-        "陳亭妏",
+        "彭◯珍",
+        "陳◯妏",
         "Wenny Chang",
-        "謝靖雯",
+        "謝◯雯",
         "Sucre Lin 林糖糖",
         "jerry._.",
         "cy.hsu",
-        "陳雅柔",
+        "陳◯柔",
         "BensonTW",
         "Arey",
         "Mizhon",
@@ -50,14 +50,14 @@ export default function AboutUs() {
     {
       id: 3,
       groupName: "地圖組",
-      personNames: ["Zack", "張容瑜", "Zeli", "Fannie", "雅", "曾德容(鷹)"],
+      personNames: ["Zack", "張◯瑜", "Zeli", "Fannie", "雅", "曾◯容(鷹)"],
     },
     {
       id: 4,
       groupName: "設計組",
       personNames: [
         "Vita",
-        "葉彥均 Andy",
+        "葉◯均 Andy",
         "Pichu",
         "瑜瑜",
         "渺渺",
@@ -162,6 +162,10 @@ export default function AboutUs() {
               personNames={member.personNames}
             />
           ))}
+        </div>
+
+        <div className="text-[16px] leading-[20px] text-[var(--text-black)]">
+          以及其他所有不願具名卻也默默地和我們一起完成任務的志工朋友！
         </div>
       </section>
     </div>
