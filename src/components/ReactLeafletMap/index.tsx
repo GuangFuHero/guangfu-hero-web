@@ -35,6 +35,13 @@ interface MapEventsProps {
   onSidebarClose: () => void;
 }
 
+type LeafletMapRef = {
+  getMap: () => L.Map | null;
+  flyTo: (latlng: [number, number], zoom?: number | undefined) => void;
+  openPopup: (latlng: [number, number], dataId: string) => void;
+  updateUserLocation: (position: UserPosition, isVisible: boolean) => void;
+} | null;
+
 const MapEvents = ({ onSidebarClose }: MapEventsProps) => {
   useMapEvents({ click: onSidebarClose });
   return null;
@@ -71,9 +78,10 @@ interface ReactLeafletMapProps {
   onSidebarClose: () => void;
   userPosition: UserPosition | null;
   isUserLocationVisible: boolean;
+  isFullScreenMap?: boolean;
 }
 
-const ReactLeafletMapContent = forwardRef<any, ReactLeafletMapProps>(
+const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
   ({ activeLayer, onSidebarClose, userPosition, isUserLocationVisible }, ref) => {
     const queryClient = useMapQueries();
     const map = useMap();
@@ -92,10 +100,9 @@ const ReactLeafletMapContent = forwardRef<any, ReactLeafletMapProps>(
       flyTo: (latlng: [number, number], zoom?: number) => {
         map.flyTo(latlng, zoom || 15);
       },
-      openPopup: (latlng: [number, number], dataId: string) => {
-        // Find and open popup for the marker with dataId
-        map.eachLayer((layer: any) => {
-          if (layer.options && layer.options.dataId === dataId) {
+      openPopup: (_: [number, number], dataId: string) => {
+        map.eachLayer((layer) => {
+          if (layer.options && layer.options?.dataId === dataId) {
             layer.openPopup();
           }
         });
@@ -206,12 +213,15 @@ const ReactLeafletMapContent = forwardRef<any, ReactLeafletMapProps>(
 
 ReactLeafletMapContent.displayName = 'ReactLeafletMapContent';
 
-const ReactLeafletMap = forwardRef<any, ReactLeafletMapProps>(
-  ({ activeLayer, onSidebarClose, userPosition, isUserLocationVisible }, ref) => {
+const ReactLeafletMap = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
+  (
+    { activeLayer, onSidebarClose, userPosition, isUserLocationVisible, isFullScreenMap = true },
+    ref,
+  ) => {
     const [mapReady, setMapReady] = useState(false);
 
     useEffect(() => {
-      delete (L.Icon.Default.prototype as any)._getIconUrl;
+      delete L.Icon.Default.prototype?._getIconUrl;
       L.Icon.Default.mergeOptions({
         iconRetinaUrl:
           'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -225,7 +235,11 @@ const ReactLeafletMap = forwardRef<any, ReactLeafletMapProps>(
         id="map"
         center={[MAP_START_POSITION_INFO.lat, MAP_START_POSITION_INFO.lng]}
         zoom={MAP_START_POSITION_INFO.zoom}
-        style={{ height: '100svh', width: '100svw' }}
+        style={{
+          height: '100svh',
+          width: '100%',
+          ...(isFullScreenMap ? {} : { maxWidth: 'calc(100svw - 32px)' }),
+        }}
         zoomControl={false}
         attributionControl={false}
         whenReady={() => setMapReady(true)}

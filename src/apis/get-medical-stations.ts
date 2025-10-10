@@ -4,5 +4,5 @@ import { fetchAllItemsApiRequest } from './config';
 export const getMedicalStations = async (): Promise<{
   member: MedicalStation[];
 }> => {
-  return fetchAllItemsApiRequest('/medical_stations');
+  return fetchAllItemsApiRequest<MedicalStation>('/medical_stations');
 };

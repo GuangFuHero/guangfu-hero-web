@@ -7,7 +7,8 @@ import {
   useShowerStations,
   useWaterStations,
 } from '@/hooks/useMapData';
-import { LayerType } from '@/types/map';
+import { LayerType, UserPosition } from '@/types/map';
+import { RefObject } from 'react';
 import Legend from './Legend';
 import Statistics from './Statistics';
 
@@ -15,15 +16,15 @@ interface InfoSidebarProps {
   isOpen: boolean;
   onClose: () => void;
   activeLayer: LayerType;
-  mapRef: React.RefObject<any>;
+  mapRef: RefObject<{
+    getMap: () => L.Map | null;
+    flyTo: (latlng: [number, number], zoom?: number | undefined) => void;
+    openPopup: (latlng: [number, number], dataId: string) => void;
+    updateUserLocation: (position: UserPosition, isVisible: boolean) => void;
+  } | null>;
 }
 
-export default function InfoSidebar({
-  isOpen,
-  onClose,
-  activeLayer,
-  mapRef,
-}: InfoSidebarProps) {
+export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: InfoSidebarProps) {
   const accommodationsQuery = useAccommodations();
   const waterStationsQuery = useWaterStations();
   const restroomsQuery = useRestrooms();
@@ -35,15 +36,12 @@ export default function InfoSidebar({
   const restroomData = restroomsQuery.data || [];
   const showerStationData = showerStationsQuery.data || [];
   const medicalStationData = medicalStationsQuery.data || [];
-  const handleItemClick = (
-    coordinates: { lat: number; lng: number },
-    id: string
-  ) => {
+  const handleItemClick = (coordinates: { lat: number; lng: number }, id: string) => {
     if (mapRef.current && coordinates.lat && coordinates.lng) {
       if (window.innerWidth <= 768) {
         onClose();
       }
-      mapRef.current.flyTo([coordinates.lat, coordinates.lng], 15, id);
+      mapRef.current.flyTo([coordinates.lat, coordinates.lng], 15);
       mapRef.current.openPopup([coordinates.lat, coordinates.lng], id);
     }
   };
@@ -75,7 +73,7 @@ export default function InfoSidebar({
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
               >
                 導航
               </a>
@@ -92,19 +90,12 @@ export default function InfoSidebar({
         <div
           key={index}
           className="p-3 rounded-lg hover:bg-gray-100 cursor-pointer border-b border-gray-200"
-          onClick={() =>
-            station.coordinates &&
-            handleItemClick(station.coordinates, station.id)
-          }
+          onClick={() => station.coordinates && handleItemClick(station.coordinates, station.id)}
         >
           <div className="flex items-center gap-1">
             <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-gray-800 truncate">
-                {station.name}
-              </h4>
-              <p className="text-sm text-gray-600 truncate">
-                {station.address || '未提供地址'}
-              </p>
+              <h4 className="font-semibold text-gray-800 truncate">{station.name}</h4>
+              <p className="text-sm text-gray-600 truncate">{station.address || '未提供地址'}</p>
             </div>
             {station.coordinates && (
               <a
@@ -113,7 +104,7 @@ export default function InfoSidebar({
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
               >
                 導航
               </a>
@@ -130,19 +121,12 @@ export default function InfoSidebar({
         <div
           key={index}
           className="p-3 rounded-lg hover:bg-gray-100 cursor-pointer border-b border-gray-200"
-          onClick={() =>
-            restroom.coordinates &&
-            handleItemClick(restroom.coordinates, restroom.id)
-          }
+          onClick={() => restroom.coordinates && handleItemClick(restroom.coordinates, restroom.id)}
         >
           <div className="flex items-center gap-1">
             <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-gray-800 truncate">
-                {restroom.name}
-              </h4>
-              <p className="text-sm text-gray-600 truncate">
-                {restroom.address || '未提供地址'}
-              </p>
+              <h4 className="font-semibold text-gray-800 truncate">{restroom.name}</h4>
+              <p className="text-sm text-gray-600 truncate">{restroom.address || '未提供地址'}</p>
             </div>
             {restroom.coordinates && (
               <a
@@ -151,7 +135,7 @@ export default function InfoSidebar({
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
               >
                 導航
               </a>
@@ -168,30 +152,17 @@ export default function InfoSidebar({
         <div
           key={index}
           className="p-3 rounded-lg hover:bg-gray-100 cursor-pointer border-b border-gray-200"
-          onClick={() =>
-            station.coordinates &&
-            handleItemClick(station.coordinates, station.id)
-          }
+          onClick={() => station.coordinates && handleItemClick(station.coordinates, station.id)}
         >
           <div className="flex items-center gap-1">
             <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-gray-800 truncate">
-                {station.name}
-              </h4>
-              <p className="text-sm text-gray-600 truncate">
-                {station.address || '未提供地址'}
-              </p>
+              <h4 className="font-semibold text-gray-800 truncate">{station.name}</h4>
+              <p className="text-sm text-gray-600 truncate">{station.address || '未提供地址'}</p>
               {station.facility_type && (
-                <p className="text-xs text-gray-500 mt-1">
-                  類型: {station.facility_type}
-                </p>
+                <p className="text-xs text-gray-500 mt-1">類型: {station.facility_type}</p>
               )}
               {station.is_free !== undefined && (
-                <p
-                  className={`text-xs ${
-                    station.is_free ? 'text-green-600' : 'text-orange-600'
-                  }`}
-                >
+                <p className={`text-xs ${station.is_free ? 'text-green-600' : 'text-orange-600'}`}>
                   {station.is_free ? '免費' : '收費'}
                 </p>
               )}
@@ -203,7 +174,7 @@ export default function InfoSidebar({
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
               >
                 導航
               </a>
@@ -220,16 +191,11 @@ export default function InfoSidebar({
         <div
           key={index}
           className="p-3 rounded-lg hover:bg-gray-100 cursor-pointer border-b border-gray-200"
-          onClick={() =>
-            station.coordinates &&
-            handleItemClick(station.coordinates, station.id)
-          }
+          onClick={() => station.coordinates && handleItemClick(station.coordinates, station.id)}
         >
           <div className="flex items-center gap-1">
             <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-gray-800 truncate">
-                {station.name}
-              </h4>
+              <h4 className="font-semibold text-gray-800 truncate">{station.name}</h4>
               <p className="text-sm text-gray-600 truncate">
                 {station.detailed_address || '未提供地址'}
               </p>
@@ -241,7 +207,7 @@ export default function InfoSidebar({
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={e => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
               >
                 導航
               </a>
@@ -260,9 +226,7 @@ export default function InfoSidebar({
           <span className="font-semibold text-gray-700 flex items-center">
             <span className="text-orange-600 mr-2">🏠</span>
             住宿點
-            <span className="ml-2 text-sm text-gray-500">
-              ({accommodationData.length})
-            </span>
+            <span className="ml-2 text-sm text-gray-500">({accommodationData.length})</span>
           </span>
           <svg
             className="w-5 h-5 transform transition-transform details-arrow"
@@ -287,9 +251,7 @@ export default function InfoSidebar({
           <span className="font-semibold text-gray-700 flex items-center">
             <span className="text-blue-600 mr-2">💧</span>
             加水站
-            <span className="ml-2 text-sm text-gray-500">
-              ({waterStationData.length})
-            </span>
+            <span className="ml-2 text-sm text-gray-500">({waterStationData.length})</span>
           </span>
           <svg
             className="w-5 h-5 transform transition-transform details-arrow"
@@ -314,9 +276,7 @@ export default function InfoSidebar({
           <span className="font-semibold text-gray-700 flex items-center">
             <span className="text-green-600 mr-2">🚻</span>
             廁所
-            <span className="ml-2 text-sm text-gray-500">
-              ({restroomData.length})
-            </span>
+            <span className="ml-2 text-sm text-gray-500">({restroomData.length})</span>
           </span>
           <svg
             className="w-5 h-5 transform transition-transform details-arrow"
@@ -341,9 +301,7 @@ export default function InfoSidebar({
           <span className="font-semibold text-gray-700 flex items-center">
             <span className="text-yellow-600 mr-2">🚿</span>
             洗澡點
-            <span className="ml-2 text-sm text-gray-500">
-              ({showerStationData.length})
-            </span>
+            <span className="ml-2 text-sm text-gray-500">({showerStationData.length})</span>
           </span>
           <svg
             className="w-5 h-5 transform transition-transform details-arrow"
@@ -368,9 +326,7 @@ export default function InfoSidebar({
           <span className="font-semibold text-gray-700 flex items-center">
             <span className="text-red-600 mr-2">🏥</span>
             醫療站
-            <span className="ml-2 text-sm text-gray-500">
-              ({medicalStationData.length})
-            </span>
+            <span className="ml-2 text-sm text-gray-500">({medicalStationData.length})</span>
           </span>
           <svg
             className="w-5 h-5 transform transition-transform details-arrow"

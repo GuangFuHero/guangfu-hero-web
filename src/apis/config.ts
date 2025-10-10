@@ -17,9 +17,9 @@ export const createApiRequest = async (endpoint: string, options?: RequestInit) 
   }
 };
 
-export const fetchAllItemsApiRequest = async (endpoint: string, options?: RequestInit) => {
+export const fetchAllItemsApiRequest = async <T>(endpoint: string, options?: RequestInit) => {
   try {
-    let allData: any[] = [];
+    let allData: T[] = [];
     let nextUrl: string | null = `${API_URL}${endpoint}`;
 
     while (nextUrl) {
@@ -35,7 +35,7 @@ export const fetchAllItemsApiRequest = async (endpoint: string, options?: Reques
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data: any = await response.json();
+      const data: { member: T[]; next?: string } = await response.json();
 
       // 將當前頁面的數據加入總數據中
       if (data.member && Array.isArray(data.member)) {

@@ -8,10 +8,7 @@ interface WaterStationMarkerProps {
   isVisible: boolean;
 }
 
-const WaterStationMarker = ({
-  station,
-  isVisible,
-}: WaterStationMarkerProps) => {
+const WaterStationMarker = ({ station, isVisible }: WaterStationMarkerProps) => {
   const { openReportModal } = useModal();
   if (!isVisible) return null;
 
@@ -26,24 +23,17 @@ const WaterStationMarker = ({
   if (isNaN(lat) || isNaN(lng)) return null;
 
   return (
-    <Marker
-      position={[lat, lng]}
-      icon={waterStationIcon}
-      // @ts-ignore - dataId is a custom property
-      dataId={station.id}
-    >
+    <Marker position={[lat, lng]} icon={waterStationIcon} dataId={station.id}>
       <Popup>
         <div className="max-w-xs">
           <h3 className="font-bold text-lg mb-2">{station.name || '-'}</h3>
           <div className="space-y-1 text-sm">
             <div>
-              <span className="font-semibold">地址:</span>{' '}
-              {station.address || '-'}
+              <span className="font-semibold">地址:</span> {station.address || '-'}
             </div>
             {station.opening_hours && (
               <div>
-                <span className="font-semibold">開放時間:</span>{' '}
-                {station.opening_hours}
+                <span className="font-semibold">開放時間:</span> {station.opening_hours}
               </div>
             )}
             {station.notes && (
@@ -56,11 +46,7 @@ const WaterStationMarker = ({
             <button
               onClick={() => {
                 if (!!station?.id) {
-                  openReportModal(
-                    '加水站',
-                    station.id,
-                    station.name || '未知加水站'
-                  );
+                  openReportModal('加水站', station.id, station.name || '未知加水站');
                 }
               }}
               className="cursor-pointer w-full px-3 py-2 bg-orange-500 text-white text-sm rounded-md hover:bg-orange-600 transition-colors"
