@@ -6,10 +6,10 @@ import { env } from "@/config/env";
 export const generateMetadata = (): Metadata => {
   return {
     title: "志工資訊 - 行前必讀",
-    description: "志工行前指引：裝備建議、藥品補給、安全守則與工具清單，做好準備更安全有效率。",
+    description: "鏟子超人出發前記得檢查裝備清單，並做好安全準備、結伴同行。",
     openGraph: {
       title: "志工資訊 - 行前必讀",
-      description: "志工行前指引：裝備建議、藥品補給、安全守則與工具清單，做好準備更安全有效率。",
+      description: "鏟子超人出發前記得檢查裝備清單，並做好安全準備、結伴同行。",
       url: `${env.NEXT_PUBLIC_BASE_URL}/volunteer/preparation`,
       type: "website",
     },
