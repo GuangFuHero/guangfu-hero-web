@@ -12,6 +12,7 @@ import DisasterReliefToolsChecklist from "@/features/VolunteerInfo/DisasterRelie
 import OtherEssentialChecklist from "./OtherEssentialChecklistProps";
 import { getAssetPath } from "@/lib/utils";
 import StepNumber from "@/components/StepNumber";
+import ActionButton from "@/components/ActionButton";
 
 type InfoCategory = "行前必讀" | "交通資訊" | "住宿資訊";
 type TransportMode = "大眾運輸" | "共乘資訊";
@@ -296,6 +297,16 @@ export default function VolunteerInfo({
                       >
                         點此查看交通資訊
                       </a>
+                      <br /><br />
+                      或<br />
+                      <a
+                        href="https://sites.google.com/view/guangfu250923/%E6%88%91%E6%98%AF%E5%BF%97%E5%B7%A5/transport?authuser=0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--secondary)] underline ml-1"
+                      >
+                        點我前往GoBus遊覽車媒合平台
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -304,11 +315,11 @@ export default function VolunteerInfo({
 
             {/* 線上志工 */}
             <div>
-              <div className="rounded-lg p-8 text-center space-y-2">
+              <div className="rounded-lg px-2 py-8 text-center space-y-2">
                 <h3 className="font-bold text-xl text-[var(--text-black)]">
                   評估自己無法到第一線清淤超人
                 </h3>
-                <p className="mb-6">也可以加入線上志工，一起遠端貢獻心力</p>
+                <p className="mb-6">歡迎加入線上或到志工媒合當其他種類超人！</p>
                 <a
                   href="https://sites.google.com/view/guangfu250923/%E6%88%91%E6%98%AF%E5%BF%97%E5%B7%A5/volunteers?authuser=0"
                   target="_blank"
@@ -323,44 +334,58 @@ export default function VolunteerInfo({
         )}
         {selectedCategory === "交通資訊" && (
           <div className="space-y-6 mb-5">
-            <h2 className="text-[var(--orange)] text-2xl text-center font-bold mb-4">
-              把路留給救災的重機！
-            </h2>
-            <p className="text-[var(--text-black)] leading-relaxed">
-              花蓮光復鄉正全力進行災後重建，台鐵已加開班次，以確保充足運能。一起搭乘大眾運輸，以保存體力，把力量留到最關鍵的時刻！如真的需要自駕，請盡可能共乘，讓我們一起將道路讓給救災重機！
-            </p>
+            <div className="bg-[var(--gray-4)] rounded-lg p-5">
+              <h2 className="text-xl font-bold text-center mb-3">
+                請勿開車進入光復，<br />
+                把路留給救災的重機！
+              </h2>
+              <div className="flex gap-4">
+                <div className="flex flex-col w-1/2">
+                  <div className="text-center bg-[var(--light-primary)] rounded py-1 px-2 font-bold mb-2">
+                    南下路線
+                  </div>
+                  <div>請停在花蓮火車站，改搭區間車往光復。</div>
+                </div>
+                <div className="flex flex-col w-1/2">
+                  <div className="text-center bg-[var(--light-primary)] rounded py-1 px-2 font-bold mb-2">
+                    北上路線
+                  </div>
+                  <div>請停在鳳林火車站，改搭區間車往光復。</div>
+                </div>
+              </div>
+            </div>
 
-            <div className="flex p-[4px] mx-auto my-8 size-fit gap-3 rounded-full border border-[var(--gray-3)]">
+            <div className="flex p-[4px] mx-auto my-8 gap-3 rounded-lg border border-[var(--gray-3)] bg-[var(--gray-4)]">
               <button
                 onClick={() => setSelectedTransportMode("大眾運輸")}
                 className={`
-                  text-sm h-[36px] py-[8px] px-[25px]
-                  rounded-full border-0 cursor-pointer whitespace-nowrap
+                  flex-1 text-sm h-[36px] py-[8px] px-[25px]
+                  rounded-lg border-0 cursor-pointer whitespace-nowrap
                   ${
                     selectedTransportMode === "大眾運輸"
                       ? `
-                      bg-[var(--light-gray-background)] text-[var(--orange)]
+                      bg-[var(--primary)] text-white
                     `
                       : `
-                      bg-[var(--background)] text-[var(--gray-2)]
+                      bg-[var(--gray-4)] text-[var(--text-black)]
                     `
                   }
                 `}
               >
-                大眾運輸
+                大眾運輸 / 接駁
               </button>
               <button
                 onClick={() => setSelectedTransportMode("共乘資訊")}
                 className={`
-                  text-sm h-[36px] py-[8px] px-[25px]
-                  rounded-full border-0 cursor-pointer whitespace-nowrap
+                  flex-1 text-sm h-[36px] py-[8px] px-[25px]
+                  rounded-lg border-0 cursor-pointer whitespace-nowrap
                   ${
                     selectedTransportMode === "共乘資訊"
                       ? `
-                      bg-[var(--light-gray-background)] text-[var(--orange)]
+                      bg-[var(--primary)] text-white
                     `
                       : `
-                      bg-[var(--background)] text-[var(--gray-2)]
+                      bg-[var(--gray-4)] text-[var(--text-black)]
                     `
                   }
                 `}
@@ -372,187 +397,176 @@ export default function VolunteerInfo({
             {selectedTransportMode === "大眾運輸" && (
               <>
                 <div>
-                  <h3 className="text-xl font-bold mb-3">
-                    一、如何到花蓮：台鐵
-                  </h3>
-                  <a
-                    href="https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip112/gobytime"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex text-[var(--gray)] underline text-sm mb-2"
-                  >
-                    列車班次這裡看
-                  </a>
-                  <a
-                    href="https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip121/query"
-                    className="flex text-[var(--gray)] underline text-sm mb-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    台鐵訂票來這邊
-                  </a>
+                  <div className="flex items-center gap-3 mb-4">
+                    <StepNumber number={1} />
+                    <h2 className="text-[var(--text-black)] font-semibold text-xl">
+                      如何到花蓮：台鐵
+                    </h2>
+                  </div>
+                  <div className="flex my-3">
+                    <ActionButton
+                      href={"https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip112/gobytime"}
+                      variant="secondary"
+                      icon="/icon_arrow_outward.svg"
+                    >
+                      列車班次資訊
+                    </ActionButton>
+                  </div>
+                  <div className="flex my-3">
+                    <ActionButton
+                      href={"https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip121/query"}
+                      variant="secondary"
+                      icon="/icon_arrow_outward.svg"
+                    >
+                      前往訂票
+                    </ActionButton>
+                  </div>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-bold mb-4 text-[var(--text-black)]">
-                    二、如何從花蓮到災區
-                  </h3>
-
-                  <div>
-                    <p className="rounded-lg bg-[var(--light-primary)] text-center text-md mb-2">
+                  <div className="flex items-center gap-3 mb-4">
+                    <StepNumber number={2} />
+                    <h2 className="text-[var(--text-black)] font-semibold text-xl">
+                      如何從花蓮到災區
+                    </h2>
+                  </div>
+                  <div className="mb-6">
+                    <p className="rounded-lg bg-[var(--light-primary)] text-center py-1 text-md mb-2">
                       交通部觀光署接駁車
                     </p>
-                    <p className="text-center text-sm text-[var(--text-black)]  mb-2">
+                    <div className="text-sm text-[var(--text-black)]  mb-2">
                       公路局每日調度專車：
                       <br />
-                      07:00-10:00、16:00-20:00
+                      07:00-10:00、16:00-20:00 每小時一班
                       <br />
-                      每小時一班
-                    </p>
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="bg-white rounded-lg overflow-hidden border border-[var(--gray-3)]">
-                        <Image
-                          src={getAssetPath("/station_1.svg")}
-                          alt="花蓮車站 A"
-                          width={200}
-                          height={300}
-                          className="w-full h-auto"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg overflow-hidden border border-[var(--gray-3)]">
-                        <Image
-                          src={getAssetPath("/station_2.svg")}
-                          alt="花蓮車站 B"
-                          width={200}
-                          height={300}
-                          className="w-full h-auto"
-                        />
-                      </div>
-                    </div>
-                    <div className="text-sm text-[var(--gray)] space-y-2 mb-4">
-                      <p>
-                        ※專車路線往返新城｜花蓮｜吉安｜壽豐｜玉里等站與志工住宿地點。
-                      </p>
-                      <p>※車站與專車皆有識別圖卡，方便快速找到搭乘位置。</p>
-                      <p>
-                        ※班次將依需求與災區復原狀況隨時調整，確保交通不中斷。
-                      </p>
-                    </div>
-                    <div className="mb-4">
-                      <a
-                        href="https://www.facebook.com/timefortaiwan101/posts/1240379071467098?rdid=rHjplZG0zRYAL8Dw#"
-                        className="underline text-sm text-[var(--secondary)]"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        點此看官方公告
-                      </a>
                       <p className="text-sm text-[var(--gray-2)] mt-2">
-                        *交通部可能依現場狀況調整班次間距，請隨時留意官方公告。
+                        *班次將依現場狀況調整，請隨時留意官方公告。
                       </p>
+                      <div className="flex my-3">
+                        <ActionButton
+                          href={"https://www.facebook.com/timefortaiwan101/posts/1240379071467098?rdid=rHjplZG0zRYAL8Dw#"}
+                          variant="secondary"
+                          icon="/icon_arrow_outward.svg"
+                        >
+                          點此看官方公告
+                        </ActionButton>
+                      </div>
                     </div>
+                    <Image
+                      src={getAssetPath("/station_1.svg")}
+                      alt="花蓮車站 A"
+                      width={200}
+                      height={300}
+                      className="my-2 w-full h-auto"
+                    />
+                    <Image
+                      src={getAssetPath("/station_2.svg")}
+                      alt="花蓮車站 B"
+                      width={200}
+                      height={300}
+                      className="my-2 w-full h-auto"
+                    />
+                    <p className="text-sm text-[var(--gray-2)] mt-2">
+                      ※專車路線往返新城｜花蓮｜吉安｜壽豐｜玉里等站與志工住宿地點。
+                      <br />
+                      ※車站與專車皆有識別圖卡，方便快速找到搭乘位置。
+                    </p>
                   </div>
 
-                  <div className="text-[var(--text-black)]">
-                    <p className="rounded-lg bg-[var(--light-primary)] text-center text-md mb-2">
+                  <div className="mb-6">
+                    <p className="rounded-lg bg-[var(--light-primary)] py-1 text-center text-md mb-2">
                       尋找小蜜蜂接駁
                     </p>
-                    <p>
-                      車站周邊目前已由政府、軍方接手，以重機為主力投入救援。然而，偏遠的村落還需要鏟子超人們的支援！小蜜蜂超人已準備好，帶著鏟子超人們，一起前往需要幫助的地方！
-                    </p>
-                    <p className="mt-4 mb-4">
-                      無論獨行或加入任何團體救災，請務必注意自身安全
-                    </p>
+                    <div className="bg-[var(--gray-4)] rounded-lg p-4">
+                      <div className="font-medium ">車站前臨時泊車點（無固定位置）</div>
+                      <div className="text-[var(--gray-2)] my-2">
+                        出車站後，跟著現場的招牌指引就能找到！救災需求千變萬化，泊車點也跟著滾動調整，因此無確切地址。
+                      </div>
+                      <div className="bg-white rounded-lg overflow-hidden border border-[var(--gray-3)]">
+                        <Image
+                          src={getAssetPath("/sign.svg")}
+                          alt="sign"
+                          width={200}
+                          height={300}
+                          className="w-full h-auto"
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="bg-[var(--gray-background)] rounded-lg p-6 space-y-6">
-                    <div className="flex gap-2">
-                      <div className="w-70 font-bold">
-                        車站前小蜜蜂臨時泊車點
-                        <br />
-                        （無固定位置）
+                  <div className="mb-6">
+                    <p className="rounded-lg bg-[var(--light-primary)] py-1 text-center text-md mb-2">
+                      其他社群資訊
+                    </p>
+                    <div className="bg-[var(--gray-4)] rounded-lg p-4 space-y-6">
+                      <div className="flex gap-2">
+                        <div className="basis-2/5 font-bold">
+                          慈濟志工社群
+                          <br />
+                          <a
+                            className="border-b text-[var(--secondary)]"
+                            href="https://line.me/ti/g2/gNNwamqenP9lV5jJHFVvIC2SYJOWrPbwJNMLXA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            加入 LINE@
+                          </a>
+                        </div>
+                        <p className="basis-3/5 text-[var(--gray-2)]">
+                          由慈濟組織的志工社群，可依指示至記事本了解群內運作模式。
+                        </p>
                       </div>
-                      <p className="text-[var(--gray-2)]">
-                        出車站後，跟著現場的招牌指引就能找到！救災需求千變萬化，泊車點也跟著滾動調整，因此無確切地址。
-                      </p>
-                    </div>
-                    <div className="bg-white rounded-lg overflow-hidden border border-[var(--gray-3)]">
-                      <Image
-                        src={getAssetPath("/sign.svg")}
-                        alt="sign"
-                        width={200}
-                        height={300}
-                        className="w-full h-auto"
-                      />
-                    </div>
-
-                    <div className="flex gap-2">
-                      <div className="w-70 font-bold">
-                        慈濟志工社群
-                        <br />
-                        <a
-                          className="border-b text-[var(--secondary)]"
-                          href="https://line.me/ti/g2/gNNwamqenP9lV5jJHFVvIC2SYJOWrPbwJNMLXA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          加入 LINE 社群
-                        </a>
+                      <div className="flex gap-2">
+                        <div className="basis-2/5 font-bold">
+                          動森島民
+                          <br />
+                          <a
+                            className="border-b text-[var(--secondary)]"
+                            href="https://line.me/ti/g2/RBQui9B01TU9u5fnru_3KCS9J4BuvZInmkO7DA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            加入 LINE@
+                          </a>
+                        </div>
+                        <p className="basis-3/5 text-[var(--gray-2)]">
+                          由當地居民自行組織，可依指示至記事本了解群內運作模式。
+                        </p>
                       </div>
-                      <p className="text-[var(--gray-2)]">
-                        由慈濟組織的志工社群，可依指示至記事本了解群內運作模式。
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <div className="w-70 font-bold">
-                        動森島民
-                        <br />
-                        <a
-                          className="border-b text-[var(--secondary)]"
-                          href="https://line.me/ti/g2/RBQui9B01TU9u5fnru_3KCS9J4BuvZInmkO7DA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          加入 LINE 社群
-                        </a>
+                      <div className="flex gap-2">
+                        <div className="basis-2/5 font-bold">
+                          花蓮救災-
+                          <br />
+                          <a
+                            className="border-b text-[var(--secondary)]"
+                            href="https://line.me/ti/g2/xFQQW0R_NpxuFQ2diepCNKrqzYne-lqMLolknQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            加入 LINE@
+                          </a>
+                        </div>
+                        <p className="basis-3/5 text-[var(--gray-2)]">
+                          由熱心超人組織，可依指示至記事本了解群內運作模式。
+                        </p>
                       </div>
-                      <p className="text-[var(--gray-2)]">
-                        由當地居民自行組織，可依指示至記事本了解群內運作模式。
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <div className="w-70 font-bold">
-                        花蓮救災-大部隊不去的地方
-                        <br />
-                        <a
-                          className="border-b text-[var(--secondary)]"
-                          href="https://line.me/ti/g2/xFQQW0R_NpxuFQ2diepCNKrqzYne-lqMLolknQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          加入 LINE 社群
-                        </a>
+                      <div className="flex gap-2">
+                        <div className="basis-2/5 font-bold">
+                          出發阿陶莫
+                          <br />
+                          <a
+                            className="border-b text-[var(--secondary)]"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://line.me/ti/g/kT5bXAtJ4U"
+                          >
+                            加入 LINE@
+                          </a>
+                        </div>
+                        <p className="basis-3/5 text-[var(--gray-2)]">
+                          由熱心超人組織，可依指示至記事本了解群內運作模式。
+                        </p>
                       </div>
-                      <p className="text-[var(--gray-2)]">
-                        由熱心超人組織，可依指示至記事本了解群內運作模式。
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <div className="w-70 font-bold">
-                        出發阿陶莫
-                        <br />
-                        <a
-                          className="border-b text-[var(--secondary)]"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href="https://line.me/ti/g/kT5bXAtJ4U"
-                        >
-                          加入 LINE 社群
-                        </a>
-                      </div>
-                      <p className="text-[var(--gray-2)]">
-                        由熱心超人組織，可依指示至記事本了解群內運作模式。
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -562,26 +576,9 @@ export default function VolunteerInfo({
             {selectedTransportMode === "共乘資訊" && (
               <div className="space-y-4">
                 <div>
-                  <div className="bg-[var(--gray-background)] rounded-lg p-5">
-                    <h2 className="text-xl font-bold text-center mb-3">
-                      請勿開車進入光復
-                    </h2>
-                    <div className="flex gap-4">
-                      <div className="flex flex-col w-1/2">
-                        <div className="text-center bg-[var(--light-primary)] rounded py-1 px-2 font-bold mb-2">
-                          南下路線
-                        </div>
-                        <div>請停在花蓮火車站，改搭區間車往光復。</div>
-                      </div>
-                      <div className="flex flex-col w-1/2">
-                        <div className="text-center bg-[var(--light-primary)] rounded py-1 px-2 font-bold mb-2">
-                          北上路線
-                        </div>
-                        <div>請停在鳳林火車站，改搭區間車往光復。</div>
-                      </div>
-                    </div>
-                  </div>
-
+                  <p className="rounded-lg bg-[var(--light-primary)] text-center py-1 text-md mb-2">
+                    替代路線
+                  </p>
                   <div className="bg-white overflow-hidden my-4">
                     <Image
                       src={getAssetPath("/alt_road.svg")}
@@ -594,62 +591,67 @@ export default function VolunteerInfo({
                       資料來源：2025/09/26 花蓮縣政府公告
                     </div>
                   </div>
-                  <div className="text-md py-4">
-                    <div className="flex justify-center mb-3">
-                      <a
-                        href="https://gobus.moushih.com/"
-                        className="flex text-[var(--secondary)] underline text-md"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        遊覽車媒合去Gobus
-                      </a>
-                    </div>
-                    <Image
-                      src={getAssetPath("/go_bus_banner.svg")}
-                      alt="go-bus-banner"
-                      width={335}
-                      height={335}
-                      className="w-full h-auto"
-                    />
-                    <h3 className="font-semibold mb-0 mt-3">
-                      關於 Gobus —— 讓愛心接送，更簡單。
-                    </h3>
-                    <p>
-                      召集人可以輕鬆發布車次、管理名單；志工則能一鍵報名、快速參加活動。讓每一次出發，都更有效率，也更有溫度。
-                    </p>
+                </div>
+                <div>
+                  <p className="rounded-lg bg-[var(--light-primary)] text-center py-1 text-md mb-2">
+                    遊覽車媒合
+                  </p>
+                  <Image
+                    src={getAssetPath("/go_bus_banner.jpg")}
+                    alt="go-bus-banner"
+                    width={335}
+                    height={335}
+                    className="w-full h-auto"
+                  />
+                  <h3 className="font-semibold mb-0 mt-3">
+                    關於 Gobus —— 讓愛心接送，更簡單。
+                  </h3>
+                  <p>
+                    召集人可以輕鬆發布車次、管理名單；志工則能一鍵報名、快速參加活動。讓每一次出發，都更有效率，也更有溫度。
+                  </p>
+                  <div className="flex my-3">
+                    <ActionButton
+                      href={"https://gobus.moushih.com/"}
+                      variant="secondary"
+                      icon="/icon_arrow_outward.svg"
+                    >
+                      遊覽車媒合去Gobus
+                    </ActionButton>
                   </div>
-                  <p className="rounded-lg bg-[var(--light-primary)] text-center text-md mb-2 mt-4">
+                </div>
+                <div>
+                  <p className="rounded-lg bg-[var(--light-primary)] text-center py-1 text-md mb-2">
                     各區共乘資訊
                   </p>
                   <p className="m-2">
-                    無論獨行或加入任何團體救災，請務必注意自身安全
+                    加入共乘 Line 群組，可查看相關資訊
                   </p>
-                  <div className="flex flex-col m-2">
-                    <a
-                      href="https://line.me/ti/g2/gitK-a3bK9FWZPLET55pxfGo0CyDT1NenIt8mQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-[var(--secondary)] underline mb-1"
+                  <div className="flex my-3">
+                    <ActionButton
+                      href={"https://line.me/ti/g2/gitK-a3bK9FWZPLET55pxfGo0CyDT1NenIt8mQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"}
+                      variant="secondary"
+                      icon="/icon_arrow_outward.svg"
                     >
                       光復救災 北區共乘
-                    </a>
-                    <a
-                      href="https://line.me/ti/g2/t15dvRs84e71Bv3W4GNKPlFcqycQFxaAeP3pRg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-[var(--secondary)] underline mb-1"
+                    </ActionButton>
+                  </div>
+                  <div className="flex my-3">
+                    <ActionButton
+                      href={"https://line.me/ti/g2/t15dvRs84e71Bv3W4GNKPlFcqycQFxaAeP3pRg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"}
+                      variant="secondary"
+                      icon="/icon_arrow_outward.svg"
                     >
                       光復救災 中區共乘
-                    </a>
-                    <a
-                      href="https://line.me/ti/g2/rSzI8t-udCwxDYITMl2WzdCyAnyjgATWkdg5Zw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-[var(--secondary)] underline mb-1"
+                    </ActionButton>
+                  </div>
+                  <div className="flex my-3">
+                    <ActionButton
+                      href={"https://line.me/ti/g2/rSzI8t-udCwxDYITMl2WzdCyAnyjgATWkdg5Zw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"}
+                      variant="secondary"
+                      icon="/icon_arrow_outward.svg"
                     >
                       光復救災 南區共乘
-                    </a>
+                    </ActionButton>
                   </div>
                 </div>
               </div>
