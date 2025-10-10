@@ -27,6 +27,7 @@ export default function AboutUs() {
         "Yi",
         "謝◯雯",
         "Stephanie Sung",
+        "Sucre Lin 林糖糖",
         "IKEA",
         "jerry._.",
         "Randy",
@@ -71,13 +72,13 @@ export default function AboutUs() {
       personNames: [
         "Zack",
         "Fannie",
-        "張◯瑜 (PerfectlyJoJo)",
+        "張◯瑜",
         "雅",
         "Zeli",
         "曾◯容 (鷹)",
         "Claire",
         "ShunFa Yang",
-        "湯◯嵐 (Lanny Tang)",
+        "嵐",
         "billy",
       ]
     },
@@ -125,7 +126,7 @@ export default function AboutUs() {
         "Jocelyn",
         "Yukay",
         "Andrew Yen",
-        "Julia(小孟)",
+        "Julia (小孟)",
       ],
     },
     {
@@ -133,7 +134,7 @@ export default function AboutUs() {
       groupName: "核實組",
       personNames: [
         "雅",
-        "湯雅嵐 (Lanny Tang)",
+        "嵐",
         "小路",
       ],
     },
