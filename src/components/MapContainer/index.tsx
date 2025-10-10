@@ -75,6 +75,7 @@ function MapContainer({ isFullScreenMap = true }: { isFullScreenMap?: boolean })
         onSidebarClose={handleSidebarClose}
         userPosition={geolocation.userPosition}
         isUserLocationVisible={geolocation.isLocationVisible}
+        isFullScreenMap={isFullScreenMap}
       />
 
       {/* 定位按鈕面板 */}
@@ -119,7 +120,7 @@ function MapContainer({ isFullScreenMap = true }: { isFullScreenMap?: boolean })
   );
 }
 
-export default function ({ isFullScreenMap = true }: { isFullScreenMap?: boolean }) {
+export default function Map({ isFullScreenMap = true }: { isFullScreenMap?: boolean }) {
   return (
     <Providers>
       <ToastProvider>

@@ -8,9 +8,7 @@ export default function ReportIssueModal() {
 
   if (!isReportModalOpen) return null;
 
-  const handleReportSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleReportSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!reportData) return;
@@ -30,6 +28,7 @@ export default function ReportIssueModal() {
       await submitIssueReportMutation.mutateAsync(report);
       closeReportModal();
     } catch (error) {
+      console.error(error);
       // 錯誤處理已在 mutation 的 onError 中處理
     }
   };
@@ -43,12 +42,7 @@ export default function ReportIssueModal() {
             onClick={closeReportModal}
             className="text-gray-400 hover:text-gray-600 transition-colors"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -78,10 +72,7 @@ export default function ReportIssueModal() {
           </div>
 
           <div>
-            <label
-              htmlFor="reportName"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="reportName" className="block text-sm font-medium text-gray-700 mb-1">
               問題點名稱
             </label>
             <input
@@ -95,10 +86,7 @@ export default function ReportIssueModal() {
           </div>
 
           <div>
-            <label
-              htmlFor="issueReason"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="issueReason" className="block text-sm font-medium text-gray-700 mb-1">
               問題原因 <span className="text-red-500">*</span>
             </label>
             <textarea

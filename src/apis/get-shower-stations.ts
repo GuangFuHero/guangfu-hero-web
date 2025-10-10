@@ -4,5 +4,5 @@ import { fetchAllItemsApiRequest } from './config';
 export const getShowerStations = async (): Promise<{
   member: ShowerStation[];
 }> => {
-  return fetchAllItemsApiRequest('/shower_stations');
+  return fetchAllItemsApiRequest<ShowerStation>('/shower_stations');
 };

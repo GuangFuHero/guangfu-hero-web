@@ -1,14 +1,15 @@
 'use client';
 
+import { UserPosition } from '@/types/map';
 import { handleGoBack } from '@/utils/helpers';
 
 interface LocationPanelProps {
   geolocation: {
-    userPosition: any;
+    userPosition: UserPosition | null;
     hasLocationPermission: boolean;
     isLocationVisible: boolean;
     isWatchingPosition: boolean;
-    requestUserLocation: () => Promise<any>;
+    requestUserLocation: () => Promise<UserPosition | null>;
     startWatchingPosition: (showConfirm?: boolean) => Promise<void>;
     stopWatchingPosition: () => void;
     setIsLocationVisible: (visible: boolean) => void;

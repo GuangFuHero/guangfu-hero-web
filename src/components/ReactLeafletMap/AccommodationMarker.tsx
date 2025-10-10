@@ -8,52 +8,34 @@ interface AccommodationMarkerProps {
   isVisible: boolean;
 }
 
-const AccommodationMarker = ({
-  accommodation,
-  isVisible,
-}: AccommodationMarkerProps) => {
+const AccommodationMarker = ({ accommodation, isVisible }: AccommodationMarkerProps) => {
   const { openReportModal } = useModal();
-  if (
-    !isVisible ||
-    !accommodation.coordinates?.lat ||
-    !accommodation.coordinates?.lng
-  ) {
+  if (!isVisible || !accommodation.coordinates?.lat || !accommodation.coordinates?.lng) {
     return null;
   }
 
   const { lat, lng } = accommodation.coordinates;
 
   return (
-    <Marker
-      position={[lat, lng]}
-      icon={accommodationIcon}
-      // @ts-ignore - dataId is a custom property
-      dataId={accommodation.id}
-    >
+    <Marker position={[lat, lng]} icon={accommodationIcon} dataId={accommodation.id}>
       <Popup>
         <div className="max-w-xs">
-          <h3 className="font-bold text-lg mb-2">
-            {accommodation?.name || '-'}
-          </h3>
+          <h3 className="font-bold text-lg mb-2">{accommodation?.name || '-'}</h3>
           <div className="space-y-1 text-sm">
             <div>
-              <span className="font-semibold">地址:</span>{' '}
-              {accommodation?.address || '未提供'}
+              <span className="font-semibold">地址:</span> {accommodation?.address || '未提供'}
             </div>
             <div>
-              <span className="font-semibold">聯絡:</span>{' '}
-              {accommodation?.contact_info || '未提供'}
+              <span className="font-semibold">聯絡:</span> {accommodation?.contact_info || '未提供'}
             </div>
             {accommodation?.pricing && (
               <div>
-                <span className="font-semibold">費用:</span>{' '}
-                {accommodation.pricing || '-'}
+                <span className="font-semibold">費用:</span> {accommodation.pricing || '-'}
               </div>
             )}
             {accommodation?.notes && (
               <div>
-                <span className="font-semibold">備註:</span>{' '}
-                {accommodation.notes}
+                <span className="font-semibold">備註:</span> {accommodation.notes}
               </div>
             )}
           </div>
@@ -61,11 +43,7 @@ const AccommodationMarker = ({
             <button
               onClick={() => {
                 if (accommodation?.id) {
-                  openReportModal(
-                    '住宿點',
-                    accommodation.id,
-                    accommodation?.name || '未知住宿點'
-                  );
+                  openReportModal('住宿點', accommodation.id, accommodation?.name || '未知住宿點');
                 }
               }}
               className="cursor-pointer w-full px-3 py-2 bg-orange-500 text-white text-sm rounded-md hover:bg-orange-600 transition-colors"

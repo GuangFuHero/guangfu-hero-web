@@ -70,9 +70,6 @@ const CATEGORIES = [
   },
 ];
 
-const MAP_URL = 'https://guangfu250923-map.pttapp.cc/map.html';
-const MAP_HEIGHT = 422;
-
 const getMapUrl = (station: {
   coordinates: {
     lat: number;

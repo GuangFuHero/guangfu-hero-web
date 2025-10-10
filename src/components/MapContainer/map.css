@@ -71,10 +71,6 @@
 
 /* 手機版響應式設計 */
 @media (max-width: 768px) {
-  #map {
-    max-width: calc(100svw - 32px);
-  }
-
   .location-panel {
     top: 10px;
     left: 10px;

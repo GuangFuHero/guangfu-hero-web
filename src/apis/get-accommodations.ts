@@ -4,5 +4,5 @@ import { fetchAllItemsApiRequest } from './config';
 export const getAccommodations = async (): Promise<{
   member: Accommodation[];
 }> => {
-  return fetchAllItemsApiRequest('/accommodations');
+  return fetchAllItemsApiRequest<Accommodation>('/accommodations');
 };
