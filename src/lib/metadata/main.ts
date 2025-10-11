@@ -5,7 +5,7 @@ export async function generateSiteMetadata(): Promise<Metadata> {
   const metaTitleDefault = "光復超人";
   const metaTitleTemplate = "光復超人 - %s";
   const metaSiteName = "光復超人";
-  const metaDescription = "提供花蓮地區災害援助資訊、志工招募與居民協助服務";
+  const metaDescription = "光復超人｜2025 花蓮光復水災資訊整合平台，提供災民支援、物資媒合、志工招募、蜜蜂接送與救災協作服務。";
   const metaAppleMobileWebAppTitle = "光復超人";
 
   const currentUrl = env.NEXT_PUBLIC_BASE_URL;

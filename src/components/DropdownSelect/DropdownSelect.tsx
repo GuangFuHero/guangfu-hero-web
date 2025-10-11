@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
-import { getAssetPath } from "@/lib/utils";
+import { getAssetPath } from '@/lib/utils';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 interface Option {
   label: string;
@@ -29,18 +29,15 @@ export default function DropdownSelect({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };
     if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [open]);
 
@@ -52,11 +49,7 @@ export default function DropdownSelect({
       >
         <span>{selectedLabel ?? defaultLabel}</span>
         <Image
-          src={
-            open
-              ? getAssetPath("/chevron_up.svg")
-              : getAssetPath("/chevron_down.svg")
-          }
+          src={open ? getAssetPath('/chevron_up.svg') : getAssetPath('/chevron_down.svg')}
           alt="up"
           width={11}
           height={6.5}
@@ -64,7 +57,7 @@ export default function DropdownSelect({
       </button>
 
       {open && (
-        <div className="min-w-[93px] w-max absolute left-0 z-10 mt-1 bg-[var(--gray-4)] rounded-md">
+        <div className="min-w-[93px] w-max absolute left-0 mt-1 bg-[var(--gray-4)] rounded-md z-500">
           {options.map(({ value, label }) => (
             <button
               key={value}
@@ -73,7 +66,7 @@ export default function DropdownSelect({
                 setOpen(false);
               }}
               className={`block w-full px-3 py-2 text-left hover:bg-[var(--gray-3)] ${
-                value === valueProp && "bg-[#e6e6e9]"
+                value === valueProp && 'bg-[#e6e6e9]'
               }`}
             >
               {label}

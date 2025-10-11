@@ -254,3 +254,58 @@ export interface ReportResponse {
   created_at: number;
   updated_at: number;
 }
+
+export interface SupplyResponse {
+  "@context": string;
+  "@type": string;
+  limit: number;
+  member: Supply[];
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  totalItems: number;
+}
+
+export interface Supply {
+  address: string;
+  created_at: number;
+  id: string;
+  name: string;
+  notes: string | null;
+  phone: string;
+  pii_date: number | null;
+  supplies: SupplyItem[];
+  updated_at: number;
+}
+
+export interface SupplyItem {
+  id: string;
+  supply_id: string;
+  tag: string;
+  name: string;
+  recieved_count: number;
+  total_count: number;
+  unit: string;
+}
+
+export interface ReportSupplyProvider {
+  name: string;
+  address: string;
+  phone: string;
+  notes: string;
+  supply_item_id: string;
+  provide_unit: string;
+  provide_count: number;
+  pii_date: number;
+}
+export interface ReportSupplyProviderResponse {
+  name: string;
+  address: string;
+  phone: string;
+  notes: string;
+  supply_item_id: string;
+  provide_unit: string;
+  provide_count: number;
+  pii_date: number;
+  id: string;
+}
