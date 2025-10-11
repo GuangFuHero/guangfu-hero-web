@@ -6,7 +6,7 @@ const LOGO_URL = 'https://gf250923.org/logo_new.svg';
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: '志工媒合 | 光復超人 - 花蓮光復地震災區救援志工招募',
+    title: '志工媒合',
     description:
       '成為救災超人、瀏覽任務媒合與報到資訊，與在地需求即時配對，安全有序投入協助。花蓮光復鄉地震災區志工招募、物資分配、災民協助平台。',
     keywords:
@@ -48,7 +48,7 @@ export default function VolunteerRegisterPage() {
         '@type': 'Organization',
         '@id': `${SITE_URL}/#organization`,
         name: '光復超人',
-        alternateName: ['鏟子超人', '光復小蜜蜂', '花蓮小蜜蜂'],
+        alternateName: ['鏟子超人', '光復志工', '光復救災', '鏟子英雄', '光復英雄'],
         url: SITE_URL,
         logo: {
           '@type': 'ImageObject',
@@ -101,7 +101,7 @@ export default function VolunteerRegisterPage() {
           '@type': 'ImageObject',
           url: LOGO_URL,
         },
-        datePublished: '2025-09-25',
+        datePublished: '2025-09-23',
         dateModified: new Date().toISOString().split('T')[0],
         author: {
           '@id': `${SITE_URL}/#organization`,
@@ -132,7 +132,7 @@ export default function VolunteerRegisterPage() {
         '@id': `${SITE_URL}/#website`,
         url: SITE_URL,
         name: '光復超人',
-        description: '花蓮光復地震災區救援平台 - 志工媒合、物資分配、災民協助',
+        description: '花蓮光復地震災區救援平台 - 志工媒合、物資分配、居民協助',
         publisher: {
           '@id': `${SITE_URL}/#organization`,
         },
