@@ -1,7 +1,7 @@
 'use client';
 
-import { useCallback, useRef, useEffect, useState } from 'react';
 import { getAssetPath } from '@/lib/utils';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface WarningModalProps {
   isOpen: boolean;
@@ -100,7 +100,7 @@ export default function WarningModal({ isOpen, onClose }: WarningModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-1001 flex items-center justify-center p-4">
       <div className="fixed inset-0 bg-black/20 backdrop-blur-[4px]" onClick={onClose} />
       <div className="relative bg-[var(--text-black)] rounded-[20px] max-w-md w-full p-6 shadow-2xl flex flex-col gap-6">
         <header className="relative h-[25px] flex items-center justify-center">
