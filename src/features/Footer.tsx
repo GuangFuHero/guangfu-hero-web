@@ -12,10 +12,10 @@ export default function Footer() {
             href="/resources"
             className="flex-1 max-w-[160px] bg-[var(--secondary)] hover:bg-[#166f8c] py-3 px-6 rounded-lg text-center font-bold transition-colors"
             onClick={() => {
-              ReactGA.event('物資媒合');
+              ReactGA.event('配送媒合');
             }}
           >
-            物資媒合
+            配送媒合
           </Link>
           <Link
             href="/volunteer-register"

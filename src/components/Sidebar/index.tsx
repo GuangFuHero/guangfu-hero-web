@@ -28,7 +28,7 @@ const SIDEBAR_ITEM = [
       { name: '心理資源', href: '/victim/mental-health' },
     ],
   },
-  { name: '物資媒合', href: '/resources' },
+  { name: '配送媒合', href: '/resources' },
   { name: '志工媒合', href: '/volunteer-register' },
   { name: '關於我們', href: '/volunteer/about-us' },
   { name: '隱私權政策', href: '/privacy' },
@@ -38,7 +38,7 @@ const SIDEBAR_ITEM = [
     href: 'https://docs.google.com/forms/d/e/1FAIpQLSewjwY0hhJMEIPIDhM_KLSgtZ_Q4nMPq4fHmolk0DyjRcGiqw/viewform',
   },
   {
-    name: '物資媒合/志工媒合回報',
+    name: '配送媒合 / 志工媒合回報',
     href: 'https://docs.google.com/forms/d/17VyOi9B43ouZ3_s5MdS1fs80fVR-lNvsV7Q4eG-2o68/viewform',
   },
 ];
