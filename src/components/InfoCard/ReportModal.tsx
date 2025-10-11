@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { submitReport } from "@/lib/api";
+import React, { useState } from 'react';
+import { submitReport } from '@/lib/api';
 
 interface ReportModalProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ interface ReportModalProps {
   locationId: string;
 }
 
-type ModalStep = "form" | "success";
+type ModalStep = 'form' | 'success';
 
 const ReportModal: React.FC<ReportModalProps> = ({
   isOpen,
@@ -20,14 +20,14 @@ const ReportModal: React.FC<ReportModalProps> = ({
   locationName,
   locationId,
 }) => {
-  const [step, setStep] = useState<ModalStep>("form");
-  const [reason, setReason] = useState("");
+  const [step, setStep] = useState<ModalStep>('form');
+  const [reason, setReason] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     if (!reason.trim()) {
-      setError("請填寫問題原因");
+      setError('請填寫問題原因');
       return;
     }
 
@@ -40,21 +40,21 @@ const ReportModal: React.FC<ReportModalProps> = ({
         location_type: locationType,
         location_id: locationId,
         reason: reason.trim(),
-        notes: "",
-        status: "false",
+        notes: '',
+        status: 'false',
       });
 
-      setStep("success");
+      setStep('success');
     } catch (err) {
-      setError(err instanceof Error ? err.message : "提交失敗,請稍後再試");
+      setError(err instanceof Error ? err.message : '提交失敗,請稍後再試');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleClose = () => {
-    setStep("form");
-    setReason("");
+    setStep('form');
+    setReason('');
     setError(null);
     onClose();
   };
@@ -73,22 +73,14 @@ const ReportModal: React.FC<ReportModalProps> = ({
       <div className="fixed inset-0 z-[80] flex items-end pointer-events-none">
         <div
           className="bg-white rounded-t-2xl w-full max-h-[85vh] overflow-y-auto animate-slide-up shadow-lg pointer-events-auto"
-          onClick={(e) => e.stopPropagation()}
+          onClick={e => e.stopPropagation()}
         >
-          {step === "form" ? (
+          {step === 'form' ? (
             <>
               {/* Header */}
               <div className="flex justify-between items-center p-6 pb-4 border-b border-[var(--gray-3)]">
-                <button
-                  onClick={handleClose}
-                  className="text-[var(--gray)] hover:text-gray-800"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                <button onClick={handleClose} className="text-[var(--gray)] hover:text-gray-800">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -140,7 +132,7 @@ const ReportModal: React.FC<ReportModalProps> = ({
                   </label>
                   <textarea
                     value={reason}
-                    onChange={(e) => {
+                    onChange={e => {
                       setReason(e.target.value);
                       setError(null);
                     }}
@@ -148,9 +140,7 @@ const ReportModal: React.FC<ReportModalProps> = ({
                     rows={4}
                     className="w-full px-4 py-3 border border-[var(--gray-3)] bg-white text-gray-900 rounded-lg focus:ring-2 focus:ring-[#009688] focus:border-transparent resize-none"
                   />
-                  {error && (
-                    <p className="mt-2 text-sm text-red-500">{error}</p>
-                  )}
+                  {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
                 </div>
               </div>
 
@@ -168,7 +158,7 @@ const ReportModal: React.FC<ReportModalProps> = ({
                   disabled={isSubmitting}
                   className="flex-1 bg-[#C96319] text-white py-3 rounded-lg font-medium hover:bg-[#B55815] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? "提交中..." : "提交回報"}
+                  {isSubmitting ? '提交中...' : '提交回報'}
                 </button>
               </div>
             </>
@@ -203,9 +193,7 @@ const ReportModal: React.FC<ReportModalProps> = ({
                     </svg>
                   </div>
 
-                  <h2 className="text-2xl font-bold text-[var(--text-black)] mb-2">
-                    提交完成
-                  </h2>
+                  <h2 className="text-2xl font-bold text-[var(--text-black)] mb-2">提交完成</h2>
                   <p className="text-[var(--gray)] mb-8">
                     您的回報已成功送出
                     <br />

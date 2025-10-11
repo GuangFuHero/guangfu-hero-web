@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useCallback, useMemo, useState } from "react";
-import dayjs from "dayjs";
-import { DataType } from "./index";
-import ReportModal from "./ReportModal";
+import React, { useCallback, useMemo, useState } from 'react';
+import dayjs from 'dayjs';
+import { DataType } from './index';
+import ReportModal from './ReportModal';
 
 interface DetailModalProps {
   onClose: () => void;
@@ -13,42 +13,42 @@ interface DetailModalProps {
 }
 
 const fieldLabels: Record<string, string> = {
-  address: "地址",
-  affiliated_organization: "所屬單位",
-  capacity: "容量",
-  contact_info: "聯絡資訊",
-  contact_person: "聯絡人",
-  created_at: "建立時間",
-  daily_capacity: "每日可收納",
-  detailed_address: "地址",
-  emergency_support: "緊急支援",
-  equipment: "設備",
-  facilities: "設施",
-  is_free: "是否免費",
-  languages: "語言",
-  link: "連結",
-  location: "地點",
-  medical_staff: "醫療人員",
-  name: "名稱",
-  note: "備註",
-  notes: "備註",
-  opening_hours: "開放時間",
-  operating_hours: "營運時間",
-  phone: "電話",
-  service_format: "服務形式",
-  service_hours: "服務時間",
-  services: "提供服務",
-  specialties: "專長",
-  station_type: "類型",
-  status: "狀態",
-  target_audience: "服務對象",
-  updated_at: "更新時間",
-  waiting_time: "等候時間",
-  website_url: "網站",
+  address: '地址',
+  affiliated_organization: '所屬單位',
+  capacity: '容量',
+  contact_info: '聯絡資訊',
+  contact_person: '聯絡人',
+  created_at: '建立時間',
+  daily_capacity: '每日可收納',
+  detailed_address: '地址',
+  emergency_support: '緊急支援',
+  equipment: '設備',
+  facilities: '設施',
+  is_free: '是否免費',
+  languages: '語言',
+  link: '連結',
+  location: '地點',
+  medical_staff: '醫療人員',
+  name: '名稱',
+  note: '備註',
+  notes: '備註',
+  opening_hours: '開放時間',
+  operating_hours: '營運時間',
+  phone: '電話',
+  service_format: '服務形式',
+  service_hours: '服務時間',
+  services: '提供服務',
+  specialties: '專長',
+  station_type: '類型',
+  status: '狀態',
+  target_audience: '服務對象',
+  updated_at: '更新時間',
+  waiting_time: '等候時間',
+  website_url: '網站',
 };
 
-const excludeFields = ["id", "coordinates"];
-const timeFields = ["created_at", "updated_at"];
+const excludeFields = ['id', 'coordinates'];
+const timeFields = ['created_at', 'updated_at'];
 
 const DetailModal = ({ onClose, type, name, fullData }: DetailModalProps) => {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -60,20 +60,17 @@ const DetailModal = ({ onClose, type, name, fullData }: DetailModalProps) => {
       .filter(([key, value]) => {
         if (excludeFields.includes(key)) return false;
         if (!fieldLabels[key]) return false;
-        if (value === null || value === undefined || value === "") return false;
+        if (value === null || value === undefined || value === '') return false;
         if (Array.isArray(value) && value.length === 0) return false;
-        if (
-          Array.isArray(value) &&
-          value.every((item) => item === "string" || item === null)
-        )
+        if (Array.isArray(value) && value.every(item => item === 'string' || item === null))
           return false;
-        if (value === "string") return false;
+        if (value === 'string') return false;
         return true;
       })
       .map(([key, value]) => ({
         label: fieldLabels[key],
         value: timeFields.includes(key)
-          ? dayjs.unix(Number(value)).format("YYYY-MM-DD HH:mm")
+          ? dayjs.unix(Number(value)).format('YYYY-MM-DD HH:mm')
           : value,
       }));
   }, [fullData]);
@@ -94,11 +91,11 @@ const DetailModal = ({ onClose, type, name, fullData }: DetailModalProps) => {
       <div className="fixed inset-0 z-50 flex items-end pointer-events-none">
         <div
           className="bg-white rounded-t-2xl w-full max-h-[85vh] overflow-y-auto animate-slide-up shadow-lg pointer-events-auto"
-          onClick={(e) => e.stopPropagation()}
+          onClick={e => e.stopPropagation()}
         >
           <div className="flex justify-between items-start p-6 pb-4">
             <div className="px-3 py-1 bg-[var(--gray-4)] text-[var(--gray-2)] text-sm rounded">
-              {type || "定點"}
+              {type || '定點'}
             </div>
             <button
               onClick={onClose}
@@ -123,16 +120,16 @@ const DetailModal = ({ onClose, type, name, fullData }: DetailModalProps) => {
                   </div>
                   <div className="text-[var(--gray-2)] flex-1 break-words overflow-wrap-anywhere">
                     {Array.isArray(value) ? (
-                      value.join("、")
-                    ) : typeof value === "boolean" ? (
+                      value.join('、')
+                    ) : typeof value === 'boolean' ? (
                       value ? (
-                        "是"
+                        '是'
                       ) : (
-                        "否"
+                        '否'
                       )
-                    ) : typeof value === "object" && value !== null ? (
+                    ) : typeof value === 'object' && value !== null ? (
                       JSON.stringify(value, null, 2)
-                    ) : label === "連結" || label === "網站" ? (
+                    ) : label === '連結' || label === '網站' ? (
                       <a
                         href={String(value)}
                         target="_blank"
@@ -142,7 +139,7 @@ const DetailModal = ({ onClose, type, name, fullData }: DetailModalProps) => {
                         {String(value)}
                       </a>
                     ) : (
-                      String(value) || "未提供"
+                      String(value) || '未提供'
                     )}
                   </div>
                 </div>
@@ -167,7 +164,7 @@ const DetailModal = ({ onClose, type, name, fullData }: DetailModalProps) => {
         <ReportModal
           isOpen={isReportModalOpen}
           onClose={handleReportClose}
-          locationType={type || "定點"}
+          locationType={type || '定點'}
           locationName={name}
           locationId={fullData.id}
         />

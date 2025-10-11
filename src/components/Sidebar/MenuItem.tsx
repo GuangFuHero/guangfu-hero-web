@@ -1,26 +1,23 @@
-"use client";
-import Link from "next/link";
+'use client';
+import Link from 'next/link';
 
 interface MenuItemProps {
-  item: { 
-    name: string; 
-    href: string 
+  item: {
+    name: string;
+    href: string;
   };
   onClose: () => void;
 }
 
 const MenuItem = ({ item, onClose }: MenuItemProps) => {
-  const href = item.href || "";
-  const isAnchor = href.startsWith("#");
+  const href = item.href || '';
+  const isAnchor = href.startsWith('#');
   const isExternal = /^https?:\/\//i.test(href);
 
   if (isAnchor) {
     // 頁內錨點：不開新分頁
     return (
-      <a
-        href={href}
-        className="px-6 py-4 hover:bg-gray-700 border-b border-[#434343]"
-      >
+      <a href={href} className="px-6 py-4 hover:bg-gray-700 border-b border-[#434343]">
         {item.name}
       </a>
     );

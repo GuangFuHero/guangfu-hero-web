@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 interface CarouselIndicatorsProps {
   alerts: { text: string; actionable: boolean }[];
@@ -25,7 +25,7 @@ const CarouselIndicators = ({
             setIsPaused(true);
           }}
           className={`w-[6px] h-[6px] rounded-full transition-colors ${
-            index === currentSlide ? "bg-[var(--gray-2)]" : "bg-[var(--gray-3)]"
+            index === currentSlide ? 'bg-[var(--gray-2)]' : 'bg-[var(--gray-3)]'
           }`}
           aria-label={`跳到第 ${index + 1} 則警示：${alert.text}`}
           aria-current={index === currentSlide}

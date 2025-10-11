@@ -1,70 +1,101 @@
-"use client";
+'use client';
 
-import TeamGroup from "@/components/TeamGroup";
+import TeamGroup from '@/components/TeamGroup';
 
 export default function AboutUs() {
   const teamMembers = [
     {
       id: 1,
-      groupName: "網站更新組",
+      groupName: '網站更新組',
       personNames: [
-        "王璟恆",
-        "Zack",
-        "audery1011",
-        "施宇",
-        "強森",
-        "破破popo",
-        "WilliamTai",
-        "Abby Su",
-        "Yi",
-        "Stephanie Sung",
-        "IKEA",
-        "Randy",
-        "Sylvia Kuo",
-        "Jeanlu",
-        "ZhuMon",
-        "Ava Tu",
+        "王◯恆",
         "Sam",
+        "Zack",
         "JessZhong",
+        "audery1011",
         "Pink Li",
+        "施宇",
         "ppqq",
-        "Yukay",
-        "彭一珍",
-        "陳亭妏",
+        "強森",
+        "Yukay ",
+        "破破popo",
+        "彭◯珍",
+        "WilliamTai",
+        "陳◯妏",
+        "Abby Su",
         "Wenny Chang",
-        "謝靖雯",
+        "Yi",
+        "謝◯雯",
+        "Stephanie Sung",
         "Sucre Lin 林糖糖",
+        "IKEA",
         "jerry._.",
+        "Randy",
         "cy.hsu",
-        "陳雅柔",
+        "Sylvia Kuo",
+        "陳◯柔",
+        "JeanLu",
         "BensonTW",
+        "ZhuMon",
         "Arey",
+        "Ava Tu",
         "Mizhon",
+        "Pichu",
+        "haoyun, shih",
+        "蘇◯育",
+        "Glori",
+        "Lindsay",
+        "Meeka",
+        "Oswald",
+        "DanLin",
+        "Chi",
+        "Carol 朱◯綾",
+        "浩富",
       ],
     },
     {
       id: 2,
       groupName: "宣傳組",
-      personNames: ["于涵", "ヨウヨウ", "FANG JOU", "Sunny Yang"],
+      personNames: [
+        "于涵",
+        "Sunny Yang",
+        "捲捲 FANG JOU",
+        "小魏 WEI",
+        "ヨウヨウ",
+        "Julia(小孟)",
+        "阿一",
+      ],
     },
     {
       id: 3,
       groupName: "地圖組",
-      personNames: ["Zack", "張容瑜", "Zeli", "Fannie", "雅", "曾德容(鷹)"],
+      personNames: [
+        "Zack",
+        "Fannie",
+        "張◯瑜",
+        "雅",
+        "Zeli",
+        "曾◯容 (鷹)",
+        "Claire",
+        "ShunFa Yang",
+        "嵐",
+        "billy",
+      ]
     },
     {
       id: 4,
-      groupName: "設計組",
+      groupName: '設計組',
       personNames: [
         "Vita",
-        "葉彥均 Andy",
-        "Pichu",
-        "瑜瑜",
-        "渺渺",
         "Sunny Yang",
+        "葉◯均 Andy",
         "JessZhong",
+        "瑜瑜",
+        "Pichu",
         "Yuling",
+        "渺渺",
         "Sucre Lin 林糖糖",
+        "Doublewen",
       ],
     },
     {
@@ -72,31 +103,68 @@ export default function AboutUs() {
       groupName: "DC管理組",
       personNames: [
         "JessZhong",
-        "瑜瑜",
-        "Andrew Yen",
         "Sunny Yang",
+        "瑜瑜",
         "Tobie 偷偷",
+        "Andrew Yen",
+        "Chun Caroline",
       ],
     },
     {
       id: 6,
       groupName: "Line社群組 & 官方組",
-      personNames: ["于涵", "施宇(鯊魚)"],
+      personNames: [
+        "于涵",
+        "施宇 (鯊魚)",
+      ],
     },
     {
       id: 7,
       groupName: "廣宣組",
-      personNames: ["Sunny Yang", "Yukay", "Jocelyn", "Andrew Yen"],
+      personNames: [
+        "Sunny Yang",
+        "Jocelyn",
+        "Yukay",
+        "Andrew Yen",
+        "Julia (小孟)",
+      ],
     },
     {
       id: 8,
       groupName: "核實組",
-      personNames: ["出包", "雅"],
+      personNames: [
+        "雅",
+        "嵐",
+        "小路",
+      ],
     },
     {
       id: 9,
       groupName: "公關組",
-      personNames: ["捲捲 FANG JOU", "Andrew Yen"],
+      personNames: [
+        "捲捲 FANG JOU",
+        "Andrew Yen",
+      ],
+    },
+    {
+      id: 10,
+      groupName: "海巡組",
+      personNames: [
+        "Janet",
+        "嵐",
+        "小路",
+        "艾瑪",
+        "DanLin",
+        "出包",
+      ],
+    },
+    {
+      id: 11,
+      groupName: "進度管理組",
+      personNames: [
+        "Sucre Lin 林糖糖",
+        "Aylin",
+      ],
     },
   ];
 
@@ -116,11 +184,10 @@ export default function AboutUs() {
             這個平台的誕生，源自於一個簡單的信念：
             即使不在現場，我們仍能彼此連結，一起伸出手，讓力量匯聚成擁抱。
           </p>
+          <p className="mb-4">目前，我們已推出多項功能：</p>
           <p className="mb-4">
-            目前，我們已推出多項功能：
-          </p>
-          <p className="mb-4">
-            🧭 志工指引：為新手志工整理了行前資訊，包括報到方式、交通概況、裝備建議，以及可加入的團隊與在地社群。
+            🧭
+            志工指引：為新手志工整理了行前資訊，包括報到方式、交通概況、裝備建議，以及可加入的團隊與在地社群。
           </p>
           <p className="mb-4">
             🗺️ 志工地圖：整合災區的醫療站、物資站、廁所等地點，讓志工能更快熟悉現場環境。
@@ -129,7 +196,8 @@ export default function AboutUs() {
             💬 需求媒合頁面：居民可直接登錄需求，志工能即時查看並前往支援，讓協助更有效率。
           </p>
           <p className="mb-4">
-            🐝 小蜜蜂配給系統：由騎車志工組成的「小蜜蜂」團隊負責物資配送。居民填寫需求後，小蜜蜂即可前往物資站領取並親自送達。
+            🐝
+            小蜜蜂配給系統：由騎車志工組成的「小蜜蜂」團隊負責物資配送。居民填寫需求後，小蜜蜂即可前往物資站領取並親自送達。
           </p>
           <p className="mb-4">
             我們的團隊來自各地，日夜接力開發，只為讓資訊更即時、協作更順暢。
@@ -155,13 +223,17 @@ export default function AboutUs() {
         </div>
 
         <div className="space-y-[10px]">
-          {teamMembers.map((member) => (
+          {teamMembers.map(member => (
             <TeamGroup
               key={member.id}
               groupName={member.groupName}
               personNames={member.personNames}
             />
           ))}
+        </div>
+
+        <div className="text-[16px] leading-[20px] text-[var(--text-black)]">
+          以及其他所有不願具名卻也默默地和我們一起完成任務的志工朋友！
         </div>
       </section>
     </div>

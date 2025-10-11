@@ -101,7 +101,7 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
         map.flyTo(latlng, zoom || 15);
       },
       openPopup: (_: [number, number], dataId: string) => {
-        map.eachLayer((layer) => {
+        map.eachLayer(layer => {
           if (layer.options && layer.options?.dataId === dataId) {
             layer.openPopup();
           }
@@ -167,7 +167,7 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
           </Marker>
         )}
 
-        {accommodations.map((accommodation) => (
+        {accommodations.map(accommodation => (
           <AccommodationMarker
             key={accommodation.id}
             accommodation={accommodation}
@@ -175,7 +175,7 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
           />
         ))}
 
-        {waterStations.map((station) => (
+        {waterStations.map(station => (
           <WaterStationMarker
             key={station.id}
             station={station}
@@ -183,7 +183,7 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
           />
         ))}
 
-        {restrooms.map((restroom) => (
+        {restrooms.map(restroom => (
           <RestroomMarker
             key={restroom.id}
             restroom={restroom}
@@ -191,7 +191,7 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
           />
         ))}
 
-        {showerStations.map((shower) => (
+        {showerStations.map(shower => (
           <ShowerStationMarker
             key={shower.id}
             shower={shower}
@@ -199,7 +199,7 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
           />
         ))}
 
-        {medicalStations.map((medical) => (
+        {medicalStations.map(medical => (
           <MedicalStationMarker
             key={medical.id}
             medical={medical}
@@ -208,7 +208,7 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
         ))}
       </>
     );
-  },
+  }
 );
 
 ReactLeafletMapContent.displayName = 'ReactLeafletMapContent';
@@ -216,7 +216,7 @@ ReactLeafletMapContent.displayName = 'ReactLeafletMapContent';
 const ReactLeafletMap = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
   (
     { activeLayer, onSidebarClose, userPosition, isUserLocationVisible, isFullScreenMap = true },
-    ref,
+    ref
   ) => {
     const [mapReady, setMapReady] = useState(false);
 
@@ -256,7 +256,7 @@ const ReactLeafletMap = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
         )}
       </MapContainer>
     );
-  },
+  }
 );
 
 ReactLeafletMap.displayName = 'ReactLeafletMap';

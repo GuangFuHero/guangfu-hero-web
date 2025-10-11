@@ -73,7 +73,7 @@ export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: In
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
               >
                 導航
               </a>
@@ -104,7 +104,7 @@ export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: In
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
               >
                 導航
               </a>
@@ -135,7 +135,7 @@ export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: In
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
               >
                 導航
               </a>
@@ -174,7 +174,7 @@ export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: In
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
               >
                 導航
               </a>
@@ -207,7 +207,7 @@ export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: In
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium"
                 title="在 Google 地圖上查看"
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
               >
                 導航
               </a>
