@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 
 interface PrevButtonProps {
   setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,7 +10,7 @@ const PrevButton = ({ setIsPaused, prev }: PrevButtonProps) => {
   return (
     <button
       type="button"
-      onClick={(e) => {
+      onClick={e => {
         e.stopPropagation();
         setIsPaused(true);
         prev();

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface AccordionProps {
   title: string;
@@ -15,7 +15,7 @@ const Accordion: React.FC<AccordionProps> = ({
   children,
   icon,
   defaultOpen = false,
-  className = "",
+  className = '',
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -33,23 +33,16 @@ const Accordion: React.FC<AccordionProps> = ({
         </div>
         <svg
           className={`w-6 h-6 text-[var(--gray)] transition-transform flex-shrink-0 ${
-            isOpen ? "rotate-180" : ""
+            isOpen ? 'rotate-180' : ''
           }`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {isOpen && (
-        <div className="px-4 pb-4 pt-0 text-sm text-[var(--gray)]">{children}</div>
-      )}
+      {isOpen && <div className="px-4 pb-4 pt-0 text-sm text-[var(--gray)]">{children}</div>}
     </div>
   );
 };

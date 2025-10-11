@@ -25,7 +25,7 @@ export default function DropdownSelect({
 }: DropdownSelectProps) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const selectedLabel = options.find((opt) => opt.value === valueProp)?.label;
+  const selectedLabel = options.find(opt => opt.value === valueProp)?.label;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

@@ -59,7 +59,7 @@ function MapContainer({ isFullScreenMap = true }: { isFullScreenMap?: boolean })
   };
 
   const toggleSidebar = useCallback(() => {
-    setIsSidebarOpen((prev) => !prev);
+    setIsSidebarOpen(prev => !prev);
   }, [setIsSidebarOpen]);
 
   const handleSidebarClose = useCallback(() => {
