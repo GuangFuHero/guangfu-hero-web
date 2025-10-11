@@ -4,6 +4,7 @@ import { UserPosition } from '@/types/map';
 import { handleGoBack } from '@/utils/helpers';
 
 interface LocationPanelProps {
+  isFullScreenMap: boolean;
   geolocation: {
     userPosition: UserPosition | null;
     hasLocationPermission: boolean;
@@ -17,7 +18,11 @@ interface LocationPanelProps {
   onLocationToggle: () => void;
 }
 
-export default function LocationPanel({ geolocation, onLocationToggle }: LocationPanelProps) {
+export default function LocationPanel({
+  isFullScreenMap,
+  geolocation,
+  onLocationToggle,
+}: LocationPanelProps) {
   const handleLocationButtonPress = async () => {
     if (!geolocation.hasLocationPermission || !geolocation.userPosition) {
       onLocationToggle();
@@ -67,22 +72,24 @@ export default function LocationPanel({ geolocation, onLocationToggle }: Locatio
 
   return (
     <div className="location-panel">
-      <button className="go-back-btn" onClick={handleGoBack} title="返回">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
-      </button>
+      {isFullScreenMap ? (
+        <button className="go-back-btn" onClick={handleGoBack} title="返回">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+        </button>
+      ) : null}
 
       <button
         className={locationButtonClass}
@@ -112,18 +119,12 @@ export default function LocationPanel({ geolocation, onLocationToggle }: Locatio
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-          />
+          <circle cx="12" cy="12" r="9" strokeWidth="2" />
+          <circle cx="12" cy="12" r="3" strokeWidth="2" fill="currentColor" />
+          <line x1="12" y1="1" x2="12" y2="6" strokeWidth="2" strokeLinecap="round" />
+          <line x1="12" y1="18" x2="12" y2="23" strokeWidth="2" strokeLinecap="round" />
+          <line x1="1" y1="12" x2="6" y2="12" strokeWidth="2" strokeLinecap="round" />
+          <line x1="18" y1="12" x2="23" y2="12" strokeWidth="2" strokeLinecap="round" />
         </svg>
       </button>
     </div>

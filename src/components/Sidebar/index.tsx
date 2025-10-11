@@ -49,15 +49,16 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 backdrop-blur-sm z-40"
+          className="fixed inset-0 backdrop-blur-sm z-1050"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#3A3937] text-white z-50 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`z-1100 fixed top-0 left-0 h-full w-64 bg-[#3A3937] text-white transform transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <CloseButton onClose={onClose} />
         <nav className="flex flex-col">
