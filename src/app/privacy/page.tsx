@@ -1,4 +1,19 @@
 import Wrapper from "@/features/Wrapper";
+import { Metadata } from "next";
+import { env } from "@/config/env";
+
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "隱私權政策",
+    description: "說明個資蒐集目的、使用範圍與保護措施；災害之緊急公益情境下之目的外利用與告知原則。",
+    openGraph: {
+      title: "隱私權政策",
+      description: "說明個資蒐集目的、使用範圍與保護措施；災害之緊急公益情境下之目的外利用與告知原則。",
+      url: `${env.NEXT_PUBLIC_BASE_URL}/privacy`,
+      type: "website",
+    },
+  };
+};
 
 export default function PrivacyPage() {
   return (

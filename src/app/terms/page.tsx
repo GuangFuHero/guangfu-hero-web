@@ -1,4 +1,19 @@
 import Wrapper from "@/features/Wrapper";
+import { Metadata } from "next";
+import { env } from "@/config/env";
+
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "服務條款",
+    description: "本平台為民間自發性非營利之救災資訊整合與媒合服務，使用前請詳閱平台性質、責任限制與使用規範。",
+    openGraph: {
+      title: "服務條款",
+      description: "本平台為民間自發性非營利之救災資訊整合與媒合服務，使用前請詳閱平台性質、責任限制與使用規範。",
+      url: `${env.NEXT_PUBLIC_BASE_URL}/terms`,
+      type: "website",
+    },
+  };
+};
 
 export default function TermsPage() {
   return (
