@@ -33,6 +33,8 @@ const SIDEBAR_ITEM = [
   { name: "關於我們", href: "/volunteer/about-us" },
   { name: "隱私權政策", href: "/privacy" },
   { name: "服務條款", href: "/terms" },
+  { name: "網站回報問題", href: "https://docs.google.com/forms/d/1Ky8O4LHk8uXUZKIYs2JZWHxzQty-7KwNyysNj41XO_M/edit" },
+  { name: "物資媒合/志工媒合回報", href: "https://docs.google.com/forms/d/17VyOi9B43ouZ3_s5MdS1fs80fVR-lNvsV7Q4eG-2o68/viewform?edit_requested=true" },
 ];
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
@@ -54,9 +56,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#3A3937] text-white z-50 transform transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 h-full w-64 bg-[#3A3937] text-white z-50 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <CloseButton onClose={onClose} />
         <nav className="flex flex-col">
