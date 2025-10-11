@@ -290,6 +290,11 @@ export default function SiteMap() {
           </div>
         )}
       </div>
+      {showMode === 'listShow' && (
+        <div className="mb-4 text-base">
+          本頁僅供參考，建議通話確認，並以店家實際回覆為準
+        </div>
+      )}
       <div>
         {showMode === 'mapShow' && <MapContainer isFullScreenMap={false} />}
 
