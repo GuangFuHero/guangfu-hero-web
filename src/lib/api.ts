@@ -17,12 +17,15 @@ import {
 } from "./types";
 
 const API_BASE_URL = "https://guangfu250923.pttapp.cc";
+const isProd = process.env.NODE_ENV === "production";
 
 export async function fetchAPI<T>(
   endpoint: string,
   params?: Record<string, string | number>
 ): Promise<T> {
-  const url = new URL(`${API_BASE_URL}${endpoint}`);
+  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const path = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  const url = new URL(`${base}${path}`);
 
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
@@ -131,7 +134,8 @@ export async function getMentalHealthResources(
 export async function submitReport(
   data: ReportRequest
 ): Promise<ReportResponse> {
-  const response = await fetch(`${API_BASE_URL}/reports`, {
+  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const response = await fetch(`${base}/reports`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -173,13 +177,16 @@ export async function submitSupplyProvider(
   data: ReportSupplyProvider,
   lineIdToken: string
 ): Promise<ReportSupplyProviderResponse> {
-  if (!lineIdToken) { throw new Error("登入資訊有問題，請重新登入"); }
+  if (!lineIdToken) {
+    throw new Error("登入資訊有問題，請重新登入");
+  }
 
-  const response = await fetch(`${API_BASE_URL}/supply_providers`, {
+  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const response = await fetch(`${base}/supply_providers`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${lineIdToken}`,
+      Authorization: `Bearer ${lineIdToken}`,
       Accept: "application/json",
     },
     body: JSON.stringify(data),
