@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -35,6 +37,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "husky": "^9.1.7",
+    "lint-staged": "^16.2.4",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5"
