@@ -300,7 +300,7 @@ export default function VolunteerInfo({
                       <br /><br />
                       或<br />
                       <a
-                        href="https://sites.google.com/view/guangfu250923/%E6%88%91%E6%98%AF%E5%BF%97%E5%B7%A5/transport?authuser=0"
+                        href="https://gobus.moushih.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[var(--secondary)] underline ml-1"
