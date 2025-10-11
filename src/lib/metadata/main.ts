@@ -1,12 +1,13 @@
-import { Metadata } from "next";
-import { env } from "@/config/env";
+import { Metadata } from 'next';
+import { env } from '@/config/env';
 
 export async function generateSiteMetadata(): Promise<Metadata> {
-  const metaTitleDefault = "光復超人";
-  const metaTitleTemplate = "光復超人 - %s";
-  const metaSiteName = "光復超人";
-  const metaDescription = "光復超人｜2025 花蓮光復水災資訊整合平台，提供災民支援、物資媒合、志工招募、蜜蜂接送與救災協作服務。";
-  const metaAppleMobileWebAppTitle = "光復超人";
+  const metaTitleDefault = '光復超人';
+  const metaTitleTemplate = '光復超人 - %s';
+  const metaSiteName = '光復超人';
+  const metaDescription =
+    '光復超人｜2025 花蓮光復水災資訊整合平台，提供災民支援、物資媒合、志工招募、蜜蜂接送與救災協作服務。';
+  const metaAppleMobileWebAppTitle = '光復超人';
 
   const currentUrl = env.NEXT_PUBLIC_BASE_URL;
 
@@ -25,7 +26,7 @@ export async function generateSiteMetadata(): Promise<Metadata> {
       title: metaTitleDefault,
       description: metaDescription,
       url: currentUrl,
-      type: "website",
+      type: 'website',
     },
     alternates: {
       canonical: currentUrl,
@@ -33,7 +34,7 @@ export async function generateSiteMetadata(): Promise<Metadata> {
     appleWebApp: {
       title: metaAppleMobileWebAppTitle,
       capable: true,
-      statusBarStyle: "default",
+      statusBarStyle: 'default',
     },
   };
 }

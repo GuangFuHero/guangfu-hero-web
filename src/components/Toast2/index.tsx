@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 interface Toast2Props {
   isVisible: boolean;
@@ -8,21 +8,17 @@ interface Toast2Props {
   duration?: number;
 }
 
-export default function Toast2({
-  isVisible,
-  onClose,
-  duration = 3000,
-}: Toast2Props) {
+export default function Toast2({ isVisible, onClose, duration = 3000 }: Toast2Props) {
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     if (isVisible) {
       setIsClosing(false);
-      
+
       // 自動關閉
       const timer = setTimeout(() => {
         setIsClosing(true);
-        
+
         setTimeout(() => {
           onClose();
         }, 300); // 淡出動畫 0.3 秒
@@ -35,7 +31,7 @@ export default function Toast2({
   if (!isVisible && !isClosing) return null;
 
   return (
-    <div 
+    <div
       className={`fixed left-1/2 top-[40%] -translate-x-1/2 -translate-y-1/2 z-50 ${
         isClosing ? 'animate-fade-out' : 'animate-fade-in'
       }`}

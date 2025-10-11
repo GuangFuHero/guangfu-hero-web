@@ -1,6 +1,6 @@
-import React from "react";
-import Image from "next/image";
-import { getAssetPath } from "@/lib/utils";
+import React from 'react';
+import Image from 'next/image';
+import { getAssetPath } from '@/lib/utils';
 
 interface ActionButtonProps {
   children: React.ReactNode;
@@ -8,27 +8,27 @@ interface ActionButtonProps {
   href?: string;
   className?: string;
   icon?: string;
-  iconPosition?: "left" | "right";
-  variant?: "primary" | "secondary";
+  iconPosition?: 'left' | 'right';
+  variant?: 'primary' | 'secondary';
 }
 
 const ActionButton: React.FC<ActionButtonProps> = ({
   children,
   onClick,
   href,
-  className = "",
-  icon = "/nav.svg",
-  iconPosition = "right",
-  variant = "primary",
+  className = '',
+  icon = '/nav.svg',
+  iconPosition = 'right',
+  variant = 'primary',
 }) => {
   const buttonClasses = `
     h-[36px] py-2 px-3
     min-w-[80px]
     text-sm
     ${
-      variant === "primary"
-        ? "bg-[var(--secondary)] text-white hover:bg-[var(--secondary-hover)]"
-        : "bg-[var(--secondary-light)] text-[var(--secondary)]"
+      variant === 'primary'
+        ? 'bg-[var(--secondary)] text-white hover:bg-[var(--secondary-hover)]'
+        : 'bg-[var(--secondary-light)] text-[var(--secondary)]'
     }
     rounded-lg
     cursor-pointer
@@ -44,12 +44,12 @@ const ActionButton: React.FC<ActionButtonProps> = ({
       alt=""
       width={20}
       height={20}
-      className={variant === "primary" ? "invert" : ""}
+      className={variant === 'primary' ? 'invert' : ''}
       style={
-        variant === "secondary"
+        variant === 'secondary'
           ? {
               filter:
-                "invert(54%) sepia(89%) saturate(447%) hue-rotate(153deg) brightness(94%) contrast(91%)",
+                'invert(54%) sepia(89%) saturate(447%) hue-rotate(153deg) brightness(94%) contrast(91%)',
             }
           : undefined
       }
@@ -58,20 +58,15 @@ const ActionButton: React.FC<ActionButtonProps> = ({
 
   const content = (
     <>
-      {iconPosition === "left" && iconElement}
+      {iconPosition === 'left' && iconElement}
       {children}
-      {iconPosition === "right" && iconElement}
+      {iconPosition === 'right' && iconElement}
     </>
   );
 
   if (href) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={buttonClasses}
-      >
+      <a href={href} target="_blank" rel="noopener noreferrer" className={buttonClasses}>
         {content}
       </a>
     );

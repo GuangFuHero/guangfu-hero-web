@@ -79,13 +79,13 @@ const getMapUrl = (station: {
 }) => {
   if (station.coordinates) {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      `${station.coordinates.lat},${station.coordinates.lng}`,
+      `${station.coordinates.lat},${station.coordinates.lng}`
     )}`;
   }
 
   if (station.location)
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      station.location,
+      station.location
     )}`;
 
   return undefined;
@@ -125,7 +125,7 @@ export default function SiteMap() {
       setError(null);
       const response = await getWaterRefillStations(50, 0);
       const filteredStations = response.member.filter(
-        (station) => !!station.coordinates || !!station.location,
+        station => !!station.coordinates || !!station.location
       );
       setWaterRefillStations(filteredStations);
     } catch (err) {
@@ -141,7 +141,7 @@ export default function SiteMap() {
       setError(null);
       const response = await getShowerStations(50, 0);
       const filteredStations = response.member.filter(
-        (station) => !!station.coordinates || !!station.location,
+        station => !!station.coordinates || !!station.location
       );
       setShowerStations(filteredStations);
     } catch (err) {
@@ -157,7 +157,7 @@ export default function SiteMap() {
       setError(null);
       const response = await getRestrooms(50, 0);
       const filteredStations = response.member.filter(
-        (station) => !!station.coordinates || !!station.location,
+        station => !!station.coordinates || !!station.location
       );
       setRestRooms(filteredStations);
     } catch (err) {
@@ -173,7 +173,7 @@ export default function SiteMap() {
       setError(null);
       const response = await getMedicalStations(50, 0);
       const filteredStations = response.member.filter(
-        (station) => !!station.coordinates || !!station.location,
+        station => !!station.coordinates || !!station.location
       );
       setMedicalStations(filteredStations);
     } catch (err) {
@@ -189,7 +189,7 @@ export default function SiteMap() {
       setError(null);
       const response = await getAccommodations(50, 0);
       const filteredStations = response.member.filter(
-        (station) => !!station.coordinates || !!station.location,
+        station => !!station.coordinates || !!station.location
       );
       setAccommodations(filteredStations);
     } catch (err) {
@@ -230,7 +230,7 @@ export default function SiteMap() {
         ...responseAccommodations.member,
       ];
       const filteredStations = combined.filter(
-        (station) => !!station.coordinates || !!station.location,
+        station => !!station.coordinates || !!station.location
       );
       filteredStations.sort((a, b) => a.created_at - b.created_at);
       setAllData(filteredStations);
@@ -304,7 +304,7 @@ export default function SiteMap() {
                 {allData.length === 0 ? (
                   <div className="text-center py-8 text-[var(--gray)]">此分類暫無資料</div>
                 ) : (
-                  allData.map((station) => (
+                  allData.map(station => (
                     <InfoCard
                       key={station.id}
                       name={station.name}
@@ -324,7 +324,7 @@ export default function SiteMap() {
                 {waterRefillStations.length === 0 ? (
                   <div className="text-center py-8 text-[var(--gray)]">此分類暫無資料</div>
                 ) : (
-                  waterRefillStations.map((station) => (
+                  waterRefillStations.map(station => (
                     <InfoCard
                       key={station.id}
                       name={station.name}
@@ -345,7 +345,7 @@ export default function SiteMap() {
                 {showerStations.length === 0 ? (
                   <div className="text-center py-8 text-[var(--gray)]">此分類暫無資料</div>
                 ) : (
-                  showerStations.map((station) => (
+                  showerStations.map(station => (
                     <InfoCard
                       key={station.id}
                       type={station.facility_type}
@@ -366,7 +366,7 @@ export default function SiteMap() {
                 {restRooms.length === 0 ? (
                   <div className="text-center py-8 text-[var(--gray)]">此分類暫無資料</div>
                 ) : (
-                  restRooms.map((station) => (
+                  restRooms.map(station => (
                     <InfoCard
                       key={station.id}
                       type={station.facility_type}
@@ -387,7 +387,7 @@ export default function SiteMap() {
                 {medicalStations.length === 0 ? (
                   <div className="text-center py-8 text-[var(--gray)]">此分類暫無資料</div>
                 ) : (
-                  medicalStations.map((station) => (
+                  medicalStations.map(station => (
                     <InfoCard
                       key={station.id}
                       type={station.station_type}
@@ -408,7 +408,7 @@ export default function SiteMap() {
                 {accommodations.length === 0 ? (
                   <div className="text-center py-8 text-[var(--gray)]">此分類暫無資料</div>
                 ) : (
-                  accommodations.map((station) => (
+                  accommodations.map(station => (
                     <InfoCard
                       key={station.id}
                       name={station.name}

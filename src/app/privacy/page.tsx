@@ -1,16 +1,18 @@
-import Wrapper from "@/features/Wrapper";
-import { Metadata } from "next";
-import { env } from "@/config/env";
+import Wrapper from '@/features/Wrapper';
+import { Metadata } from 'next';
+import { env } from '@/config/env';
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: "隱私權政策",
-    description: "說明個資蒐集目的、使用範圍與保護措施；災害之緊急公益情境下之目的外利用與告知原則。",
+    title: '隱私權政策',
+    description:
+      '說明個資蒐集目的、使用範圍與保護措施；災害之緊急公益情境下之目的外利用與告知原則。',
     openGraph: {
-      title: "隱私權政策",
-      description: "說明個資蒐集目的、使用範圍與保護措施；災害之緊急公益情境下之目的外利用與告知原則。",
+      title: '隱私權政策',
+      description:
+        '說明個資蒐集目的、使用範圍與保護措施；災害之緊急公益情境下之目的外利用與告知原則。',
       url: `${env.NEXT_PUBLIC_BASE_URL}/privacy`,
-      type: "website",
+      type: 'website',
     },
   };
 };
@@ -23,9 +25,7 @@ export default function PrivacyPage() {
 
         <div className="space-y-6 text-[var(--gray)]">
           <section>
-            <p className="mb-4">
-              適用網站:光復救災資訊整合及本團隊所架設之平台(下稱「本網站」)
-            </p>
+            <p className="mb-4">適用網站:光復救災資訊整合及本團隊所架設之平台(下稱「本網站」)</p>
           </section>
 
           <section>
@@ -34,9 +34,7 @@ export default function PrivacyPage() {
               <li>
                 光復救災資訊整合網(下稱本網站、「我們」)重視您的隱私權保護。本隱私權政策(下稱「本政策」)說明本平台如何蒐集、處理、利用及保護您的個人資料。
               </li>
-              <li>
-                本隱私權政策適用於您使用本網站所有服務時,本網站所蒐集、處理及利用的個人資料。
-              </li>
+              <li>本隱私權政策適用於您使用本網站所有服務時,本網站所蒐集、處理及利用的個人資料。</li>
               <li>
                 不適用於經由本網站連結之其他網站,該等網站之隱私權保護,請參閱各該網站之隱私權政策。
               </li>
@@ -64,9 +62,7 @@ export default function PrivacyPage() {
                 統計救災資訊、分析服務使用情形,以優化平台功能
               </li>
               <li>
-                <strong>
-                  181 / 其他經營合於營業登記項目或組織章程所定之業務:
-                </strong>
+                <strong>181 / 其他經營合於營業登記項目或組織章程所定之業務:</strong>
                 與本網站救災資訊整合相關之其他必要業務
               </li>
             </ul>
@@ -77,9 +73,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold mb-3">
-              本網站可能蒐集的個人資料類別
-            </h2>
+            <h2 className="text-xl font-bold mb-3">本網站可能蒐集的個人資料類別</h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>
                 <strong>識別類(C001):</strong>
@@ -122,9 +116,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold mb-3">
-              利用之期間、地區、對象及方式
-            </h2>
+            <h2 className="text-xl font-bold mb-3">利用之期間、地區、對象及方式</h2>
 
             <h3 className="text-lg font-bold mt-4 mb-2">利用期間</h3>
             <ul className="list-disc pl-6 space-y-2">
@@ -153,9 +145,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold mb-3">不提供個人資料之影響</h2>
-            <p className="mb-3">
-              若您選擇不提供個人資料或提供不完整資料,可能產生下列影響:
-            </p>
+            <p className="mb-3">若您選擇不提供個人資料或提供不完整資料,可能產生下列影響:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>無法完成志工報名:無法聯繫您進行志工調度與安排</li>
               <li>無法進行物資媒合:無法確認您的聯絡方式與物資詳情</li>
@@ -190,9 +180,7 @@ export default function PrivacyPage() {
               <li>分析網站流量與使用情形</li>
               <li>優化網站功能</li>
             </ul>
-            <p className="mt-3 mb-3">
-              您可以透過瀏覽器設定拒絕Cookie,但可能影響部分網站功能
-            </p>
+            <p className="mt-3 mb-3">您可以透過瀏覽器設定拒絕Cookie,但可能影響部分網站功能</p>
 
             <h3 className="text-lg font-bold mt-4 mb-2">自動蒐集資訊</h3>
             <p className="mb-2">本網站伺服器會自動記錄您的:</p>

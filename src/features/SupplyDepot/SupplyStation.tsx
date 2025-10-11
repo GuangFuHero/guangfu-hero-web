@@ -1,16 +1,14 @@
-"use client";
-import React from "react";
-import { Card, TextField, Typography, Stack } from "@mui/material";
-import { useFormContext } from "react-hook-form";
-import { ProviderInfo } from "@/lib/supplyLocalStorage";
+'use client';
+import React from 'react';
+import { Card, TextField, Typography, Stack } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
+import { ProviderInfo } from '@/lib/supplyLocalStorage';
 
 interface SupplyStationProps {
-  previousInfo?: ProviderInfo
+  previousInfo?: ProviderInfo;
 }
 
-const SupplyStation = ({
-  previousInfo
-}: SupplyStationProps) => {
+const SupplyStation = ({ previousInfo }: SupplyStationProps) => {
   const {
     register,
     setValue,
@@ -20,7 +18,6 @@ const SupplyStation = ({
   return (
     <section aria-labelledby="station-info" className="space-y-6">
       <Card variant="outlined" sx={{ p: 2 }}>
-
         <Typography variant="subtitle1" sx={{ mb: 1 }}>
           物資站資訊
         </Typography>
@@ -30,10 +27,10 @@ const SupplyStation = ({
           type="button"
           onClick={() => {
             if (previousInfo) {
-              setValue("name", previousInfo.name);
-              setValue("phone", previousInfo.phone);
-              setValue("address", previousInfo.address);
-              setValue("notes", previousInfo.notes);
+              setValue('name', previousInfo.name);
+              setValue('phone', previousInfo.phone);
+              setValue('address', previousInfo.address);
+              setValue('notes', previousInfo.notes);
             }
           }}
         >
@@ -43,10 +40,10 @@ const SupplyStation = ({
           className="mb-8 mr-4 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-black shadow-sm hover:bg-gray-100 active:scale-[0.99]"
           type="button"
           onClick={() => {
-            setValue("name", "");
-            setValue("phone", "");
-            setValue("address", "");
-            setValue("notes", "");
+            setValue('name', '');
+            setValue('phone', '');
+            setValue('address', '');
+            setValue('notes', '');
           }}
         >
           清除物資站資料
@@ -61,8 +58,8 @@ const SupplyStation = ({
             margin="dense"
             slotProps={{ inputLabel: { shrink: true } }}
             required
-            {...register("name", {
-              required: "請輸入物資站名稱",
+            {...register('name', {
+              required: '請輸入物資站名稱',
             })}
             error={!!errors.name}
             helperText={errors.name?.message as string}
@@ -75,8 +72,8 @@ const SupplyStation = ({
             margin="dense"
             slotProps={{ inputLabel: { shrink: true } }}
             required
-            {...register("phone", {
-              required: "請輸入電話號碼",
+            {...register('phone', {
+              required: '請輸入電話號碼',
             })}
             error={!!errors.phone}
             helperText={errors.phone?.message as string}
@@ -89,8 +86,8 @@ const SupplyStation = ({
             margin="dense"
             slotProps={{ inputLabel: { shrink: true } }}
             required
-            {...register("address", {
-              required: "請輸入地址",
+            {...register('address', {
+              required: '請輸入地址',
             })}
             error={!!errors.address}
             helperText={errors.address?.message as string}
@@ -104,7 +101,7 @@ const SupplyStation = ({
             multiline
             rows={2}
             slotProps={{ inputLabel: { shrink: true } }}
-            {...register("notes")}
+            {...register('notes')}
           />
         </Stack>
       </Card>

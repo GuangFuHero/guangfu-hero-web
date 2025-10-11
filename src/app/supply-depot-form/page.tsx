@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import DropdownSelect from "@/components/DropdownSelect";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import DropdownSelect from '@/components/DropdownSelect';
 
 /** ---------------- 基本設定 ---------------- */
 const PAGE_SIZE = 50;
-const API_BASE = "https://guangfu250923.pttapp.cc/supplies?embed=all";
+const API_BASE = 'https://guangfu250923.pttapp.cc/supplies?embed=all';
 
 type NeedItem = {
   // 對應 supply_item_id（要送給後端）
@@ -38,16 +38,15 @@ type SupplyRow = {
   tag?: string;
 };
 
-const isRecord = (v: unknown): v is Record<string, unknown> =>
-  v !== null && typeof v === "object";
+const isRecord = (v: unknown): v is Record<string, unknown> => v !== null && typeof v === 'object';
 
 const asString = (v: unknown): string | undefined =>
-  typeof v === "string" ? v : typeof v === "number" ? String(v) : undefined;
+  typeof v === 'string' ? v : typeof v === 'number' ? String(v) : undefined;
 
 function buildListUrl(offset: number) {
   const u = new URL(API_BASE);
-  u.searchParams.set("limit", String(PAGE_SIZE));
-  u.searchParams.set("offset", String(offset));
+  u.searchParams.set('limit', String(PAGE_SIZE));
+  u.searchParams.set('offset', String(offset));
   return u.toString();
 }
 
@@ -63,7 +62,7 @@ type HydraCollection = {
 
 function parseHydraToNeeds(payload: unknown): {
   needs: Need[];
-  page: Required<Pick<HydraCollection, "limit" | "offset" | "totalItems">> & {
+  page: Required<Pick<HydraCollection, 'limit' | 'offset' | 'totalItems'>> & {
     next: string | null;
     previous: string | null;
   };
@@ -83,17 +82,16 @@ function parseHydraToNeeds(payload: unknown): {
   const col = payload as HydraCollection;
 
   const rows = Array.isArray(col.member) ? col.member : [];
-  const limit = typeof col.limit === "number" ? col.limit : PAGE_SIZE;
-  const offset = typeof col.offset === "number" ? col.offset : 0;
-  const totalItems =
-    typeof col.totalItems === "number" ? col.totalItems : rows.length;
-  const next = typeof col.next === "string" ? col.next : null;
-  const previous = typeof col.previous === "string" ? col.previous : null;
+  const limit = typeof col.limit === 'number' ? col.limit : PAGE_SIZE;
+  const offset = typeof col.offset === 'number' ? col.offset : 0;
+  const totalItems = typeof col.totalItems === 'number' ? col.totalItems : rows.length;
+  const next = typeof col.next === 'string' ? col.next : null;
+  const previous = typeof col.previous === 'string' ? col.previous : null;
 
   const needs: Need[] = rows
     .filter(
       // 只保留尚缺物資的需求單
-      (rowU) =>
+      rowU =>
         isRecord(rowU) &&
         Array.isArray(rowU.supplies) &&
         rowU.supplies.length > 0 &&
@@ -104,25 +102,25 @@ function parseHydraToNeeds(payload: unknown): {
         return {
           id: String(idx),
           title: `需求 ${idx}`,
-          desc: "",
+          desc: '',
           items: [],
           tags: [],
-          createdAt: "",
-          organizationKey: "",
+          createdAt: '',
+          organizationKey: '',
         };
       }
       const row = rowU as Record<string, unknown>;
 
-      const id = asString(row["id"]) ?? String(idx);
-      const name = asString(row["name"]) ?? `需求 ${id}`;
-      const address = asString(row["address"]) ?? "";
-      const phone = asString(row["phone"]) ?? "";
-      const notes = asString(row["notes"]) ?? "";
-      const createdAt = asString(row["created_at"]) ?? "";
+      const id = asString(row['id']) ?? String(idx);
+      const name = asString(row['name']) ?? `需求 ${id}`;
+      const address = asString(row['address']) ?? '';
+      const phone = asString(row['phone']) ?? '';
+      const notes = asString(row['notes']) ?? '';
+      const createdAt = asString(row['created_at']) ?? '';
 
       // supplies -> items + tags（僅顯示）
-      const suppliesArr = Array.isArray(row["supplies"])
-        ? (row["supplies"] as {
+      const suppliesArr = Array.isArray(row['supplies'])
+        ? (row['supplies'] as {
             id: string;
             name: string;
             supply_id: string; // 物資單 ID
@@ -132,10 +130,10 @@ function parseHydraToNeeds(payload: unknown): {
           }[])
         : [];
 
-      const items: NeedItem[] = suppliesArr.filter(isRecord).map((it) => {
-        const itemName = asString(it["name"]) ?? "未命名";
-        const total = (it["total_count"] as number) ?? 0;
-        const unit = asString(it["unit"]) ?? "";
+      const items: NeedItem[] = suppliesArr.filter(isRecord).map(it => {
+        const itemName = asString(it['name']) ?? '未命名';
+        const total = (it['total_count'] as number) ?? 0;
+        const unit = asString(it['unit']) ?? '';
 
         return {
           id: it.id,
@@ -149,16 +147,14 @@ function parseHydraToNeeds(payload: unknown): {
         new Set(
           suppliesArr
             .filter(isRecord)
-            .map((it) => asString(it["tag"]) || "")
+            .map(it => asString(it['tag']) || '')
             .filter(Boolean) as string[]
         )
       );
 
       // desc 多行（NeedCard 用 whitespace-pre-line 顯示）
-      const descLines = [address, phone && `連絡電話：${phone}`, notes].filter(
-        Boolean
-      );
-      const desc = descLines.join("\n");
+      const descLines = [address, phone && `連絡電話：${phone}`, notes].filter(Boolean);
+      const desc = descLines.join('\n');
 
       // 單位 key（用於合併需求單：將同個單位的多張單，合併成一張需求單）
       const organizationKey = `${name}|${address}|${phone}`;
@@ -172,9 +168,9 @@ function parseHydraToNeeds(payload: unknown): {
    */
   const mergeRequestsByOrganization = (list: Need[]) => {
     const mergedMap = new Map();
-    list.forEach((req) => {
+    list.forEach(req => {
       const key = req.organizationKey;
-      const itemsWithSupplyId = req.items.map((item) => ({
+      const itemsWithSupplyId = req.items.map(item => ({
         ...item,
         supplyId: req.id,
       }));
@@ -205,13 +201,10 @@ function parseHydraToNeeds(payload: unknown): {
 /** ---------------- Helpers ---------------- */
 function cryptoRandomId() {
   if (
-    typeof globalThis !== "undefined" &&
-    typeof (globalThis as { crypto?: Crypto }).crypto?.getRandomValues ===
-      "function"
+    typeof globalThis !== 'undefined' &&
+    typeof (globalThis as { crypto?: Crypto }).crypto?.getRandomValues === 'function'
   ) {
-    const n = (globalThis as { crypto?: Crypto }).crypto!.getRandomValues(
-      new Uint32Array(1)
-    )[0];
+    const n = (globalThis as { crypto?: Crypto }).crypto!.getRandomValues(new Uint32Array(1))[0];
     return (n >>> 0).toString(36);
   }
   return Math.random().toString(36).slice(2);
@@ -231,36 +224,36 @@ async function handleSubmitStationOnly(
   onOk?: () => void
 ) {
   if (!needId) {
-    alert("請先在左側選擇一筆需求");
+    alert('請先在左側選擇一筆需求');
     return;
   }
 
   const { station, supplies } = data;
 
   if (!station.name?.trim() || !station.address?.trim()) {
-    alert("請填寫物資站「名稱」、「地址」");
+    alert('請填寫物資站「名稱」、「地址」');
     return;
   }
   if (!station.phone?.trim()) {
-    alert("請填寫物資站「電話」");
+    alert('請填寫物資站「電話」');
     return;
   }
 
   if (supplies.length === 0) {
-    alert("請至少新增一筆可提供的物資");
+    alert('請至少新增一筆可提供的物資');
     return;
   }
 
-  if (supplies.some((s) => !s.id || s.count <= 0)) {
-    alert("請確認每筆物資的名稱、數量皆已填寫");
+  if (supplies.some(s => !s.id || s.count <= 0)) {
+    alert('請確認每筆物資的名稱、數量皆已填寫');
     return;
   }
 
-  const payloadList = supplies.map((supplyItem) => ({
+  const payloadList = supplies.map(supplyItem => ({
     name: station.name.trim(),
     address: station.address.trim(),
-    phone: (station.phone || "").trim(),
-    notes: (station.notes || "").trim(),
+    phone: (station.phone || '').trim(),
+    notes: (station.notes || '').trim(),
     supply_item_id: supplyItem.id,
     provide_unit: supplyItem.unit,
     provide_count: supplyItem.count,
@@ -270,35 +263,30 @@ async function handleSubmitStationOnly(
   try {
     // 因應 API 設計，每一筆物資需要各自打一次 API
     await Promise.all(
-      payloadList.map(async (payload) => {
-        const res = await fetch(
-          `https://guangfu250923.pttapp.cc/supply_providers`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            // 若改為 Cookie 驗證，需加 credentials: "include" 並請後端正確設定 CORS
-            body: JSON.stringify({
-              ...payload,
-            }),
-          }
-        );
+      payloadList.map(async payload => {
+        const res = await fetch(`https://guangfu250923.pttapp.cc/supply_providers`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          // 若改為 Cookie 驗證，需加 credentials: "include" 並請後端正確設定 CORS
+          body: JSON.stringify({
+            ...payload,
+          }),
+        });
 
         if (!res.ok) {
           const text = await res.text();
-          throw new Error(
-            `POST 失敗：${res.status} ${res.statusText}\n${text}`
-          );
+          throw new Error(`POST 失敗：${res.status} ${res.statusText}\n${text}`);
         }
       })
     );
 
-    alert("已更新物資站資訊！");
+    alert('已更新物資站資訊！');
     onOk?.();
   } catch (e) {
-    alert((e instanceof Error && e?.message) || "送出失敗");
+    alert((e instanceof Error && e?.message) || '送出失敗');
   }
 }
 
@@ -311,20 +299,20 @@ export default function ReliefFormPage() {
   const [authed, setAuthed] = useState(false);
 
   // 物資站基本資訊（受控）
-  const [stationName, setStationName] = useState("");
-  const [stationPhone, setStationPhone] = useState("");
-  const [stationAddress, setStationAddress] = useState("");
-  const [stationNotes, setStationNotes] = useState("");
+  const [stationName, setStationName] = useState('');
+  const [stationPhone, setStationPhone] = useState('');
+  const [stationAddress, setStationAddress] = useState('');
+  const [stationNotes, setStationNotes] = useState('');
 
   // 右側「可提供的物資」動態列表
   const [supplies, setSupplies] = useState<SupplyRow[]>([
     {
       id: cryptoRandomId(),
-      name: "",
-      qty: "",
-      unit: "",
-      tag: "",
-      supplyItemId: "",
+      name: '',
+      qty: '',
+      unit: '',
+      tag: '',
+      supplyItemId: '',
     },
   ]);
 
@@ -339,16 +327,14 @@ export default function ReliefFormPage() {
   // 選取中的需求 id（PATCH 用）
   const [selectedNeedId, setSelectedNeedId] = useState<string | null>(null);
   // 選取中的需求單，底下所有需要的物資選項
-  const [selectedNeedSupplyOptions, setSelectedNeedSupplyOptions] = useState<
-    NeedItem[]
-  >([]);
+  const [selectedNeedSupplyOptions, setSelectedNeedSupplyOptions] = useState<NeedItem[]>([]);
 
   const pageIndex = useMemo(() => Math.floor(offset / PAGE_SIZE) + 1, [offset]);
 
   // 登入檢查
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const flag = !!localStorage.getItem("line_oauth_state");
+    if (typeof window === 'undefined') return;
+    const flag = !!localStorage.getItem('line_oauth_state');
     setAuthed(flag);
     setAuthChecked(true);
   }, []);
@@ -366,13 +352,12 @@ export default function ReliefFormPage() {
       setErrMsg(null);
       try {
         const res = await fetch(buildListUrl(offset), {
-          method: "GET",
-          cache: "no-store",
+          method: 'GET',
+          cache: 'no-store',
           signal: ac.signal,
-          headers: { Accept: "application/json" },
+          headers: { Accept: 'application/json' },
         });
-        if (!res.ok)
-          throw new Error(`API 錯誤：${res.status} ${res.statusText}`);
+        if (!res.ok) throw new Error(`API 錯誤：${res.status} ${res.statusText}`);
 
         const json: unknown = await res.json();
         const { needs: normalized, page } = parseHydraToNeeds(json);
@@ -380,19 +365,15 @@ export default function ReliefFormPage() {
         setNeeds(normalized);
 
         const more =
-          (page.next && page.next.length > 0) ||
-          page.offset + page.limit < page.totalItems;
+          (page.next && page.next.length > 0) || page.offset + page.limit < page.totalItems;
         setHasNext(more);
 
-        if (
-          selectedNeedId &&
-          !normalized.some((n) => n.id === selectedNeedId)
-        ) {
+        if (selectedNeedId && !normalized.some(n => n.id === selectedNeedId)) {
           setSelectedNeedId(null);
         }
       } catch (err) {
-        if ((err as { name?: string })?.name === "AbortError") return;
-        setErrMsg((err as Error).message ?? "發生未知錯誤");
+        if ((err as { name?: string })?.name === 'AbortError') return;
+        setErrMsg((err as Error).message ?? '發生未知錯誤');
         setNeeds([]);
         setHasNext(false);
       } finally {
@@ -404,23 +385,21 @@ export default function ReliefFormPage() {
     return () => ac.abort();
   }, [offset, authed]);
 
-  const goPrev = () => setOffset((o) => Math.max(0, o - PAGE_SIZE));
-  const goNext = () => setOffset((o) => o + PAGE_SIZE);
+  const goPrev = () => setOffset(o => Math.max(0, o - PAGE_SIZE));
+  const goNext = () => setOffset(o => o + PAGE_SIZE);
 
   // 觸發 LINE SSO（未登入門擋頁用）
   const startLineLogin = () => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     const next = encodeURIComponent(
-      (window.location.pathname || "/") + (window.location.search || "")
+      (window.location.pathname || '/') + (window.location.search || '')
     );
 
     const state = encodeURIComponent(JSON.stringify({ next }));
     window.location.href = `https://guangfu250923.pttapp.cc/auth/line/start?state=${encodeURIComponent(
       state
-    )}&redirect_uri=${encodeURIComponent(
-      `${window.location.origin}/auth/line/callback`
-    )}`;
+    )}&redirect_uri=${encodeURIComponent(`${window.location.origin}/auth/line/callback`)}`;
   };
 
   // 檢查中骨架
@@ -447,7 +426,7 @@ export default function ReliefFormPage() {
             <button
               type="button"
               className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm shadow-sm hover:bg-slate-50"
-              onClick={() => (window.location.href = "/")}
+              onClick={() => (window.location.href = '/')}
             >
               返回首頁
             </button>
@@ -471,9 +450,7 @@ export default function ReliefFormPage() {
         {/* Header */}
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
-              物資站志工填單頁面
-            </h1>
+            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">物資站志工填單頁面</h1>
             <p className="mt-1 text-sm text-slate-600">
               {/* TODO: 等備註可以顯示時恢復文案 */}
               {/* 請填寫物資站資訊（會更新名稱、地址、電話與備註）。 */}
@@ -493,7 +470,7 @@ export default function ReliefFormPage() {
               type="button"
               className="rounded-2xl border border-transparent bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-600 active:scale-[0.99]"
               onClick={() => {
-                localStorage.removeItem("line_oauth_state");
+                localStorage.removeItem('line_oauth_state');
                 window.location.reload();
               }}
             >
@@ -595,15 +572,13 @@ export default function ReliefFormPage() {
                     </div>
                   ) : (
                     <ul className="space-y-4">
-                      {needs.map((n) => (
+                      {needs.map(n => (
                         <li key={n.id}>
                           <NeedCard
                             data={n}
                             selected={selectedNeedId === n.id}
                             onSelect={() => {
-                              setSelectedNeedId((prev) =>
-                                prev === n.id ? null : n.id
-                              );
+                              setSelectedNeedId(prev => (prev === n.id ? null : n.id));
                               setSelectedNeedSupplyOptions(n.items);
                             }}
                           />
@@ -622,7 +597,7 @@ export default function ReliefFormPage() {
               <CardHeader id="provide">可提供的物資</CardHeader>
 
               <div className="space-y-3">
-                {supplies.map((row) => (
+                {supplies.map(row => (
                   <motion.div
                     key={row.id}
                     layout
@@ -633,24 +608,23 @@ export default function ReliefFormPage() {
                     <div className="sm:col-span-full">
                       <DropdownSelect
                         value={row.supplyItemId}
-                        onChange={(value) =>
-                          setSupplies((prevSupplies) =>
-                            prevSupplies.map((supply) =>
+                        onChange={value =>
+                          setSupplies(prevSupplies =>
+                            prevSupplies.map(supply =>
                               supply.id === row.id
                                 ? {
                                     ...supply,
                                     supplyItemId: value,
                                     unit:
-                                      selectedNeedSupplyOptions.find(
-                                        (o) => o.id === value
-                                      )?.unit || "",
+                                      selectedNeedSupplyOptions.find(o => o.id === value)?.unit ||
+                                      '',
                                   }
                                 : supply
                             )
                           )
                         }
                         defaultLabel="選擇物資名稱"
-                        options={selectedNeedSupplyOptions.map((option) => {
+                        options={selectedNeedSupplyOptions.map(option => {
                           return {
                             value: option.id,
                             label: option.name,
@@ -666,10 +640,8 @@ export default function ReliefFormPage() {
                       placeholder="例：10"
                       value={row.qty}
                       min={0}
-                      onChange={(v) =>
-                        setSupplies((s) =>
-                          s.map((x) => (x.id === row.id ? { ...x, qty: v } : x))
-                        )
+                      onChange={v =>
+                        setSupplies(s => s.map(x => (x.id === row.id ? { ...x, qty: v } : x)))
                       }
                       className="sm:col-span-3"
                     />
@@ -678,20 +650,14 @@ export default function ReliefFormPage() {
                       id={`s-unit-${row.id}`}
                       placeholder="例：箱 / 瓶 / 包"
                       value={row.unit}
-                      onChange={(v) =>
-                        setSupplies((s) =>
-                          s.map((x) =>
-                            x.id === row.id ? { ...x, unit: v } : x
-                          )
-                        )
+                      onChange={v =>
+                        setSupplies(s => s.map(x => (x.id === row.id ? { ...x, unit: v } : x)))
                       }
                       className="sm:col-span-3"
                     />
                     <button
                       className="sm:col-span-2 text-red-600 hover:text-red-700 cursor-pointer"
-                      onClick={() =>
-                        setSupplies((s) => s.filter((x) => x.id !== row.id))
-                      }
+                      onClick={() => setSupplies(s => s.filter(x => x.id !== row.id))}
                     >
                       刪除
                     </button>
@@ -703,15 +669,15 @@ export default function ReliefFormPage() {
                     type="button"
                     className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
                     onClick={() =>
-                      setSupplies((s) => [
+                      setSupplies(s => [
                         ...s,
                         {
                           id: cryptoRandomId(),
-                          supplyItemId: "",
-                          name: "",
-                          qty: "",
-                          unit: "",
-                          tag: "",
+                          supplyItemId: '',
+                          name: '',
+                          qty: '',
+                          unit: '',
+                          tag: '',
                         },
                       ])
                     }
@@ -728,7 +694,7 @@ export default function ReliefFormPage() {
                 <button
                   type="button"
                   className="order-2 rounded-2xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-800 shadow-sm hover:bg-slate-50 sm:order-1"
-                  onClick={() => router.push("/")}
+                  onClick={() => router.push('/')}
                 >
                   回首頁
                 </button>
@@ -747,13 +713,13 @@ export default function ReliefFormPage() {
                           address: stationAddress,
                           notes: stationNotes,
                         },
-                        supplies: supplies.map((supply) => ({
+                        supplies: supplies.map(supply => ({
                           id: supply.supplyItemId,
                           count: Number(supply.qty),
                           unit: supply.unit,
                         })),
                       },
-                      () => setOffset((o) => o) // 送出成功後重抓目前頁
+                      () => setOffset(o => o) // 送出成功後重抓目前頁
                     )
                   }
                 >
@@ -774,19 +740,11 @@ export default function ReliefFormPage() {
 /** ---------------- UI atoms ---------------- */
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      {children}
-    </div>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">{children}</div>
   );
 }
 
-function CardHeader({
-  children,
-  id,
-}: {
-  children: React.ReactNode;
-  id?: string;
-}) {
+function CardHeader({ children, id }: { children: React.ReactNode; id?: string }) {
   return (
     <h2 id={id} className="mb-4 text-lg font-semibold tracking-tight">
       {children}
@@ -798,7 +756,7 @@ function Field({
   label,
   id,
   className,
-  type = "text",
+  type = 'text',
   inputMode,
   placeholder,
   value,
@@ -809,17 +767,15 @@ function Field({
   id: string;
   className?: string;
   type?: string;
-  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
   placeholder?: string;
   value?: string;
   onChange?: (v: string) => void;
   min?: number;
 }) {
   return (
-    <label className={`block ${className || ""}`} htmlFor={id}>
-      <span className="mb-1 block text-sm font-medium text-slate-700">
-        {label}
-      </span>
+    <label className={`block ${className || ''}`} htmlFor={id}>
+      <span className="mb-1 block text-sm font-medium text-slate-700">{label}</span>
       <input
         id={id}
         name={id}
@@ -828,7 +784,7 @@ function Field({
         placeholder={placeholder}
         value={value}
         min={min}
-        onChange={(e) => onChange?.(e.target.value)}
+        onChange={e => onChange?.(e.target.value)}
         className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none ring-0 placeholder:text-slate-400 focus:border-amber-500 focus:shadow-[0_0_0_3px_rgba(245,158,11,0.15)]"
       />
     </label>
@@ -848,16 +804,16 @@ function NeedCard({
   return (
     <div
       className={[
-        "group flex gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-4",
-        "cursor-pointer transition shadow-sm hover:bg-slate-50",
-        selected ? "ring-2 ring-emerald-500" : "ring-0",
-      ].join(" ")}
+        'group flex gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-4',
+        'cursor-pointer transition shadow-sm hover:bg-slate-50',
+        selected ? 'ring-2 ring-emerald-500' : 'ring-0',
+      ].join(' ')}
       role="checkbox"
       aria-checked={!!selected}
       tabIndex={0}
       onClick={onSelect}
-      onKeyDown={(e) => {
-        if (e.key === " " || e.key === "Enter") {
+      onKeyDown={e => {
+        if (e.key === ' ' || e.key === 'Enter') {
           e.preventDefault();
           onSelect?.();
         }
@@ -868,8 +824,8 @@ function NeedCard({
         <input
           type="checkbox"
           checked={!!selected}
-          onClick={(e) => e.stopPropagation()}
-          onChange={(e) => {
+          onClick={e => e.stopPropagation()}
+          onChange={e => {
             e.stopPropagation();
             onSelect?.();
           }}
@@ -889,7 +845,7 @@ function NeedCard({
             )}
           </div>
           <div className="flex gap-1">
-            {data.tags.map((t) => (
+            {data.tags.map(t => (
               <span
                 key={t}
                 className="rounded-full bg-white px-2 py-0.5 text-xs text-slate-600 ring-1 ring-slate-200"
@@ -902,9 +858,7 @@ function NeedCard({
 
         {/* 地址 / 電話 / 備註：以換行顯示 */}
         {data.desc && (
-          <p className="mt-1 whitespace-pre-line text-sm text-slate-600">
-            {data.desc}
-          </p>
+          <p className="mt-1 whitespace-pre-line text-sm text-slate-600">{data.desc}</p>
         )}
 
         <ul className="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2">

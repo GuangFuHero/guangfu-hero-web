@@ -23,7 +23,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
       }
 
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           const newPosition = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
@@ -33,7 +33,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
           onPositionUpdate?.(newPosition);
           resolve(newPosition);
         },
-        (error) => {
+        error => {
           setHasLocationPermission(false);
           let message = '無法獲取您的位置';
 
@@ -56,7 +56,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
           enableHighAccuracy: true,
           timeout: 15000,
           maximumAge: 300000,
-        },
+        }
       );
     });
   }, []);
@@ -68,7 +68,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
       if (shouldShowConfirm) {
         const confirmed = await showConfirm(
           '位置追蹤確認',
-          '是否開啟實時位置追蹤？這將持續更新您在地圖上的位置。',
+          '是否開啟實時位置追蹤？這將持續更新您在地圖上的位置。'
         );
 
         if (!confirmed) {
@@ -79,7 +79,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
 
       try {
         const id = navigator.geolocation.watchPosition(
-          (position) => {
+          position => {
             const newPosition = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
@@ -88,7 +88,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
             // 直接通過回調更新地圖
             onPositionUpdate?.(newPosition);
           },
-          (error) => {
+          error => {
             console.error('位置追蹤錯誤:', error);
             stopWatchingPosition();
             showToast('位置追蹤失敗', 'error');
@@ -97,7 +97,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
             enableHighAccuracy: true,
             timeout: 15000,
             maximumAge: 60000,
-          },
+          }
         );
 
         setWatchId(id);
@@ -108,7 +108,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
         showToast('位置追蹤啟動失敗', 'error');
       }
     },
-    [isWatchingPosition, onPositionUpdate],
+    [isWatchingPosition, onPositionUpdate]
   );
 
   const stopWatchingPosition = useCallback(() => {
@@ -142,7 +142,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
 
     const confirmed = await showConfirm(
       '位置權限請求',
-      '此網站想要取得您的位置資訊並開啟實時位置追蹤，是否允許？\n這將幫助您在地圖上看到自己的位置並保持更新。',
+      '此網站想要取得您的位置資訊並開啟實時位置追蹤，是否允許？\n這將幫助您在地圖上看到自己的位置並保持更新。'
     );
 
     if (!confirmed) {

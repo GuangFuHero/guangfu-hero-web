@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { getSupplies } from "@/lib/api";
-import { Supply, SupplyItem } from "@/lib/types";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { getSupplies } from '@/lib/api';
+import { Supply, SupplyItem } from '@/lib/types';
 // import mock from "@/lib/mock.json";
 
 const LIMIT = 50;
@@ -39,8 +39,8 @@ export const useFetchAllData = (authed: boolean) => {
         offsetRef.current = LIMIT;
         setHasMore(response.member.length < response.totalItems);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "載入物資資料時發生錯誤");
-        console.error("Failed to fetch supplies after retries:", err);
+        setError(err instanceof Error ? err.message : '載入物資資料時發生錯誤');
+        console.error('Failed to fetch supplies after retries:', err);
       } finally {
         setLoading(false);
       }
@@ -59,14 +59,12 @@ export const useFetchAllData = (authed: boolean) => {
     try {
       const response = await getSupplies(LIMIT, offsetRef.current);
 
-      setSupplies((prev) => [...prev, ...normalizeData(response.member)]);
+      setSupplies(prev => [...prev, ...normalizeData(response.member)]);
       offsetRef.current += LIMIT;
       setHasMore(offsetRef.current < totalItemsRef.current);
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "載入更多物資資料時發生錯誤"
-      );
-      console.error("Failed to fetch more supplies after retries:", err);
+      setError(err instanceof Error ? err.message : '載入更多物資資料時發生錯誤');
+      console.error('Failed to fetch more supplies after retries:', err);
     } finally {
       setLoadingMore(false);
     }
@@ -85,7 +83,7 @@ export const useFetchAllData = (authed: boolean) => {
 function normalizeData(data: Supply[]): NormalizedSupplyItem[] {
   const supplySet = [] as NormalizedSupplyItem[];
   data.map(({ supplies, address, name, updated_at }) => {
-    supplies.forEach((s) => {
+    supplies.forEach(s => {
       if (s.total_count > s.recieved_count) {
         supplySet.push({
           ...s,

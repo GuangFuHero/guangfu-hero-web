@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -10,7 +10,7 @@ import {
   ListItem,
   ListItemText,
   Box,
-} from "@mui/material";
+} from '@mui/material';
 
 export interface ConfirmModalItem {
   name: string;
@@ -40,13 +40,13 @@ interface ConfirmModalProps {
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
   open,
   title,
-  message = "",
+  message = '',
   stationInfo,
   items,
   onConfirm,
   onCancel,
-  confirmText = "確認",
-  cancelText = "取消",
+  confirmText = '確認',
+  cancelText = '取消',
 }) => {
   return (
     <Dialog open={open} onClose={onCancel} maxWidth="sm" fullWidth>
@@ -61,11 +61,11 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             </Typography>
             <Box
               sx={{
-                bgcolor: "grey.50",
+                bgcolor: 'grey.50',
                 p: 1,
                 borderRadius: 1,
-                border: "1px solid",
-                borderColor: "divider",
+                border: '1px solid',
+                borderColor: 'divider',
               }}
             >
               <Typography variant="body2" sx={{ mb: 0.5 }}>
@@ -98,17 +98,17 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             <List
               dense
               sx={{
-                bgcolor: "background.paper",
-                maxHeight: "50vh",
-                overflow: "auto",
+                bgcolor: 'background.paper',
+                maxHeight: '50vh',
+                overflow: 'auto',
               }}
             >
               {items.map((item, index) => (
                 <ListItem
                   key={index}
                   sx={{
-                    border: "1px solid",
-                    borderColor: "divider",
+                    border: '1px solid',
+                    borderColor: 'divider',
                     borderRadius: 1,
                     mb: 0.5,
                   }}

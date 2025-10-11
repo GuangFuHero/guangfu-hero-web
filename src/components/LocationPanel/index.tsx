@@ -96,11 +96,11 @@ export default function LocationPanel({
         onMouseDown={startPress}
         onMouseUp={endPress}
         onMouseLeave={endPress}
-        onTouchStart={(e) => {
+        onTouchStart={e => {
           e.preventDefault();
           startPress();
         }}
-        onTouchEnd={(e) => {
+        onTouchEnd={e => {
           e.preventDefault();
           endPress();
         }}
@@ -108,8 +108,8 @@ export default function LocationPanel({
           geolocation.isWatchingPosition
             ? '停止追蹤位置（長按）'
             : geolocation.hasLocationPermission
-            ? '定位（長按追蹤）'
-            : '定位'
+              ? '定位（長按追蹤）'
+              : '定位'
         }
       >
         <svg

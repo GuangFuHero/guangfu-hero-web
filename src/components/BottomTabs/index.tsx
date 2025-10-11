@@ -38,9 +38,7 @@ export default function BottomTabs({
         {TABS.map(tab => (
           <button
             key={tab.id}
-            className={`map-control-btn ${
-              activeLayer === tab.type ? 'active' : ''
-            }`}
+            className={`map-control-btn ${activeLayer === tab.type ? 'active' : ''}`}
             onClick={() => onLayerChange(tab.type)}
           >
             {tab.label}

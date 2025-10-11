@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
 interface MenuItemProps {
   item: {
@@ -12,7 +12,7 @@ interface MenuItemProps {
 }
 
 const MenuItem = ({ item, onClose }: MenuItemProps) => {
-  const isAnchor = item.href.startsWith("#");
+  const isAnchor = item.href.startsWith('#');
   return isAnchor ? (
     <a
       href={item.href}
