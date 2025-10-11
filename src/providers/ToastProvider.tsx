@@ -9,11 +9,7 @@ interface ToastMessage {
 
 interface ToastContextType {
   toasts: ToastMessage[];
-  showToast: (
-    message: string,
-    type?: ToastMessage['type'],
-    duration?: number
-  ) => void;
+  showToast: (message: string, type?: ToastMessage['type'], duration?: number) => void;
   removeToast: (id: string) => void;
 }
 
@@ -26,11 +22,7 @@ interface ToastProviderProps {
 export const ToastProvider = ({ children }: ToastProviderProps) => {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  const showToast = (
-    message: string,
-    type: ToastMessage['type'] = 'info',
-    duration = 3000
-  ) => {
+  const showToast = (message: string, type: ToastMessage['type'] = 'info', duration = 3000) => {
     const id = Date.now().toString();
     const newToast: ToastMessage = {
       id,
@@ -57,9 +49,7 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
     removeToast,
   };
 
-  return (
-    <ToastContext.Provider value={value}>{children}</ToastContext.Provider>
-  );
+  return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>;
 };
 
 export const useToast = () => {

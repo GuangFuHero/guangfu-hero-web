@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useCallback, useRef, useEffect, useState } from "react";
-import { getAssetPath } from "@/lib/utils";
+import { useCallback, useRef, useEffect, useState } from 'react';
+import { getAssetPath } from '@/lib/utils';
 
 interface WarningModalProps {
   isOpen: boolean;
@@ -31,21 +31,21 @@ export default function WarningModal({ isOpen, onClose }: WarningModalProps) {
         audioRef.current.currentTime = 0;
       }
 
-      const audio = new Audio(getAssetPath("/audio/alert.wav"));
+      const audio = new Audio(getAssetPath('/audio/alert.wav'));
       audioRef.current = audio;
       setIsPlayingAlert(true);
       setIsPlayingAlertOff(false);
 
-      audio.addEventListener("ended", () => {
+      audio.addEventListener('ended', () => {
         setIsPlayingAlert(false);
       });
 
-      audio.play().catch((error) => {
-        console.error("Error playing alert sound:", error);
+      audio.play().catch(error => {
+        console.error('Error playing alert sound:', error);
         setIsPlayingAlert(false);
       });
     } catch (error) {
-      console.error("Error creating audio:", error);
+      console.error('Error creating audio:', error);
       setIsPlayingAlert(false);
     }
   }, [isPlayingAlert]);
@@ -68,12 +68,12 @@ export default function WarningModal({ isOpen, onClose }: WarningModalProps) {
         audioRef.current.currentTime = 0;
       }
 
-      const audio = new Audio(getAssetPath("/audio/alert_off.mp3"));
+      const audio = new Audio(getAssetPath('/audio/alert_off.mp3'));
       audioRef.current = audio;
       setIsPlayingAlertOff(true);
       setIsPlayingAlert(false);
 
-      audio.addEventListener("ended", () => {
+      audio.addEventListener('ended', () => {
         setIsPlayingAlertOff(false);
       });
 
@@ -81,7 +81,7 @@ export default function WarningModal({ isOpen, onClose }: WarningModalProps) {
         setIsPlayingAlertOff(false);
       });
     } catch (error) {
-      console.error("Error creating audio:", error);
+      console.error('Error creating audio:', error);
       setIsPlayingAlertOff(false);
     }
   }, [isPlayingAlertOff]);
@@ -101,10 +101,7 @@ export default function WarningModal({ isOpen, onClose }: WarningModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div
-        className="fixed inset-0 bg-black/20 backdrop-blur-[4px]"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-[4px]" onClick={onClose} />
       <div className="relative bg-[var(--text-black)] rounded-[20px] max-w-md w-full p-6 shadow-2xl flex flex-col gap-6">
         <header className="relative h-[25px] flex items-center justify-center">
           {/* 標題 */}
@@ -123,9 +120,7 @@ export default function WarningModal({ isOpen, onClose }: WarningModalProps) {
 
         {/* 內容 */}
         <div className="text-white">
-          <p className="text-2xl font-medium text-center text-white">
-            堰塞湖隨時有溢流風險
-          </p>
+          <p className="text-2xl font-medium text-center text-white">堰塞湖隨時有溢流風險</p>
           <p className="text-[28px] leading-[35px] font-bold text-center text-[#F23555]">
             若警報響起，請儘速往
             <br />
@@ -151,7 +146,7 @@ export default function WarningModal({ isOpen, onClose }: WarningModalProps) {
                 >
                   <path
                     d="M22 35.9502V31.8502C25 30.9835 27.4167 29.3169 29.25 26.8502C31.0833 24.3835 32 21.5835 32 18.4502C32 15.3169 31.0833 12.5169 29.25 10.0502C27.4167 7.58353 25 5.91686 22 5.0502V0.950195C26.1333 1.88353 29.5 3.9752 32.1 7.2252C34.7 10.4752 36 14.2169 36 18.4502C36 22.6835 34.7 26.4252 32.1 29.6752C29.5 32.9252 26.1333 35.0169 22 35.9502ZM0 24.5002V12.5002H8L18 2.5002V34.5002L8 24.5002H0ZM22 26.5002V10.4002C23.5667 11.1335 24.7917 12.2335 25.675 13.7002C26.5583 15.1669 27 16.7669 27 18.5002C27 20.2002 26.5583 21.7752 25.675 23.2252C24.7917 24.6752 23.5667 25.7669 22 26.5002ZM14 12.2002L9.7 16.5002H4V20.5002H9.7L14 24.8002V12.2002Z"
-                    fill={isPlayingAlert ? "#F23555" : "white"}
+                    fill={isPlayingAlert ? '#F23555' : 'white'}
                     className="transition-colors"
                   />
                 </svg>
@@ -180,7 +175,7 @@ export default function WarningModal({ isOpen, onClose }: WarningModalProps) {
                 >
                   <path
                     d="M22 35.9502V31.8502C25 30.9835 27.4167 29.3169 29.25 26.8502C31.0833 24.3835 32 21.5835 32 18.4502C32 15.3169 31.0833 12.5169 29.25 10.0502C27.4167 7.58353 25 5.91686 22 5.0502V0.950195C26.1333 1.88353 29.5 3.9752 32.1 7.2252C34.7 10.4752 36 14.2169 36 18.4502C36 22.6835 34.7 26.4252 32.1 29.6752C29.5 32.9252 26.1333 35.0169 22 35.9502ZM0 24.5002V12.5002H8L18 2.5002V34.5002L8 24.5002H0ZM22 26.5002V10.4002C23.5667 11.1335 24.7917 12.2335 25.675 13.7002C26.5583 15.1669 27 16.7669 27 18.5002C27 20.2002 26.5583 21.7752 25.675 23.2252C24.7917 24.6752 23.5667 25.7669 22 26.5002ZM14 12.2002L9.7 16.5002H4V20.5002H9.7L14 24.8002V12.2002Z"
-                    fill={isPlayingAlertOff ? "#F23555" : "white"}
+                    fill={isPlayingAlertOff ? '#F23555' : 'white'}
                     className="transition-colors"
                   />
                 </svg>

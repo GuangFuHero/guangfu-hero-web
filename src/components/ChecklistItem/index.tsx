@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ChecklistItemProps {
   id: string;
@@ -28,8 +28,8 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
       <div className="flex-1">
         <span
           className={`font-medium ${
-            checked ? "line-through text-[var(--gray-2)]" : ""
-          } ${highlight ? "text-orange-600" : ""}`}
+            checked ? 'line-through text-[var(--gray-2)]' : ''
+          } ${highlight ? 'text-orange-600' : ''}`}
         >
           {label}
         </span>

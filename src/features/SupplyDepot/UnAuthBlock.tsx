@@ -1,20 +1,18 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 
 const UnAuthBlock = () => {
   const startLineLogin = () => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     const next = encodeURIComponent(
-      (window.location.pathname || "/") + (window.location.search || "")
+      (window.location.pathname || '/') + (window.location.search || '')
     );
 
     const state = encodeURIComponent(JSON.stringify({ next }));
     window.location.href = `https://guangfu250923.pttapp.cc/auth/line/start?state=${encodeURIComponent(
       state
-    )}&redirect_uri=${encodeURIComponent(
-      `${window.location.origin}/auth/line/callback`
-    )}`;
+    )}&redirect_uri=${encodeURIComponent(`${window.location.origin}/auth/line/callback`)}`;
   };
 
   return (
@@ -28,7 +26,7 @@ const UnAuthBlock = () => {
           <button
             type="button"
             className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm shadow-sm hover:bg-slate-50"
-            onClick={() => (window.location.href = "/")}
+            onClick={() => (window.location.href = '/')}
           >
             返回首頁
           </button>

@@ -60,9 +60,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     onCancel?: () => void;
   } | null>(null);
 
-  const [confirmResolver, setConfirmResolver] = useState<
-    ((result: boolean) => void) | null
-  >(null);
+  const [confirmResolver, setConfirmResolver] = useState<((result: boolean) => void) | null>(null);
 
   const openHelpModal = () => setIsHelpModalOpen(true);
   const closeHelpModal = () => setIsHelpModalOpen(false);
@@ -136,9 +134,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     showConfirm,
   };
 
-  return (
-    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 };
 
 export const useModal = () => {

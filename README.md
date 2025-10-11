@@ -13,6 +13,7 @@ A disaster relief coordination platform connecting volunteers and victims in Hua
 ## ✨ Key Features
 
 ### 🧭 Volunteer Guidance
+
 - Pre-departure information and onboarding
 - Registration and check-in procedures
 - Transportation information
@@ -20,12 +21,14 @@ A disaster relief coordination platform connecting volunteers and victims in Hua
 - Local community and team connections
 
 ### 🗺️ Interactive Disaster Area Map
+
 - Medical stations and health facilities
 - Supply distribution points
 - Public facilities (restrooms, showers)
 - Real-time location information for volunteers
 
 ### 💬 Victim Assistance System
+
 - Medical assistance requests
 - Mental health resources
 - Shelter information
@@ -33,6 +36,7 @@ A disaster relief coordination platform connecting volunteers and victims in Hua
 - Real-time matching with available volunteers
 
 ### 🐝 Resource Matching (小蜜蜂 System)
+
 - Supply delivery coordination
 - Motorcycle volunteer ("Little Bee") dispatch
 - Request tracking from submission to delivery
@@ -57,12 +61,14 @@ A disaster relief coordination platform connecting volunteers and victims in Hua
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/GuangFuHero/guangfu-hero-web-org.git
 cd guangfu-hero-web-org
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 # or
@@ -72,6 +78,7 @@ pnpm install
 ```
 
 3. Run the development server:
+
 ```bash
 npm run dev
 # or
@@ -160,7 +167,6 @@ We welcome contributions from volunteers! This is an ongoing relief effort, and 
 ## 📜 License
 
 This project is private and maintained by the GuangFu Hero volunteer team.
-
 
 ## 💝 Mission
 

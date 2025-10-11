@@ -1,16 +1,18 @@
-import Wrapper from "@/features/Wrapper";
-import { Metadata } from "next";
-import { env } from "@/config/env";
+import Wrapper from '@/features/Wrapper';
+import { Metadata } from 'next';
+import { env } from '@/config/env';
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: "服務條款",
-    description: "本平台為民間自發性非營利之救災資訊整合與媒合服務，使用前請詳閱平台性質、責任限制與使用規範。",
+    title: '服務條款',
+    description:
+      '本平台為民間自發性非營利之救災資訊整合與媒合服務，使用前請詳閱平台性質、責任限制與使用規範。',
     openGraph: {
-      title: "服務條款",
-      description: "本平台為民間自發性非營利之救災資訊整合與媒合服務，使用前請詳閱平台性質、責任限制與使用規範。",
+      title: '服務條款',
+      description:
+        '本平台為民間自發性非營利之救災資訊整合與媒合服務，使用前請詳閱平台性質、責任限制與使用規範。',
       url: `${env.NEXT_PUBLIC_BASE_URL}/terms`,
-      type: "website",
+      type: 'website',
     },
   };
 };
@@ -23,9 +25,7 @@ export default function TermsPage() {
 
         <div className="space-y-6 text-[var(--gray)]">
           <section>
-            <p className="mb-4">
-              適用網站：光復救災資訊整合及本團隊所架設之平台（下稱「本網站」）
-            </p>
+            <p className="mb-4">適用網站：光復救災資訊整合及本團隊所架設之平台（下稱「本網站」）</p>
           </section>
 
           <section>
@@ -37,9 +37,7 @@ export default function TermsPage() {
               <li>
                 當您使用本平台或其提供之表單、媒合平台及資訊上傳與社群連結分享等功能，即代表同意本平台服務條款與隱私權政策。
               </li>
-              <li>
-                未成年人需經法定代理人同意且不得獨自從事具安全風險之行動。
-              </li>
+              <li>未成年人需經法定代理人同意且不得獨自從事具安全風險之行動。</li>
             </ul>
           </section>
 
@@ -64,9 +62,7 @@ export default function TermsPage() {
               <li>
                 志工或提供物資者均應依現地指揮與官方公告行動，並自行評估體力、風險與自身安全等方式。
               </li>
-              <li>
-                對於因使用本平台而生之直接或間接損害，我們於法律允許範圍內不負賠償責任。
-              </li>
+              <li>對於因使用本平台而生之直接或間接損害，我們於法律允許範圍內不負賠償責任。</li>
             </ul>
 
             <h3 className="text-lg font-bold mt-4 mb-2">資訊正確性</h3>
@@ -93,9 +89,7 @@ export default function TermsPage() {
                   <li>捐贈契約之成立或履行</li>
                 </ul>
               </li>
-              <li>
-                若透過本平台連結向第三方捐贈，相關權利義務以該第三方之條款為準。
-              </li>
+              <li>若透過本平台連結向第三方捐贈，相關權利義務以該第三方之條款為準。</li>
             </ul>
           </section>
 
@@ -142,9 +136,7 @@ export default function TermsPage() {
               <li>
                 本平台透過嵌入或連結第三方（如Google、Github）作為通訊、表單、雲端或串接做為資料蒐集及利用服務。其條款與隱私權政策依第三方相關政策而定。
               </li>
-              <li>
-                基於維護、資安、不可抗力或超出合理控制之情形，我們得暫停或變更服務。
-              </li>
+              <li>基於維護、資安、不可抗力或超出合理控制之情形，我們得暫停或變更服務。</li>
             </ul>
           </section>
 
@@ -176,9 +168,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-bold mb-3">準據法與管轄</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>
-                本條款依中華民國法令作為準據法，相關爭議及解釋依此進行處理
-              </li>
+              <li>本條款依中華民國法令作為準據法，相關爭議及解釋依此進行處理</li>
               <li>由臺北地方法院為第一審管轄</li>
             </ul>
           </section>

@@ -1,11 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   color-scheme: light;
   --primary: #f37c0e;
   --primary-point: #feca5f;
   --light-primary: #f9e6c0;
-  --tertiary: #FFEEBA;
+  --tertiary: #ffeeba;
   --secondary: #179bc6;
   --secondary-hover: #1488ad;
   --secondary-light: #e9fffd;
@@ -18,7 +18,7 @@
   --gray-2: #838383;
   --gray-3: #e6e6e6;
   --gray-4: #f4f4f5;
-  --black-overlay:#00000033;
+  --black-overlay: #00000033;
 }
 
 @theme inline {
