@@ -148,9 +148,9 @@ export default function VolunteerRegisterPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 警示條 */}
-      <div className="w-full bg-amber-100/90 border-b border-amber-300">
-        <div className="mx-auto max-w-6xl px-4 py-3 text-amber-900 text-sm md:text-base">
+      {/* 警示條（自然高度，不寫死） */}
+      <div className="w-full bg-amber-100/90 border-b border-amber-300 shrink-0 overflow-hidden">
+        <div className="mx-auto max-w-6xl px-4 py-3 text-amber-900 text-sm md:text-base break-words whitespace-normal">
           <span className="mr-2">⚠️</span>
           志工媒合前請先
           <strong className="mx-1 text-red-600">電話確認</strong>並
@@ -168,6 +168,7 @@ export default function VolunteerRegisterPage() {
         allow="geolocation"
         style={{ height: 'calc(100vh - 160px)' }}
       />
+
     </Wrapper>
   );
 }
