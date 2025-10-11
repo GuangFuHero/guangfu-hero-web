@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     if (!isProd) {
+      // resolve CORS issue in local dev
       return [
         {
           source: "/api/:path*",
