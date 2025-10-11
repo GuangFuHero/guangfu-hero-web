@@ -6,9 +6,7 @@ interface HelpRequestModalProps {
   userPosition: UserPosition | null;
 }
 
-export default function HelpRequestModal({
-  userPosition,
-}: HelpRequestModalProps) {
+export default function HelpRequestModal({ userPosition }: HelpRequestModalProps) {
   const { isHelpModalOpen, closeHelpModal } = useModal();
   const { showToast } = useToast();
 
@@ -45,20 +43,12 @@ export default function HelpRequestModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-1000">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-1001">
       <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-gray-800">請求人力支援</h3>
-          <button
-            onClick={closeHelpModal}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+          <button onClick={closeHelpModal} className="text-gray-400 hover:text-gray-600">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -71,10 +61,7 @@ export default function HelpRequestModal({
 
         <form onSubmit={handleHelpSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="requestType"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="requestType" className="block text-sm font-medium text-gray-700 mb-1">
               請求類型
             </label>
             <select
@@ -92,10 +79,7 @@ export default function HelpRequestModal({
           </div>
 
           <div>
-            <label
-              htmlFor="peopleNeeded"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="peopleNeeded" className="block text-sm font-medium text-gray-700 mb-1">
               所需人數
             </label>
             <input
@@ -110,10 +94,7 @@ export default function HelpRequestModal({
           </div>
 
           <div>
-            <label
-              htmlFor="contactPerson"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="contactPerson" className="block text-sm font-medium text-gray-700 mb-1">
               聯絡人
             </label>
             <input
@@ -126,10 +107,7 @@ export default function HelpRequestModal({
           </div>
 
           <div>
-            <label
-              htmlFor="contactPhone"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="contactPhone" className="block text-sm font-medium text-gray-700 mb-1">
               聯絡電話
             </label>
             <input
@@ -142,10 +120,7 @@ export default function HelpRequestModal({
           </div>
 
           <div>
-            <label
-              htmlFor="location"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
               詳細地點
             </label>
             <input
@@ -156,9 +131,7 @@ export default function HelpRequestModal({
               placeholder="將自動填入當前位置"
               defaultValue={
                 userPosition
-                  ? `緯度: ${userPosition.lat.toFixed(
-                      6
-                    )}, 經度: ${userPosition.lng.toFixed(6)}`
+                  ? `緯度: ${userPosition.lat.toFixed(6)}, 經度: ${userPosition.lng.toFixed(6)}`
                   : ''
               }
               readOnly
@@ -166,10 +139,7 @@ export default function HelpRequestModal({
           </div>
 
           <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
               詳細描述
             </label>
             <textarea

@@ -236,7 +236,7 @@ const ReactLeafletMap = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
         center={[MAP_START_POSITION_INFO.lat, MAP_START_POSITION_INFO.lng]}
         zoom={MAP_START_POSITION_INFO.zoom}
         style={{
-          height: '100svh',
+          height: '100svw',
           width: '100%',
           ...(isFullScreenMap ? {} : { maxWidth: 'calc(100svw - 32px)' }),
         }}
