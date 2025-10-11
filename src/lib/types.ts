@@ -19,8 +19,8 @@ export interface Accommodations {
 }
 
 export interface AccommodationsResponse {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   limit: number;
   member: Accommodations[];
   next: string | null;
@@ -48,8 +48,8 @@ export interface RestRooms {
 }
 
 export interface RestRoomsResponse {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   limit: number;
   member: RestRooms[];
   next: string | null;
@@ -79,8 +79,8 @@ export interface ShowerStations {
 }
 
 export interface ShowerStationsResponse {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   limit: number;
   member: ShowerStations[];
   next: string | null;
@@ -109,8 +109,8 @@ export interface WaterRefillStations {
 }
 
 export interface WaterRefillStationsResponse {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   limit: number;
   member: WaterRefillStations[];
   next: string | null;
@@ -142,8 +142,8 @@ export interface Shelter {
 }
 
 export interface ShelterResponse {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   limit: number;
   member: Shelter[];
   next: string | null;
@@ -187,8 +187,8 @@ export interface MedicalStation {
 }
 
 export interface MedicalStationResponse {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   limit: number;
   member: MedicalStation[];
   next: string | null;
@@ -224,8 +224,8 @@ export interface MentalHealthResource {
 }
 
 export interface MentalHealthResourceResponse {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   limit: number;
   member: MentalHealthResource[];
   next: string | null;
@@ -256,8 +256,8 @@ export interface ReportResponse {
 }
 
 export interface SupplyResponse {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': string;
   limit: number;
   member: Supply[];
   next: string | null;

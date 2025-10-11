@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
-import { getAssetPath } from "@/lib/utils";
-import Sidebar from "@/components/Sidebar";
-import Link from "next/link";
-import Toast2 from "@/components/Toast2";
+import Sidebar from '@/components/Sidebar';
+import Toast2 from '@/components/Toast2';
+import { getAssetPath } from '@/lib/utils';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Header({ hideShare = false }: { hideShare?: boolean }) {
   const pathname = usePathname();
@@ -14,7 +14,7 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
   const [showToast, setShowToast] = useState(false);
 
   const handleShare = async () => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     // 建構完整 URL
     const baseUrl = window.location.origin;
@@ -22,10 +22,10 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
 
     // 根據路徑決定標題
     const getTitle = () => {
-      if (pathname.startsWith("/map")) return "光復超人 - 現場地圖";
-      if (pathname.startsWith("/volunteer")) return "光復超人 - 志工資訊";
-      if (pathname.startsWith("/victim")) return "光復超人 - 居民協助";
-      return "光復超人";
+      if (pathname.startsWith('/map')) return '光復超人 - 現場地圖';
+      if (pathname.startsWith('/volunteer')) return '光復超人 - 志工資訊';
+      if (pathname.startsWith('/victim')) return '光復超人 - 居民協助';
+      return '光復超人';
     };
 
     const title = getTitle();
@@ -39,7 +39,7 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
         });
       } catch (error) {
         // 如果使用者取消分享或發生錯誤=複製功能
-        if (!(error instanceof Error && error.name === "AbortError")) {
+        if (!(error instanceof Error && error.name === 'AbortError')) {
           await fallbackToCopy(shareUrl);
         }
       }
@@ -51,7 +51,7 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
 
   const fallbackToCopy = async (url: string) => {
     if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      console.warn("Clipboard API 不可用 - 需要 HTTPS 或 localhost 環境");
+      console.warn('Clipboard API 不可用 - 需要 HTTPS 或 localhost 環境');
       return;
     }
 
@@ -60,13 +60,13 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
       // 複製成功,顯示 Toast2
       setShowToast(true);
     } catch (error) {
-      console.error("複製失敗:", error);
+      console.error('複製失敗:', error);
     }
   };
 
   return (
     <>
-      <header className="w-full shadow-sm fixed top-0 bg-white z-20">
+      <header className="w-full shadow-sm fixed top-0 bg-white z-1000">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 relative">
             {/* Left: Hamburger menu */}
@@ -91,7 +91,7 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
             <div className="absolute left-1/2 -translate-x-1/2">
               <Link href="/map" aria-label="前往地圖">
                 <Image
-                  src={getAssetPath("/logo_new.svg")}
+                  src={getAssetPath('/logo_new.svg')}
                   alt="Logo"
                   width={120}
                   height={40}
@@ -103,12 +103,7 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
             {/* Right: Share icon */}
             {!hideShare && (
               <button className="p-2" aria-label="分享" onClick={handleShare}>
-                <Image
-                  src={getAssetPath("/share.svg")}
-                  alt="分享"
-                  width={24}
-                  height={24}
-                />
+                <Image src={getAssetPath('/share.svg')} alt="分享" width={24} height={24} />
               </button>
             )}
           </div>
@@ -119,11 +114,7 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Toast 提示 */}
-      <Toast2
-        isVisible={showToast}
-        onClose={() => setShowToast(false)}
-        duration={3000}
-      />
+      <Toast2 isVisible={showToast} onClose={() => setShowToast(false)} duration={3000} />
     </>
   );
 }

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
 interface SubMenuItemProps {
   item: {
@@ -13,12 +13,7 @@ interface SubMenuItemProps {
   onClose: () => void;
 }
 
-const SubMenuItem = ({
-  item,
-  toggleSection,
-  expandedSection,
-  onClose,
-}: SubMenuItemProps) => {
+const SubMenuItem = ({ item, toggleSection, expandedSection, onClose }: SubMenuItemProps) => {
   return (
     <div className="border-b border-[var(--gray)]">
       <button
@@ -28,18 +23,13 @@ const SubMenuItem = ({
         <span>{item.name}</span>
         <svg
           className={`w-4 h-4 transition-transform ${
-            expandedSection === item.name ? "rotate-180" : ""
+            expandedSection === item.name ? 'rotate-180' : ''
           }`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
       {expandedSection === item.name && (

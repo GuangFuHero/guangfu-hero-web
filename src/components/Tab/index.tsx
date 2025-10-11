@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface TabProps {
   children: React.ReactNode;
@@ -7,12 +7,7 @@ interface TabProps {
   className?: string;
 }
 
-const Tab: React.FC<TabProps> = ({
-  children,
-  active = false,
-  onClick,
-  className = "",
-}) => {
+const Tab: React.FC<TabProps> = ({ children, active = false, onClick, className = '' }) => {
   return (
     <button
       onClick={onClick}
@@ -24,8 +19,8 @@ const Tab: React.FC<TabProps> = ({
         border-b-4
         ${
           active
-            ? "border-[var(--primary)] text-[var(--primary)]"
-            : "border-transparent text-[var(--text-black)]"
+            ? 'border-[var(--primary)] text-[var(--primary)]'
+            : 'border-transparent text-[var(--text-black)]'
         }
         ${className}
       `}

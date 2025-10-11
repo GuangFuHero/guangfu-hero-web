@@ -1,19 +1,15 @@
-"use client";
+'use client';
 
-import React from "react";
-import Image from "next/image";
-import { getAssetPath } from "@/lib/utils";
+import React from 'react';
+import Image from 'next/image';
+import { getAssetPath } from '@/lib/utils';
 
 interface CategoryButtonProps {
   children: React.ReactNode;
   active?: boolean;
   onClick?: () => void;
 }
-const CategoryButton = ({
-  children,
-  active = false,
-  onClick,
-}: CategoryButtonProps) => {
+const CategoryButton = ({ children, active = false, onClick }: CategoryButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -22,17 +18,10 @@ const CategoryButton = ({
         p-2 rounded-md text-sm
         whitespace-nowrap shrink-0 leading-none
         w-fit
-        ${active ? "bg-[#E2E2E2]" : "bg-[#F4F4F4]"}
+        ${active ? 'bg-[#E2E2E2]' : 'bg-[#F4F4F4]'}
       `}
     >
-      {active && (
-        <Image
-          src={getAssetPath("/check.svg")}
-          alt="check"
-          width={14}
-          height={14}
-        />
-      )}
+      {active && <Image src={getAssetPath('/check.svg')} alt="check" width={14} height={14} />}
       {children}
     </button>
   );

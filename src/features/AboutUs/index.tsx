@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import TeamGroup from "@/components/TeamGroup";
+import TeamGroup from '@/components/TeamGroup';
 
 export default function AboutUs() {
   const teamMembers = [
     {
       id: 1,
-      groupName: "網站更新組",
+      groupName: '網站更新組',
       personNames: [
         "王◯恆",
         "Sam",
@@ -84,7 +84,7 @@ export default function AboutUs() {
     },
     {
       id: 4,
-      groupName: "設計組",
+      groupName: '設計組',
       personNames: [
         "Vita",
         "Sunny Yang",
@@ -184,11 +184,10 @@ export default function AboutUs() {
             這個平台的誕生，源自於一個簡單的信念：
             即使不在現場，我們仍能彼此連結，一起伸出手，讓力量匯聚成擁抱。
           </p>
+          <p className="mb-4">目前，我們已推出多項功能：</p>
           <p className="mb-4">
-            目前，我們已推出多項功能：
-          </p>
-          <p className="mb-4">
-            🧭 志工指引：為新手志工整理了行前資訊，包括報到方式、交通概況、裝備建議，以及可加入的團隊與在地社群。
+            🧭
+            志工指引：為新手志工整理了行前資訊，包括報到方式、交通概況、裝備建議，以及可加入的團隊與在地社群。
           </p>
           <p className="mb-4">
             🗺️ 志工地圖：整合災區的醫療站、物資站、廁所等地點，讓志工能更快熟悉現場環境。
@@ -197,7 +196,8 @@ export default function AboutUs() {
             💬 需求媒合頁面：居民可直接登錄需求，志工能即時查看並前往支援，讓協助更有效率。
           </p>
           <p className="mb-4">
-            🐝 小蜜蜂配給系統：由騎車志工組成的「小蜜蜂」團隊負責物資配送。居民填寫需求後，小蜜蜂即可前往物資站領取並親自送達。
+            🐝
+            小蜜蜂配給系統：由騎車志工組成的「小蜜蜂」團隊負責物資配送。居民填寫需求後，小蜜蜂即可前往物資站領取並親自送達。
           </p>
           <p className="mb-4">
             我們的團隊來自各地，日夜接力開發，只為讓資訊更即時、協作更順暢。
@@ -223,7 +223,7 @@ export default function AboutUs() {
         </div>
 
         <div className="space-y-[10px]">
-          {teamMembers.map((member) => (
+          {teamMembers.map(member => (
             <TeamGroup
               key={member.id}
               groupName={member.groupName}

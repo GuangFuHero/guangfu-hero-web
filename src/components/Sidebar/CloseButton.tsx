@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 
 interface CloseButtonProps {
   onClose: () => void;
@@ -8,12 +8,7 @@ interface CloseButtonProps {
 const CloseButton = ({ onClose }: CloseButtonProps) => (
   <div className="flex justify-between items-center p-4">
     <button onClick={onClose} className="p-2 hover:bg-[var(--gray)] rounded">
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 const AuthCheckSkeleton = () => (
   <main className="min-h-dvh grid place-items-center bg-gradient-to-b from-slate-50 to-slate-100">
