@@ -1,6 +1,6 @@
-import { useModal } from '@/providers/ModalProvider';
-import { useToast } from '@/providers/ToastProvider';
-import { HelpRequestData, UserPosition } from '@/types/map';
+import { useModal } from "@/providers/ModalProvider";
+import { useToast } from "@/providers/ToastProvider";
+import { HelpRequestData, UserPosition } from "@/types/map";
 
 interface HelpRequestModalProps {
   userPosition: UserPosition | null;
@@ -19,33 +19,33 @@ export default function HelpRequestModal({
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const peopleNeeded = parseInt(formData.get('peopleNeeded') as string, 10);
+    const peopleNeeded = parseInt(formData.get("peopleNeeded") as string, 10);
 
     if (isNaN(peopleNeeded) || peopleNeeded < 1) {
-      showToast('請輸入有效的人數（至少1人）', 'error');
+      showToast("請輸入有效的人數（至少1人）", "error");
       return;
     }
 
     const helpRequest: HelpRequestData = {
       peopleNeeded,
-      type: formData.get('requestType') as string,
-      urgency: (formData.get('urgencyLevel') as string) || 'medium',
-      contactPerson: formData.get('contactPerson') as string,
-      contactPhone: formData.get('contactPhone') as string,
-      location: formData.get('location') as string,
-      description: formData.get('description') as string,
+      type: formData.get("requestType") as string,
+      urgency: (formData.get("urgencyLevel") as string) || "medium",
+      contactPerson: formData.get("contactPerson") as string,
+      contactPhone: formData.get("contactPhone") as string,
+      location: formData.get("location") as string,
+      description: formData.get("description") as string,
       coordinates: userPosition || undefined,
       timestamp: new Date().toISOString(),
     };
 
     // 模擬提交（實際應用中應該發送到後端）
-    console.log('提交人力請求:', helpRequest);
-    showToast('人力請求已提交，相關單位將盡快與您聯繫', 'success');
+    console.log("提交人力請求:", helpRequest);
+    showToast("人力請求已提交，相關單位將盡快與您聯繫", "success");
     closeHelpModal();
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-1000">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-1001">
       <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-gray-800">請求人力支援</h3>
@@ -157,9 +157,9 @@ export default function HelpRequestModal({
               defaultValue={
                 userPosition
                   ? `緯度: ${userPosition.lat.toFixed(
-                      6
+                      6,
                     )}, 經度: ${userPosition.lng.toFixed(6)}`
-                  : ''
+                  : ""
               }
               readOnly
             />

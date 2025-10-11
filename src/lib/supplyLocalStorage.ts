@@ -1,5 +1,15 @@
+// Local storage key for supply provider info
+const STORAGE_KEY_PROVIDER_INFO = "supply_provider_info";
 // Local storage key for supply provider reports
-const STORAGE_KEY = "supply_provider_reports";
+const STORAGE_KEY_REPORTS = "supply_provider_reports";
+
+
+export interface ProviderInfo {
+  name: string;
+  phone: string;
+  address: string;
+  notes: string;
+}
 
 export interface ReportedSupplyItem {
   count: number;
@@ -8,6 +18,44 @@ export interface ReportedSupplyItem {
 
 export type ReportedSupplies = Record<string, ReportedSupplyItem>;
 
+
+/**
+ * Get the stored provider info from local storage
+ */
+export function getStoredProviderInfo(): ProviderInfo {
+  if (typeof window === "undefined") return <ProviderInfo>{};
+
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY_PROVIDER_INFO);
+    return stored ? JSON.parse(stored) : <ProviderInfo>{};
+  } catch (error) {
+    console.error("Error reading from local storage:", error);
+    return <ProviderInfo>{};
+  }
+}
+
+/**
+ * Save the provider info to local storage
+ */
+export function updateStoredProvderInfo(
+  name: string,
+  phone: string,
+  address: string,
+  notes?: string
+): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    const newProviderInfo: ProviderInfo = {
+      name: name, phone: phone, address: address, notes: notes?? ""
+    }
+
+    localStorage.setItem(STORAGE_KEY_PROVIDER_INFO, JSON.stringify(newProviderInfo));
+  } catch (error) {
+    console.error("Error writing to local storage:", error);
+  }
+}
+
 /**
  * Get all reported supply items from local storage
  */
@@ -15,7 +63,7 @@ export function getReportedSupplies(): ReportedSupplies {
   if (typeof window === "undefined") return {};
 
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = localStorage.getItem(STORAGE_KEY_REPORTS);
     return stored ? JSON.parse(stored) : {};
   } catch (error) {
     console.error("Error reading from local storage:", error);
@@ -46,7 +94,7 @@ export function addReportedSupply(
       };
     }
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(reported));
+    localStorage.setItem(STORAGE_KEY_REPORTS, JSON.stringify(reported));
   } catch (error) {
     console.error("Error writing to local storage:", error);
   }
@@ -75,7 +123,7 @@ export function clearReportedSupplies(): void {
   if (typeof window === "undefined") return;
 
   try {
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_KEY_REPORTS);
   } catch (error) {
     console.error("Error clearing local storage:", error);
   }

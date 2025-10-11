@@ -2,7 +2,7 @@
 
 /* 控制面板樣式 */
 .location-panel {
-  position: fixed;
+  position: absolute;
   top: 20px;
   left: 20px;
   z-index: 1000;
@@ -15,7 +15,7 @@
   bottom: 20px;
   left: 20px;
   right: 20px;
-  z-index: 1000;
+  z-index: 900;
   background: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(0.1px);
   border-radius: 12px;
@@ -52,7 +52,7 @@
   top: 10px;
   right: 10px;
   width: 320px;
-  max-height: calc(100svh - 120px);
+  bottom: 120px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
@@ -91,8 +91,8 @@
     top: 10px;
     left: 10px;
     right: 10px;
+    bottom: 80px;
     width: auto;
-    max-height: calc(100svh - 110px);
   }
 
   .map-control-btn {

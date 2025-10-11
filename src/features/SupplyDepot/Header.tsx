@@ -18,7 +18,7 @@ const Header = () => (
       <button
         disabled
         type="button"
-        className="rounded-2xl border border-transparent bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-600 active:scale-[0.99]"
+        className="rounded-2xl border border-transparent bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-sm"
       >
         已登入
       </button>

@@ -165,6 +165,7 @@ const SupplyRequirementList = ({
                         placeholder="數量"
                         variant="outlined"
                         type="number"
+                        inputMode="numeric"
                         {...register(`quantity_${id}`, {
                           valueAsNumber: true,
                           validate: (value) => {

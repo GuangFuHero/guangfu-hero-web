@@ -20,6 +20,9 @@ import { useForm, FormProvider } from "react-hook-form";
 import { submitSupplyProvider } from "@/lib/api";
 import { useState, useEffect } from "react";
 import {
+  getStoredProviderInfo,
+  updateStoredProvderInfo,
+  type ProviderInfo,
   getReportedSupplies,
   addReportedSupply,
   type ReportedSupplies,
@@ -57,6 +60,9 @@ const SupplyDepotFormPage = () => {
     message: string;
     severity: "success" | "error" | "info";
   }>({ open: false, message: "", severity: "info" });
+  const [storedProviderInfo, setStoredProverderInfo] = useState<ProviderInfo>(
+    { name: "", phone: "", address: "", notes: "" }
+  )
   const [reportedSupplies, setReportedSupplies] = useState<ReportedSupplies>(
     {}
   );
@@ -68,8 +74,9 @@ const SupplyDepotFormPage = () => {
   const [confirmStationInfo, setConfirmStationInfo] =
     useState<ConfirmModalStationInfo | null>(null);
 
-  // Load reported supplies from local storage on mount
+  // Load data from local storage on mount
   useEffect(() => {
+    setStoredProverderInfo(getStoredProviderInfo());
     setReportedSupplies(getReportedSupplies());
   }, []);
 
@@ -183,7 +190,9 @@ const SupplyDepotFormPage = () => {
         pii_date: 0, // 依後端需求固定送 0
       };
       try {
-        await submitSupplyProvider(submitData);
+        const id_token = JSON.parse(localStorage.getItem("line_oauth_state")?? "{}").id_token?? "";
+
+        await submitSupplyProvider(submitData, id_token);
         // Store successful submission in local storage
         addReportedSupply(item.id, quantity);
         successCount++;
@@ -234,6 +243,9 @@ const SupplyDepotFormPage = () => {
         severity: "error",
       });
     }
+
+    // memorize supply provider's info
+    updateStoredProvderInfo(data.name, data.phone, data.address, data.notes);
   };
 
   if (!authChecked) {
@@ -251,7 +263,9 @@ const SupplyDepotFormPage = () => {
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <Stack spacing={1} sx={{ mb: 2 }}>
-                <SupplyStation />
+                <SupplyStation
+                  previousInfo={storedProviderInfo}
+                />
                 <FetchSupplyStatus
                   loading={loading}
                   error={error}
