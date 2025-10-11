@@ -1,10 +1,5 @@
 #!/bin/sh
-# Husky v9 建議：不要再 source husky.sh，保留 shebang 即可
 set -e
 
 echo "🧩 Running lint-staged..."
-# 方案 A：有 script 時用 yarn/pnpm/npm
-# yarn lint-staged
-
-# 方案 B：直接用 npx（最穩，跨包管器）
-npx --yes lint-staged
+npm run lint-staged
