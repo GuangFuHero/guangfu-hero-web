@@ -170,12 +170,16 @@ export async function getSupplies(
 }
 
 export async function submitSupplyProvider(
-  data: ReportSupplyProvider
+  data: ReportSupplyProvider,
+  lineIdToken: string
 ): Promise<ReportSupplyProviderResponse> {
+  if (!lineIdToken) { throw new Error("登入資訊有問題，請重新登入"); }
+
   const response = await fetch(`${API_BASE_URL}/supply_providers`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${lineIdToken}`,
       Accept: "application/json",
     },
     body: JSON.stringify(data),
