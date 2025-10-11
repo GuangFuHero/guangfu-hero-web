@@ -1,4 +1,4 @@
-import { useModal } from '@/providers/ModalProvider';
+import { useModal } from "@/providers/ModalProvider";
 
 export default function ConfirmModal() {
   const { isConfirmModalOpen, confirmData, closeConfirmModal } = useModal();
@@ -6,16 +6,16 @@ export default function ConfirmModal() {
   if (!isConfirmModalOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-1000">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-1001">
       <div className="bg-white rounded-[12px] p-6 w-full max-w-md mx-4">
         <div className="mb-4">
           <h3 className="text-xl font-bold text-gray-800 mb-2">
-            {confirmData?.title || '確認'}
+            {confirmData?.title || "確認"}
           </h3>
           <div
             className="text-gray-600 font-medium"
             dangerouslySetInnerHTML={{
-              __html: confirmData?.message?.replaceAll(/\r\n/g, '<br>') || '',
+              __html: confirmData?.message?.replaceAll(/\r\n/g, "<br>") || "",
             }}
           />
         </div>

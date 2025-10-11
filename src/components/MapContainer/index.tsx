@@ -38,7 +38,7 @@ function MapContainer({ isFullScreenMap = true }: { isFullScreenMap?: boolean })
   const geolocation = useGeolocation(handlePositionUpdate);
 
   useEffect(() => {
-    if (!isFullScreenMap) return;
+    // if (!isFullScreenMap) return;
     const timer = setTimeout(geolocation.initLocationPermission, 1500);
 
     return () => clearTimeout(timer);
@@ -79,21 +79,20 @@ function MapContainer({ isFullScreenMap = true }: { isFullScreenMap?: boolean })
       />
 
       {/* 定位按鈕面板 */}
-      {isFullScreenMap ? (
-        <LocationPanel
-          geolocation={geolocation}
-          onLocationToggle={() => {
-            if (!geolocation.hasLocationPermission || !geolocation.userPosition) {
-              geolocation
-                .requestUserLocation()
-                .then(() => geolocation.setIsLocationVisible(true))
-                .catch(console.error);
-            } else {
-              geolocation.setIsLocationVisible(!geolocation.isLocationVisible);
-            }
-          }}
-        />
-      ) : null}
+      <LocationPanel
+        isFullScreenMap={isFullScreenMap}
+        geolocation={geolocation}
+        onLocationToggle={() => {
+          if (!geolocation.hasLocationPermission || !geolocation.userPosition) {
+            geolocation
+              .requestUserLocation()
+              .then(() => geolocation.setIsLocationVisible(true))
+              .catch(console.error);
+          } else {
+            geolocation.setIsLocationVisible(!geolocation.isLocationVisible);
+          }
+        }}
+      />
 
       {/* 底部分頁面板 */}
       <BottomTabs
@@ -115,7 +114,7 @@ function MapContainer({ isFullScreenMap = true }: { isFullScreenMap?: boolean })
       <Modals userPosition={geolocation.userPosition} />
 
       {/* Toast 通知 */}
-      <ToastContainer />
+      {isFullScreenMap ? <ToastContainer /> : null}
     </div>
   );
 }
