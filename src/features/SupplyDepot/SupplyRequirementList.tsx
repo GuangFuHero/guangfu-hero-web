@@ -119,7 +119,7 @@ const SupplyRequirementList = ({
                       size="small"
                       sx={{ fontSize: 14 }}
                     >
-                      <Stack>
+                      <Stack alignItems="center">
                         <Typography fontSize={12} textAlign="center">
                           {requestor}
                         </Typography>
@@ -144,7 +144,6 @@ const SupplyRequirementList = ({
                       placeholder="數量"
                       variant="outlined"
                       type="number"
-                      inputMode="numeric"
                       {...register(`quantity_${id}`, {
                         valueAsNumber: true,
                         validate: value => {
@@ -160,7 +159,7 @@ const SupplyRequirementList = ({
                       })}
                       error={!!fieldError}
                       slotProps={{
-                        htmlInput: { min: 0, step: 1 },
+                        htmlInput: { min: 0, step: 1, inputMode: 'numeric' },
                       }}
                     />
                   </Grid>
