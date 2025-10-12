@@ -156,12 +156,12 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
                   key={station.id}
                   name={station.name}
                   type={
-                    station.station_type === 'self_organized'
-                      ? '臨時站點'
-                      : station.station_type === 'fixed_point'
-                        ? '固定站點'
-                        : station.station_type === 'shelter_medical'
-                          ? '大型醫療站'
+                    station.station_type === 'shelter_medical'
+                      ? '大型醫療站'
+                      : station.station_type === 'self_organized'
+                        ? '臨時站點'
+                        : station.station_type === 'fixed_point'
+                          ? '固定站點'
                           : ''
                   }
                   address={station.location}
