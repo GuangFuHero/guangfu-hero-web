@@ -47,7 +47,7 @@ export const PLACE_CONFIG: Array<PlaceConfig> = [
   {
     type: PlaceType.SHELTER,
     label: PLACE_TYPE_STRING_MAP[PlaceType.SHELTER],
-    icon: '⛺',
+    icon: '🏢',
     color: '#f97316',
   },
   {

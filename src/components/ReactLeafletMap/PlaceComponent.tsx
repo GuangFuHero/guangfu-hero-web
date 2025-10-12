@@ -9,6 +9,7 @@ import {
   PointCoordinates,
   PolygonCoordinates,
 } from '@/types/place';
+import dayjs from 'dayjs';
 import { Marker, Polygon, Polyline, Popup } from 'react-leaflet';
 import { getTabIcon } from './Icons';
 import { PLACE_CONFIG } from './place.config';
@@ -64,6 +65,24 @@ const isLineStringCoordinates = (
   );
 };
 
+const renderOpeningHours = (openTime?: string, endTime?: string) => {
+  const isOpenTimeValid = openTime && dayjs(openTime).isValid();
+  const isEndTimeValid = endTime && dayjs(endTime).isValid();
+
+  if (!isOpenTimeValid && !isEndTimeValid) {
+    return null;
+  }
+
+  return (
+    <div>
+      <span className="font-semibold">開放時間:</span>{' '}
+      {isOpenTimeValid ? dayjs(openTime).format('YYYY-MM-DD HH:mm') : ''}
+      {isOpenTimeValid && isEndTimeValid ? ' - ' : ''}
+      {isEndTimeValid ? dayjs(endTime).format('YYYY-MM-DD HH:mm') : ''}
+    </div>
+  );
+};
+
 const createPopupContent = (
   place: Place,
   openReportModal: (type: string, id: string, name: string) => void
@@ -89,11 +108,7 @@ const createPopupContent = (
             <span className="font-semibold">聯絡電話:</span> {place.contact_phone}
           </div>
         )}
-        {place.open_time && place.end_time && (
-          <div>
-            <span className="font-semibold">開放時間:</span> {place.open_time} - {place.end_time}
-          </div>
-        )}
+        {renderOpeningHours(place.open_time, place.end_time)}
         {place.website_url && (
           <div>
             <span className="font-semibold">網站:</span>

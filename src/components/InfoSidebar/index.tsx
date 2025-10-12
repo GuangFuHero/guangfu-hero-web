@@ -4,6 +4,7 @@ import { PLACE_CONFIG } from '@/components/ReactLeafletMap/place.config';
 import { usePlaces } from '@/hooks/useMapData';
 import { LayerType, UserPosition } from '@/types/map';
 import { Place, PlaceCoordinates, PlaceCoordinatesType, PlaceType } from '@/types/place';
+import dayjs from 'dayjs';
 import { RefObject } from 'react';
 import Legend from './Legend';
 import Statistics from './Statistics';
@@ -49,15 +50,14 @@ const getCenterCoordinates = (
   }
 };
 
-const getGoogleMapsUrl = (coordinates: PlaceCoordinates): string => {
+const getGoogleMapsUrl = (coordinates: PlaceCoordinates): string | null => {
   const center = getCenterCoordinates(coordinates);
-  if (!center) return '';
+  if (!center) return null;
 
   switch (coordinates.type) {
     case PlaceCoordinatesType.POINT:
       return `https://www.google.com/maps/search/?api=1&query=${center.lat},${center.lng}`;
 
-    case PlaceCoordinatesType.POLYGON:
     case PlaceCoordinatesType.LINE_STRING:
       const coordsString = coordinates.coordinates
         .map(coord => `${coord[1]},${coord[0]}`)
@@ -65,7 +65,7 @@ const getGoogleMapsUrl = (coordinates: PlaceCoordinates): string => {
       return `https://www.google.com/maps/dir/?api=1&waypoints=${coordsString}&travelmode=walking`;
 
     default:
-      return `https://www.google.com/maps/search/?api=1&query=${center.lat},${center.lng}`;
+      return null;
   }
 };
 
@@ -80,6 +80,23 @@ const getCoordinateTypeText = (coordinates: PlaceCoordinates): string => {
     default:
       return '位置';
   }
+};
+
+const renderOpeningHours = (openTime?: string, endTime?: string) => {
+  const isOpenTimeValid = openTime && dayjs(openTime).isValid();
+  const isEndTimeValid = endTime && dayjs(endTime).isValid();
+
+  if (!isOpenTimeValid && !isEndTimeValid) {
+    return null;
+  }
+
+  return (
+    <p className="text-xs font-medium">
+      🕐 {isOpenTimeValid ? dayjs(openTime).format('YYYY-MM-DD HH:mm') : ''}
+      {isOpenTimeValid && isEndTimeValid ? ' - ' : ''}
+      {isEndTimeValid ? dayjs(endTime).format('YYYY-MM-DD HH:mm') : ''}
+    </p>
+  );
 };
 
 export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: InfoSidebarProps) {
@@ -117,16 +134,15 @@ export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: In
               onClick={() => place.coordinates && handleItemClick(place.coordinates, place.id)}
             >
               <div className="flex items-center gap-1">
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-gray-800 truncate">
+                <div className="flex-1 min-w-0 gap-1">
+                  <h4 className="font-semibold text-gray-800 truncate ">
                     {place.name || '未知地點'}
                   </h4>
-                  <p className="text-sm text-gray-600 truncate">
+                  <p className="text-sm text-gray-600 truncate font-medium">
                     {place.address || place.address_description || '未提供地址'}
                   </p>
 
-                  <p className="text-xs text-blue-500 mt-1">
-                    📍 {coordinateType}
+                  <p className="text-xs mt-1 font-medium">
                     {place.coordinates.type === PlaceCoordinatesType.POLYGON &&
                       ` (${place.coordinates.coordinates.length} 個點)`}
                     {place.coordinates.type === PlaceCoordinatesType.LINE_STRING &&
@@ -134,22 +150,15 @@ export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: In
                   </p>
 
                   {place.sub_type && (
-                    <p className="text-xs text-gray-500 mt-1">類型: {place.sub_type}</p>
+                    <p className="text-xs mt-1 font-medium">類型: {place.sub_type}</p>
                   )}
                   {place.contact_phone && (
-                    <p className="text-xs text-gray-500">📞 {place.contact_phone}</p>
+                    <p className="text-xs font-medium">📞 {place.contact_phone}</p>
                   )}
-                  {place.open_time && place.end_time && (
-                    <p className="text-xs text-gray-500">
-                      🕐 {place.open_time} - {place.end_time}
-                    </p>
-                  )}
-                  {place.status && place.status !== 'active' && (
-                    <p className="text-xs text-orange-600">狀態: {place.status}</p>
-                  )}
+                  {renderOpeningHours(place.open_time, place.end_time)}
                 </div>
 
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 font-medium">
                   {place.coordinates && googleMapsUrl && (
                     <a
                       href={googleMapsUrl}
@@ -159,17 +168,11 @@ export default function InfoSidebar({ isOpen, onClose, activeLayer, mapRef }: In
                       title={
                         place.coordinates.type === PlaceCoordinatesType.POINT
                           ? '在 Google 地圖上查看'
-                          : place.coordinates.type === PlaceCoordinatesType.POLYGON
-                            ? '在 Google 地圖上查看區域'
-                            : '在 Google 地圖上查看路線'
+                          : '在 Google 地圖上查看路線'
                       }
                       onClick={e => e.stopPropagation()}
                     >
-                      {place.coordinates.type === PlaceCoordinatesType.POINT
-                        ? '導航'
-                        : place.coordinates.type === PlaceCoordinatesType.POLYGON
-                          ? '查看區域'
-                          : '查看路線'}
+                      {place.coordinates.type === PlaceCoordinatesType.POINT ? '導航' : '查看路線'}
                     </a>
                   )}
 
