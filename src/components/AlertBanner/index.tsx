@@ -10,6 +10,10 @@ import NextButton from './NextButton';
 // 可以用 \n 來換行
 const alerts = [
   {
+    text: '今(12日)18:45 花蓮局部大雨，鋒面滯留，注意安全！',
+    actionable: false,
+  },
+  {
     text: '把連假人潮眾多\n送出水電、機具需求前請參考專線',
     actionable: false,
   },
@@ -17,16 +21,16 @@ const alerts = [
     text: '現場隨時有溢流風險，點此詳讀避難守則\n若警報響起請儘速往高處避難',
     actionable: true,
   },
-  {
-    text: '因應連假人潮眾多，超人志工先領取任務、確認連繫再動身！',
-    actionable: false,
-  },
-  {
-    text: '多補水防中暑！注意自身安全，結伴同行更安心！不慎受傷，請即刻前往醫療站！',
-    actionable: false,
-  },
-  { text: '與家人朋友保持聯繫，維持手機電量', actionable: false },
+  // {
+  //   text: '因應連假人潮眾多，超人志工先領取任務、確認連繫再動身！',
+  //   actionable: false,
+  // },  // 暫時移除，避免資訊過多
+  // {
+  //   text: '多補水防中暑！注意自身安全，結伴同行更安心！不慎受傷，請即刻前往醫療站！',
+  //   actionable: false,
+  // }, // 暫時移除，避免資訊過多
   { text: '本平台不隸屬於任何政府、民間團體\n由熱心民眾齊心成立、普及災區資訊', actionable: false },
+  // { text: '與家人朋友保持聯繫，維持手機電量', actionable: false },
 ];
 
 interface AlertBannerProps {
