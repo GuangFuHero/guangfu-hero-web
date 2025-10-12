@@ -1,42 +1,36 @@
-import {
-  useAccommodations,
-  useMedicalStations,
-  useRestrooms,
-  useShowerStations,
-  useWaterStations,
-} from '@/hooks/useMapData';
+import { PLACE_CONFIG } from '@/components/ReactLeafletMap/place.config';
+import { usePlaces } from '@/hooks/useMapData';
 
 export default function Statistics() {
-  const accommodationsCount = useAccommodations().data?.length || 0;
-  const waterStationsCount = useWaterStations().data?.length || 0;
-  const restroomsCount = useRestrooms().data?.length || 0;
-  const showerStationsCount = useShowerStations().data?.length || 0;
-  const medicalStationsCount = useMedicalStations().data?.length || 0;
+  const placesQuery = usePlaces();
+  const placesData = placesQuery.data || {};
+
+  const totalCount = PLACE_CONFIG.reduce((total, config) => {
+    return total + (placesData[config.type]?.length || 0);
+  }, 0);
 
   return (
     <div className="mb-6">
       <h3 className="text-lg font-bold mb-3">統計資訊</h3>
       <div className="space-y-2 text-sm">
-        <div className="flex justify-between">
-          <span className="font-medium">總住宿點：</span>
-          <span className="font-semibold">{accommodationsCount}</span>
+        <div className="flex justify-between border-b border-gray-200 pb-2 mb-2">
+          <span className="font-medium">總設施數量：</span>
+          <span className="font-bold text-blue-600">{totalCount}</span>
         </div>
-        <div className="flex justify-between">
-          <span className="font-medium">總加水站：</span>
-          <span className="font-semibold">{waterStationsCount}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">總廁所：</span>
-          <span className="font-semibold">{restroomsCount}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">總洗澡點：</span>
-          <span className="font-semibold">{showerStationsCount}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">總醫療站：</span>
-          <span className="font-semibold">{medicalStationsCount}</span>
-        </div>
+        {PLACE_CONFIG.map(config => {
+          const count = placesData[config.type]?.length || 0;
+          return (
+            <div key={config.type} className="flex justify-between">
+              <span className="font-medium flex items-center">
+                <span className="mr-2" style={{ color: config.color }}>
+                  {config.icon}
+                </span>
+                {config.label}：
+              </span>
+              <span className="font-semibold">{count}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

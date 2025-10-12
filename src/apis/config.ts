@@ -37,12 +37,10 @@ export const fetchAllItemsApiRequest = async <T>(endpoint: string, options?: Req
 
       const data: { member: T[]; next?: string } = await response.json();
 
-      // 將當前頁面的數據加入總數據中
       if (data.member && Array.isArray(data.member)) {
         allData = allData.concat(data.member);
       }
 
-      // 檢查是否有下一頁
       if (data.next) {
         nextUrl = `${API_URL}${data.next}`;
       } else {

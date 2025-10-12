@@ -1,23 +1,11 @@
 'use client';
 
 import { LayerType } from '@/types/map';
+import { PLACE_TYPE_STRING_MAP, PlaceType } from '@/types/place';
 
-const TABS = [
-  { id: 'all', label: '全部', type: 'all' as LayerType },
-  { id: 'waterStation', label: '加水站', type: 'waterStation' as LayerType },
-  { id: 'restroom', label: '廁所', type: 'restroom' as LayerType },
-  {
-    id: 'showerStation',
-    label: '洗澡點',
-    type: 'showerStation' as LayerType,
-  },
-  {
-    id: 'medicalStation',
-    label: '醫療站',
-    type: 'medicalStation' as LayerType,
-  },
-  { id: 'accommodation', label: '住宿', type: 'accommodation' as LayerType },
-];
+const TABS = [{ id: 'all', label: '全部', type: 'all' as LayerType }].concat(
+  Object.values(PlaceType).map(type => ({ id: type, label: PLACE_TYPE_STRING_MAP[type], type }))
+);
 
 interface BottomTabsProps {
   activeLayer: LayerType;

@@ -18,22 +18,7 @@ export const stationIcon = createCustomIcon(
   [30, 30]
 );
 
-export const accommodationIcon = createCustomIcon(
-  `<div style="background-color: #6b7280; color: white; border-radius: 50%; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">🏠</div>`
-);
-
-export const waterStationIcon = createCustomIcon(
-  `<div style="background-color: #06b6d4; color: white; border-radius: 50%; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">💧</div>`
-);
-
-export const restroomIcon = createCustomIcon(
-  `<div style="background-color: #8b5cf6; color: white; border-radius: 50%; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">🚻</div>`
-);
-
-export const showerStationIcon = createCustomIcon(
-  `<div style="background-color: #f59e0b; color: white; border-radius: 50%; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">🚿</div>`
-);
-
-export const medicalStationIcon = createCustomIcon(
-  `<div style="background-color: #dc2626; color: white; border-radius: 50%; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">🏥</div>`
-);
+export const getTabIcon = (icon: string, color: string) =>
+  createCustomIcon(
+    `<div style="background-color: ${color}; color: white; border-radius: 50%; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">${icon}</div>`
+  );

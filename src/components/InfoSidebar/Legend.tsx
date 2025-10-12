@@ -1,3 +1,5 @@
+import { PLACE_CONFIG } from '../ReactLeafletMap/place.config';
+
 export default function Legend() {
   return (
     <div className="mb-6">
@@ -14,101 +16,29 @@ export default function Legend() {
           ></div>
           <span className="font-medium">光復火車站</span>
         </div>
-        <div className="legend-item">
-          <div
-            style={{
-              backgroundColor: '#10b981',
-              color: 'white',
-              borderRadius: '50%',
-              width: '25px',
-              height: '25px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '10px',
-              marginRight: '0.5rem',
-            }}
-          >
-            🏠
-          </div>
-          <span className="font-medium">住宿點</span>
-        </div>
-        <div className="legend-item">
-          <div
-            style={{
-              backgroundColor: '#06b6d4',
-              color: 'white',
-              borderRadius: '50%',
-              width: '25px',
-              height: '25px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '10px',
-              marginRight: '0.5rem',
-            }}
-          >
-            💧
-          </div>
-          <span className="font-medium">加水站</span>
-        </div>
-        <div className="legend-item">
-          <div
-            style={{
-              backgroundColor: '#8b5cf6',
-              color: 'white',
-              borderRadius: '50%',
-              width: '25px',
-              height: '25px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '10px',
-              marginRight: '0.5rem',
-            }}
-          >
-            🚻
-          </div>
-          <span className="font-medium">廁所</span>
-        </div>
-        <div className="legend-item">
-          <div
-            style={{
-              backgroundColor: '#f59e0b',
-              color: 'white',
-              borderRadius: '50%',
-              width: '25px',
-              height: '25px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '10px',
-              marginRight: '0.5rem',
-            }}
-          >
-            🚿
-          </div>
-          <span className="font-medium">洗澡點</span>
-        </div>
-        <div className="legend-item">
-          <div
-            style={{
-              backgroundColor: '#ef4444',
-              color: 'white',
-              borderRadius: '50%',
-              width: '25px',
-              height: '25px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '10px',
-              marginRight: '0.5rem',
-            }}
-          >
-            🏥
-          </div>
-          <span className="font-medium">醫療站</span>
-        </div>
+        {PLACE_CONFIG.map(config => {
+          return (
+            <div key={config.type} className="legend-item">
+              <div
+                style={{
+                  backgroundColor: config.color,
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '25px',
+                  height: '25px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '10px',
+                  marginRight: '0.5rem',
+                }}
+              >
+                {config.icon}
+              </div>
+              <span className="font-medium">{config.label}</span>
+            </div>
+          );
+        })}
         <div className="legend-item">
           <div
             className="legend-color"

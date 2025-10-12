@@ -1,12 +1,6 @@
-export type LayerType =
-  | 'all'
-  | 'accommodation'
-  | 'waterStation'
-  | 'restroom'
-  | 'showerStation'
-  | 'medicalStation'
-  | 'shuttle'
-  | 'disaster';
+import { PlaceType } from './place';
+
+export type LayerType = 'all' | PlaceType;
 
 export interface UserPosition {
   lat: number;

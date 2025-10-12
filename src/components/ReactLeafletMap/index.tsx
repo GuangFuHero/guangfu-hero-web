@@ -3,14 +3,9 @@
 import { DISASTER_AREA, MAP_START_POSITION_INFO } from '@/constants';
 import { queryKeys } from '@/hooks/useMapData';
 import { useMapQueries } from '@/hooks/useMapQueries';
-import { Accommodation } from '@/types/accommodation';
 import { LayerType, UserPosition } from '@/types/map';
 
-import { MedicalStation } from '@/types/medicalStation';
-import { Restroom } from '@/types/restroom';
-import { ShowerStation } from '@/types/showerStation';
-import { WaterStation } from '@/types/waterStation';
-
+import { Place, PlaceType } from '@/types/place';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react';
@@ -23,13 +18,9 @@ import {
   useMap,
   useMapEvents,
 } from 'react-leaflet';
-import AccommodationMarker from './AccommodationMarker';
 import GuangFuStationMarker from './GuangFuStationMarker';
 import { userLocationIcon } from './Icons';
-import MedicalStationMarker from './MedicalStationMarker';
-import RestroomMarker from './RestroomMarker';
-import ShowerStationMarker from './ShowerStationMarker';
-import WaterStationMarker from './WaterStationMarker';
+import PlaceMarker from './PlaceComponent';
 
 interface MapEventsProps {
   onSidebarClose: () => void;
@@ -86,14 +77,9 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
     const queryClient = useMapQueries();
     const map = useMap();
 
-    const accommodations: Accommodation[] =
-      queryClient.getQueryData(queryKeys.accommodations) || [];
-    const waterStations: WaterStation[] = queryClient.getQueryData(queryKeys.waterStations) || [];
-    const restrooms: Restroom[] = queryClient.getQueryData(queryKeys.restrooms) || [];
-    const showerStations: ShowerStation[] =
-      queryClient.getQueryData(queryKeys.showerStations) || [];
-    const medicalStations: MedicalStation[] =
-      queryClient.getQueryData(queryKeys.medicalStations) || [];
+    const places: Record<PlaceType | string, Place[]> | undefined = queryClient.getQueryData(
+      queryKeys.places
+    );
 
     useImperativeHandle(ref, () => ({
       getMap: () => map,
@@ -131,7 +117,7 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
 
         <GuangFuStationMarker />
 
-        {(activeLayer === 'all' || activeLayer === 'disaster') && (
+        {activeLayer === 'all' && (
           <Polygon
             positions={DISASTER_AREA}
             pathOptions={{
@@ -167,45 +153,11 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
           </Marker>
         )}
 
-        {accommodations.map(accommodation => (
-          <AccommodationMarker
-            key={accommodation.id}
-            accommodation={accommodation}
-            isVisible={isLayerVisible('accommodation')}
-          />
-        ))}
-
-        {waterStations.map(station => (
-          <WaterStationMarker
-            key={station.id}
-            station={station}
-            isVisible={isLayerVisible('waterStation')}
-          />
-        ))}
-
-        {restrooms.map(restroom => (
-          <RestroomMarker
-            key={restroom.id}
-            restroom={restroom}
-            isVisible={isLayerVisible('restroom')}
-          />
-        ))}
-
-        {showerStations.map(shower => (
-          <ShowerStationMarker
-            key={shower.id}
-            shower={shower}
-            isVisible={isLayerVisible('showerStation')}
-          />
-        ))}
-
-        {medicalStations.map(medical => (
-          <MedicalStationMarker
-            key={medical.id}
-            medical={medical}
-            isVisible={isLayerVisible('medicalStation')}
-          />
-        ))}
+        {Object.values(places || {})
+          .flat()
+          .map(place => (
+            <PlaceMarker key={place.id} place={place} isVisible={isLayerVisible(place.type)} />
+          ))}
       </>
     );
   }
