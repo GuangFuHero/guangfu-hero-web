@@ -7,9 +7,14 @@ import PrevButton from './PrevButton';
 import NextButton from './NextButton';
 
 // 將簡單字串改為含有行為屬性的物件，便於控制哪些訊息可點擊
+// 可以用 \n 來換行
 const alerts = [
   {
-    text: '現場隨時有溢流風險，點此詳讀避難守則，若警報響起請儘速往高處避難',
+    text: '把連假人潮眾多\n送出水電、機具需求前請參考專線',
+    actionable: false,
+  },
+  {
+    text: '現場隨時有溢流風險，點此詳讀避難守則\n若警報響起請儘速往高處避難',
     actionable: true,
   },
   {
@@ -21,7 +26,7 @@ const alerts = [
     actionable: false,
   },
   { text: '與家人朋友保持聯繫，維持手機電量', actionable: false },
-  { text: '本平台不隸屬於任何政府、民間團體，由熱心民眾齊心成立、普及災區資訊', actionable: false },
+  { text: '本平台不隸屬於任何政府、民間團體\n由熱心民眾齊心成立、普及災區資訊', actionable: false },
 ];
 
 interface AlertBannerProps {
@@ -86,7 +91,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
       >
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full select-none">
           <PrevButton setIsPaused={setIsPaused} prev={prev} />
-          <div className="flex-1 text-center text-[var(--text-black)] font-medium ">
+          <div className="flex-1 text-center text-[var(--text-black)] font-medium white-space-pre-wrap">
             {currentInfo.text}
             {!currentInfo.actionable && <span className="sr-only">（此訊息不可點擊）</span>}
           </div>
