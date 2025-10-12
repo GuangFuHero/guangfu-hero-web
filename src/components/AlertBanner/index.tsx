@@ -91,7 +91,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
       >
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full select-none">
           <PrevButton setIsPaused={setIsPaused} prev={prev} />
-          <div className="flex-1 text-center text-[var(--text-black)] font-medium white-space-pre-wrap">
+          <div className="flex-1 text-center text-[var(--text-black)] font-medium whitespace-pre-wrap">
             {currentInfo.text}
             {!currentInfo.actionable && <span className="sr-only">（此訊息不可點擊）</span>}
           </div>
