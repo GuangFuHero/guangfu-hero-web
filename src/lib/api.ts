@@ -23,8 +23,18 @@ export async function fetchAPI<T>(
   endpoint: string,
   params?: Record<string, string | number>
 ): Promise<T> {
-  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+
+  // const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const base =
+    // for python dev domain
+    path === '/<enpoints>'
+      ? `${window.location.origin}/devapi`
+      : // for python prod domain
+        path === '/<enpoints>'
+        ? `${window.location.origin}/api`
+        : API_BASE_URL;
+
   const url = new URL(`${base}${path}`);
 
   if (params) {
