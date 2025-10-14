@@ -14,7 +14,7 @@ const alerts = [
     actionable: true,
   },
   {
-    text: '今(14日)花蓮局部短暫陣雨，午後有較大雨勢，外出請攜雨具。',
+    text: '今(15日)花蓮有零星降雨，山區防範午後短暫雷陣雨！',
     actionable: false,
   },
   {
