@@ -113,13 +113,13 @@ export default function Legend() {
           <div
             className="legend-color"
             style={{
-              backgroundColor: '#ec4899',
+              backgroundColor: '#dc2626',
               opacity: 0.3,
               width: '25px',
               height: '25px',
             }}
           ></div>
-          <span className="font-medium">救災區域範圍</span>
+          <span className="font-medium">軍方接管區域範圍（志工勿入）</span>
         </div>
       </div>
     </div>
