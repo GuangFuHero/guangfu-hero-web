@@ -131,51 +131,49 @@ const ReactLeafletMapContent = forwardRef<LeafletMapRef, ReactLeafletMapProps>(
 
         <GuangFuStationMarker />
 
-        {(activeLayer === 'all' || activeLayer === 'disaster') && (
-          <Polygon
-            positions={[
-              [23.6789504, 121.4378053],
-              [23.6770049, 121.4362603],
-              [23.674069, 121.4351596],
-              [23.6720989, 121.4348699],
-              [23.6698614, 121.4344685],
-              [23.6664467, 121.433283],
-              [23.6633488, 121.4318963],
-              [23.6627863, 121.4336424],
-              [23.6675915, 121.4410239],
-              [23.667336, 121.4425474],
-              [23.6673753, 121.4434486],
-              [23.6682204, 121.4475041],
-              [23.6696354, 121.45392],
-              [23.6708735, 121.4575892],
-              [23.6714237, 121.4580184],
-              [23.6725832, 121.4570313],
-              [23.6731138, 121.4538985],
-              [23.6751576, 121.4473539],
-              [23.6789504, 121.4378053],
-            ]}
-            pathOptions={{
-              color: '#dc2626',
-              weight: 3,
-              opacity: 1,
-              fillColor: '#dc2626',
-              fillOpacity: 0.15,
-              dashArray: '10, 10',
-            }}
-            pane="disasterPane"
-          >
-            <Popup>
-              <div>
-                <h3 className="font-bold text-red-600">⚠️ 軍方接管區域</h3>
-                <div className="gap-0 space-y-1">
-                  <p className="m-0 text-sm font-semibold text-red-700">志工請勿擅自進入</p>
-                  <p className="m-0 text-sm text-gray-600">此區域已由軍方接管</p>
-                  <p className="m-0 text-sm text-gray-600">如需進入請先聯繫相關單位</p>
-                </div>
+        <Polygon
+          positions={[
+            [23.6789504, 121.4378053],
+            [23.6770049, 121.4362603],
+            [23.674069, 121.4351596],
+            [23.6720989, 121.4348699],
+            [23.6698614, 121.4344685],
+            [23.6664467, 121.433283],
+            [23.6633488, 121.4318963],
+            [23.6627863, 121.4336424],
+            [23.6675915, 121.4410239],
+            [23.667336, 121.4425474],
+            [23.6673753, 121.4434486],
+            [23.6682204, 121.4475041],
+            [23.6696354, 121.45392],
+            [23.6708735, 121.4575892],
+            [23.6714237, 121.4580184],
+            [23.6725832, 121.4570313],
+            [23.6731138, 121.4538985],
+            [23.6751576, 121.4473539],
+            [23.6789504, 121.4378053],
+          ]}
+          pathOptions={{
+            color: '#dc2626',
+            weight: 3,
+            opacity: 1,
+            fillColor: '#dc2626',
+            fillOpacity: 0.15,
+            dashArray: '10, 10',
+          }}
+          pane="disasterPane"
+        >
+          <Popup>
+            <div>
+              <h3 className="font-bold text-red-600">⚠️ 軍方接管區域</h3>
+              <div className="gap-0 space-y-1">
+                <p className="m-0 text-sm font-semibold text-red-700">志工請勿擅自進入</p>
+                <p className="m-0 text-sm text-gray-600">此區域已由軍方接管</p>
+                <p className="m-0 text-sm text-gray-600">如需進入請先聯繫相關單位</p>
               </div>
-            </Popup>
-          </Polygon>
-        )}
+            </div>
+          </Popup>
+        </Polygon>
 
         {userPosition && isUserLocationVisible && (
           <Marker position={[userPosition.lat, userPosition.lng]} icon={userLocationIcon}>
