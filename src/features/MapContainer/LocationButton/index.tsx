@@ -2,7 +2,7 @@
 
 import { UserPosition } from '@/lib/types/map';
 
-interface LocationPanelProps {
+interface LocationButtonProps {
   isFullScreenMap: boolean;
   geolocation: {
     userPosition: UserPosition | null;
@@ -15,11 +15,11 @@ interface LocationPanelProps {
   onLocationToggle: () => void;
 }
 
-export default function LocationPanel({
+export default function LocationButton({
   isFullScreenMap,
   geolocation,
   onLocationToggle,
-}: LocationPanelProps) {
+}: LocationButtonProps) {
   const handleLocationButtonPress = async () => {
     if (!geolocation.hasLocationPermission || !geolocation.userPosition) {
       onLocationToggle();
