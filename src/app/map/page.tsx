@@ -1,7 +1,7 @@
-import { Suspense } from 'react';
-import { Metadata } from 'next';
 import PageLayout from '@/components/PageLayout';
 import SiteMap from '@/features/SiteMap';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 const SITE_URL = 'https://gf250923.org';
 const LOGO_URL = 'https://gf250923.org/logo_new.svg';

@@ -1,18 +1,20 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import ActionButton from '@/components/ActionButton';
 import Button from '@/components/Button';
+import StepNumber from '@/components/StepNumber';
+import PlaceList from '@/features/PlaceList';
 import ClothingProtectionChecklist from '@/features/VolunteerInfo/ClothingProtectionChecklist';
+import DisasterReliefToolsChecklist from '@/features/VolunteerInfo/DisasterReliefToolsChecklist';
+import FoodSuppliesChecklist from '@/features/VolunteerInfo/FoodSuppliesChecklist';
 import FootwearHandsChecklist from '@/features/VolunteerInfo/FootwearHandsChecklist';
 import MedicalItemsChecklist from '@/features/VolunteerInfo/MedicalItemsChecklist';
-import FoodSuppliesChecklist from '@/features/VolunteerInfo/FoodSuppliesChecklist';
-import DisasterReliefToolsChecklist from '@/features/VolunteerInfo/DisasterReliefToolsChecklist';
-import OtherEssentialChecklist from './OtherEssentialChecklistProps';
+import { PlaceType } from '@/lib/types/place';
 import { getAssetPath } from '@/lib/utils';
-import StepNumber from '@/components/StepNumber';
-import ActionButton from '@/components/ActionButton';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import OtherEssentialChecklist from './OtherEssentialChecklistProps';
 
 type InfoCategory = '行前必讀' | '交通資訊' | '住宿資訊';
 type TransportMode = '大眾運輸' | '共乘資訊';
@@ -56,7 +58,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
 
   const handleCategoryClick = (category: InfoCategory) => {
     if (category === '住宿資訊') {
-      router.push('/map?view=list&category=accommodations');
+      router.push('/volunteer/accommodations');
     } else if (category === '行前必讀') {
       router.push('/volunteer/preparation');
     } else if (category === '交通資訊') {
@@ -639,12 +641,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
             )}
           </div>
         )}
-        {selectedCategory === '住宿資訊' && (
-          <div className="p-6 bg-gray-50 rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">住宿資訊</h2>
-            <p className="text-[var(--gray)]">住宿資訊的內容將顯示在這裡</p>
-          </div>
-        )}
+        {selectedCategory === '住宿資訊' && <PlaceList activeTab={PlaceType.ACCOMMODATION} />}
       </div>
     </div>
   );

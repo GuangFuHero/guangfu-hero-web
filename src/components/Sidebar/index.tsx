@@ -17,7 +17,7 @@ const SIDEBAR_ITEM = [
     subItems: [
       { name: '行前必讀', href: '/volunteer/preparation' },
       { name: '交通資訊', href: '/volunteer/transportation' },
-      { name: '住宿資訊', href: '/map?view=list&category=accommodations' },
+      { name: '住宿資訊', href: '/volunteer/accommodations' },
     ],
   },
   {
