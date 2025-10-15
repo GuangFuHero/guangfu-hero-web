@@ -1,47 +1,76 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import CarouselIndicators from './CarouselIndicators';
 import { useDrag } from '@/hooks/useDrag';
 import PrevButton from './PrevButton';
 import NextButton from './NextButton';
 
-// 將簡單字串改為含有行為屬性的物件，便於控制哪些訊息可點擊
-// 可以用 \n 來換行
-const alerts = [
-  {
-    text: '現場隨時有溢流風險，點此詳讀避難守則\n若警報響起請儘速往高處避難',
-    actionable: true,
-  },
-  {
-    text: '今(15日)花蓮有零星降雨，山區防範午後短暫雷陣雨！',
-    actionable: false,
-  },
-  {
-    text: '多補水防中暑！注意自身安全，結伴同行更安心！',
-    actionable: false,
-  },
-  { text: '本平台不隸屬於任何政府、民間團體\n由熱心民眾齊心成立、普及災區資訊', actionable: false },
-  // { text: '與家人朋友保持聯繫，維持手機電量', actionable: false },
-];
-
 interface AlertBannerProps {
   onAlertClick: () => void;
 }
 
+interface BannerAlert {
+  text: string;
+  actionable: boolean;
+}
+
 export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
+  const [alerts, setAlerts] = useState<BannerAlert[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false); // 手動互動或 hover 時暫停輪播
 
   useEffect(() => {
-    if (isPaused) return; // 暫停時不啟動計時器
+    async function fetchBanners() {
+      try {
+        // 直接從客戶端抓取 Google Sheets（避免伺服器端權限問題）
+        const sheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+        if (!sheetId) {
+          throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
+        }
+
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+        const response = await fetch(csvUrl);
+        const csvText = await response.text();
+
+        // 檢查是否返回 HTML
+        if (csvText.includes('<!DOCTYPE') || csvText.includes('<html')) {
+          throw new Error('Google Sheets not accessible');
+        }
+
+        const lines = csvText.trim().split('\n');
+        const dataLines = lines.slice(1); // 跳過標題行
+
+        const fetchedAlerts: BannerAlert[] = dataLines
+          .map(line => {
+            const [text, actionableStr] = line.split(',').map(s => s.trim());
+            if (!text) return null;
+
+            return {
+              text: text
+                .replace(/^"|"$/g, '') // 移除前後引號
+                .replace(/\\n/g, '\n'), // 把 \n 轉換成真正的換行
+              actionable: actionableStr?.toLowerCase() === 'true',
+            };
+          })
+          .filter((alert): alert is BannerAlert => alert !== null);
+
+        if (fetchedAlerts.length > 0) {
+          setAlerts(fetchedAlerts);
+        }
+      } catch (error) {
+        console.error('Failed to fetch banners:', error);
+      }
+    }
+
+    fetchBanners();
+  }, []);
+
+  useEffect(() => {
+    if (isPaused || alerts.length === 0) return; // 暫停時或沒有資料時不啟動計時器
     const timer = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % alerts.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [isPaused]);
-
-  const currentInfo = alerts[currentSlide];
+  }, [isPaused, alerts.length]);
 
   const next = () => setCurrentSlide(prev => (prev + 1) % alerts.length);
   const prev = () => setCurrentSlide(prev => (prev - 1 + alerts.length) % alerts.length);
@@ -60,13 +89,23 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
     }
   };
 
-  // Use drag hook for swipe/drag navigation
   const { isDragging, dragHandlers } = useDrag({
     onSwipeLeft: next,
     onSwipeRight: prev,
     onDragStart: () => setIsPaused(true),
     onDragEnd: () => setIsPaused(false),
   });
+
+  if (alerts.length === 0) {
+    return (
+      <>
+        <div className="bg-[#FFEEBA] h-[64px]"></div>
+        <div className="py-3 bg-white"></div>
+      </>
+    );
+  }
+
+  const currentInfo = alerts[currentSlide];
 
   return (
     <div>
