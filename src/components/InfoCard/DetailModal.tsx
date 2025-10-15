@@ -88,7 +88,7 @@ const DetailModal = ({ onClose, type, name, fullData }: DetailModalProps) => {
         className="fixed inset-0 z-40 backdrop-blur-sm bg-[var(--black-overlay)]"
         onClick={onClose}
       />
-      <div className="fixed inset-0 z-50 flex items-end pointer-events-none">
+      <div className="fixed inset-0 z-1001 flex items-end pointer-events-none">
         <div
           className="bg-white rounded-t-2xl w-full max-h-[85vh] overflow-y-auto animate-slide-up shadow-lg pointer-events-auto"
           onClick={e => e.stopPropagation()}
