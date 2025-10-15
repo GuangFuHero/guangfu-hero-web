@@ -1,14 +1,13 @@
 'use client';
 
+import { UserPosition } from '@/lib/types/map';
 import { useModal } from '@/providers/ModalProvider';
 import { useToast } from '@/providers/ToastProvider';
-import { UserPosition } from '@/types/map';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => void) => {
   const [userPosition, setUserPosition] = useState<UserPosition | null>(null);
   const [hasLocationPermission, setHasLocationPermission] = useState(false);
-  const [isLocationVisible, setIsLocationVisible] = useState(false);
   const [isWatchingPosition, setIsWatchingPosition] = useState(false);
   const [watchId, setWatchId] = useState<number | null>(null);
 
@@ -121,6 +120,10 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
   }, [watchId]);
 
   const initLocationPermission = useCallback(async () => {
+    if (window && window?.sessionStorage) {
+      const denied = window.sessionStorage.getItem('locationPermissionRequestDenied');
+      if (denied) return;
+    }
     if (!navigator.geolocation) {
       showToast('您的瀏覽器不支援定位功能', 'warning');
       return;
@@ -147,6 +150,9 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
 
     if (!confirmed) {
       showToast('已取消位置權限請求', 'info');
+      if (window && window?.sessionStorage) {
+        window.sessionStorage.setItem('locationPermissionRequestDenied', 'true');
+      }
       return;
     }
 
@@ -154,7 +160,6 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
     try {
       await requestUserLocation();
       showToast('已獲得定位權限，正在啟動位置追蹤...', 'success');
-      setIsLocationVisible(true);
       // 延遲一秒後開始位置追蹤，不再顯示確認對話框
       setTimeout(() => startWatchingPosition(false), 1000);
     } catch (error) {
@@ -175,9 +180,7 @@ export const useGeolocation = (onPositionUpdate?: (position: UserPosition) => vo
   return {
     userPosition,
     hasLocationPermission,
-    isLocationVisible,
     isWatchingPosition,
-    setIsLocationVisible,
     requestUserLocation,
     startWatchingPosition,
     stopWatchingPosition,

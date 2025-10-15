@@ -1,3 +1,7 @@
+import { ModalProvider } from '@/providers/ModalProvider';
+import { QueryProvider } from '@/providers/QueryProvider';
+import { TabProvider } from '@/providers/TabProvider';
+import { ToastProvider } from '@/providers/ToastProvider';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,5 +14,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return (
+    <QueryProvider>
+      <TabProvider>
+        <ModalProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </ModalProvider>
+      </TabProvider>
+    </QueryProvider>
+  );
 }

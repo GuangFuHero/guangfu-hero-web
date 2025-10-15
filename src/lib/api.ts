@@ -1,22 +1,22 @@
 import {
   AccommodationsResponse,
-  RestRoomsResponse,
-  ShowerStationsResponse,
-  WaterRefillStationsResponse,
-  ShelterResponse,
+  MedicalStation,
   MedicalStationResponse,
+  MentalHealthResource,
   MentalHealthResourceResponse,
   ReportRequest,
   ReportResponse,
-  MentalHealthResource,
-  MedicalStation,
-  Shelter,
-  SupplyResponse,
   ReportSupplyProvider,
   ReportSupplyProviderResponse,
+  RestRoomsResponse,
+  Shelter,
+  ShelterResponse,
+  ShowerStationsResponse,
+  SupplyResponse,
+  WaterRefillStationsResponse,
 } from './types';
 
-const API_BASE_URL = 'https://guangfu250923.pttapp.cc';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guangfu250923.pttapp.cc';
 const isProd = process.env.NODE_ENV === 'production';
 
 export async function fetchAPI<T>(
@@ -25,15 +25,10 @@ export async function fetchAPI<T>(
 ): Promise<T> {
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
 
-  // const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
-  const base =
-    // for python dev domain
-    path === '/<enpoints>'
-      ? `${window.location.origin}/devapi`
-      : // for python prod domain
-        path === '/<enpoints>'
-        ? `${window.location.origin}/api`
-        : API_BASE_URL;
+  let base: string;
+
+  if (isProd) base = `${window.location.origin}/api`;
+  else base = `${window.location.origin}/devapi`;
 
   const url = new URL(`${base}${path}`);
 

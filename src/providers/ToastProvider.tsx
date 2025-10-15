@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 interface ToastMessage {
@@ -33,7 +35,6 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
 
     setToasts(prev => [...prev, newToast]);
 
-    // 自動移除 toast
     setTimeout(() => {
       removeToast(id);
     }, duration);
