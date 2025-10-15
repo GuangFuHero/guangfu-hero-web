@@ -10,7 +10,6 @@ import ReactLeafletMap from './ReactLeafletMap';
 
 const LocationPanel = dynamic(() => import('./LocationPanel'), { ssr: false });
 const InfoSidebar = dynamic(() => import('./InfoSidebar'), { ssr: false });
-const Modals = dynamic(() => import('./Modals'), { ssr: false });
 
 export default function MapContainer({ isFullScreenMap = true }: { isFullScreenMap?: boolean }) {
   const router = useRouter();
