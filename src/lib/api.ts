@@ -16,7 +16,7 @@ import {
   WaterRefillStationsResponse,
 } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guangfu250923.pttapp.cc';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.gf250923.org';
 const isProd = process.env.NODE_ENV === 'production';
 
 export async function fetchAPI<T>(
@@ -27,7 +27,7 @@ export async function fetchAPI<T>(
 
   let base: string;
 
-  if (isProd) base = `${window.location.origin}/api`;
+  if (isProd) base = API_BASE_URL;
   else base = `${window.location.origin}/devapi`;
 
   const url = new URL(`${base}${path}`);
