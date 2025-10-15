@@ -4,11 +4,11 @@ import { UserPosition } from '@/lib/types/map';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import FullscreenPanel from './FullscreenPanel';
+import FullscreenButton from './FullscreenButton';
 import './map.css';
 import ReactLeafletMap from './ReactLeafletMap';
 
-const LocationPanel = dynamic(() => import('./LocationPanel'), { ssr: false });
+const LocationButton = dynamic(() => import('./LocationButton'), { ssr: false });
 const InfoSidebar = dynamic(() => import('./InfoSidebar'), { ssr: false });
 
 export default function MapContainer({ isFullScreenMap = true }: { isFullScreenMap?: boolean }) {
@@ -74,12 +74,12 @@ export default function MapContainer({ isFullScreenMap = true }: { isFullScreenM
         userPosition={geolocation.userPosition}
       />
 
-      <FullscreenPanel
+      <FullscreenButton
         isFullScreenMap={isFullScreenMap}
         onToggleFullScreen={handleToggleFullScreen}
       />
 
-      <LocationPanel
+      <LocationButton
         geolocation={geolocation}
         isFullScreenMap={isFullScreenMap}
         onLocationToggle={geolocation.requestUserLocation}

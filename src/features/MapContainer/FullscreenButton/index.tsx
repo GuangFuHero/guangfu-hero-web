@@ -1,14 +1,14 @@
 'use client';
 
-interface FullscreenPanelProps {
+interface FullscreenButtonProps {
   isFullScreenMap: boolean;
   onToggleFullScreen: () => void;
 }
 
-export default function FullscreenPanel({
+export default function FullscreenButton({
   isFullScreenMap,
   onToggleFullScreen,
-}: FullscreenPanelProps) {
+}: FullscreenButtonProps) {
   return (
     <div className="fullscreen-panel">
       <button className="go-back-btn" onClick={onToggleFullScreen} title="切換全屏">
