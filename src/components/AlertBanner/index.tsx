@@ -10,7 +10,7 @@ interface AlertBannerProps {
 
 interface BannerAlert {
   text: string;
-  actionable: boolean;
+  actionable: boolean | string; // true=彈出警告視窗, URL=導向連結, false=不可點擊
 }
 
 export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
@@ -44,11 +44,23 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
             const [text, actionableStr] = line.split(',').map(s => s.trim());
             if (!text) return null;
 
+            let actionable: boolean | string = false;
+            if (actionableStr) {
+              const cleanStr = actionableStr.replace(/^"|"$/g, '').trim();
+              if (cleanStr.toLowerCase() === 'true') {
+                actionable = true; // 彈出警告視窗
+              } else if (cleanStr.toLowerCase() === 'false' || cleanStr === '') {
+                actionable = false; // 不可點擊
+              } else if (cleanStr.startsWith('https')) {
+                actionable = cleanStr; // URL 連結
+              }
+            }
+
             return {
               text: text
                 .replace(/^"|"$/g, '') // 移除前後引號
                 .replace(/\\n/g, '\n'), // 把 \n 轉換成真正的換行
-              actionable: actionableStr?.toLowerCase() === 'true',
+              actionable,
             };
           })
           .filter((alert): alert is BannerAlert => alert !== null);
@@ -75,6 +87,14 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
   const next = () => setCurrentSlide(prev => (prev + 1) % alerts.length);
   const prev = () => setCurrentSlide(prev => (prev - 1 + alerts.length) % alerts.length);
 
+  const handleClick = () => {
+    if (currentInfo.actionable === true) {
+      onAlertClick();
+    } else if (typeof currentInfo.actionable === 'string') {
+      window.open(currentInfo.actionable, '_blank');
+    }
+  };
+
   const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = e => {
     if (e.key === 'ArrowRight') {
       setIsPaused(true);
@@ -83,9 +103,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
       setIsPaused(true);
       prev();
     } else if (e.key === 'Enter' || e.key === ' ') {
-      if (currentInfo.actionable) {
-        onAlertClick();
-      }
+      handleClick();
     }
   };
 
@@ -110,10 +128,10 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
   return (
     <div>
       <div
-        className={`bg-[#FFEEBA] h-[64px] flex items-center justify-center cursor-pointer hover:bg-[#FFE5A0] transition-colors ${
+        className={`bg-[#FFEEBA] h-[64px] flex items-center justify-center transition-colors ${
           currentInfo.actionable ? 'cursor-pointer hover:bg-[#FFE5A0]' : 'cursor-default'
         } ${isDragging ? 'select-none' : ''}`}
-        onClick={() => currentInfo.actionable && onAlertClick()}
+        onClick={handleClick}
         role={currentInfo.actionable ? 'button' : undefined}
         aria-pressed={currentInfo.actionable ? false : undefined}
         aria-disabled={!currentInfo.actionable || undefined}
@@ -126,10 +144,14 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
       >
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full select-none">
           <PrevButton setIsPaused={setIsPaused} prev={prev} />
-          <div className="flex-1 text-center text-[var(--text-black)] font-medium whitespace-pre-wrap">
-            {currentInfo.text}
-            {!currentInfo.actionable && <span className="sr-only">（此訊息不可點擊）</span>}
-          </div>
+          <div
+            className={`flex-1 text-center font-medium whitespace-pre-wrap [&_a]:text-blue-600 [&_a]:underline [&_a]:hover:text-blue-800 ${
+              typeof currentInfo.actionable === 'string'
+                ? 'text-blue-600 underline'
+                : 'text-[var(--text-black)]'
+            }`}
+            dangerouslySetInnerHTML={{ __html: currentInfo.text }}
+          />
           <NextButton setIsPaused={setIsPaused} next={next} />
         </div>
       </div>
