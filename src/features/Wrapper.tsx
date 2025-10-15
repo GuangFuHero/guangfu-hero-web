@@ -1,8 +1,8 @@
-import React from 'react';
-import Header from '@/features/Header';
-import Footer from '@/features/Footer';
 import Banner from '@/features/Banner';
+import Footer from '@/features/Footer';
+import Header from '@/features/Header';
 import clsx from 'clsx';
+import React from 'react';
 
 interface WrapperProps {
   hideBanner?: boolean;
@@ -23,21 +23,17 @@ const Wrapper = ({
   return (
     // 若關閉 main 滾動，外層一併隱藏滾動避免多層滾；使用 dvh 更準確
     <div className={clsx('min-h-dvh flex flex-col', noMainScroll && 'overflow-hidden')}>
-      
       <Header hideShare={hideShare} />
 
       <main
         className={clsx(
           'flex-1 min-h-0',
-          noMainScroll ? 'overflow-hidden' : 'overflow-y-auto scrollbar-none',
-          'mt-[65px]',
-          !hideFooter && 'mb-[85px]',
+          noMainScroll ? 'overflow-hidden' : 'overflow-y-auto scrollbar-none'
         )}
       >
         {!hideBanner && <Banner />}
         {children}
       </main>
-
 
       {!hideFooter && <Footer />}
     </div>

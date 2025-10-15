@@ -1,16 +1,16 @@
-import React from 'react';
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  Box,
   Button,
-  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   List,
   ListItem,
   ListItemText,
-  Box,
+  Typography,
 } from '@mui/material';
+import React from 'react';
 
 export interface ConfirmModalItem {
   name: string;

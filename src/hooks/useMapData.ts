@@ -1,91 +1,89 @@
 'use client';
 
-import {
-  getAccommodations,
-  getMedicalStations,
-  getRestrooms,
-  getShowerStations,
-  getWaterStations,
-} from '@/apis';
-import { Accommodation } from '@/types/accommodation';
+import { getAllPlacesAsync } from '@/lib/apis';
+import { createApiRequest } from '@/lib/apis/config';
+import { getPlacesAsync } from '@/lib/apis/get-places';
 
-import { MedicalStation } from '@/types/medicalStation';
-import { Restroom } from '@/types/restroom';
-import { ShowerStation } from '@/types/showerStation';
-import { WaterStation } from '@/types/waterStation';
-import { useQuery } from '@tanstack/react-query';
+import { Place, PlaceType, PlacesResponse } from '@/lib/types/place';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-// Query Keys
 export const queryKeys = {
-  accommodations: ['accommodations'] as const,
-  waterStations: ['waterStations'] as const,
-  restrooms: ['restrooms'] as const,
-  showerStations: ['showerStations'] as const,
-  medicalStations: ['medicalStations'] as const,
-  allData: ['allData'] as const,
+  allPlaces: ['places'] as const,
+  infinitePlaces: (type?: PlaceType | 'all') => [type || 'all'] as const,
 };
 
-// 住宿點數據
-export const useAccommodations = () => {
+export const useAllPlaces = () => {
   return useQuery({
-    queryKey: queryKeys.accommodations,
-    queryFn: async (): Promise<Accommodation[]> => {
-      const response = await getAccommodations();
-      return response.member || [];
-    },
-    staleTime: 5 * 60 * 1000, // 5 分鐘
-    gcTime: 10 * 60 * 1000, // 10 分鐘
-  });
-};
+    queryKey: queryKeys.allPlaces,
+    queryFn: async (): Promise<Record<PlaceType | string, Place[]>> => {
+      const response = await getAllPlacesAsync();
+      const places = response?.member || [];
 
-// 加水站數據
-export const useWaterStations = () => {
-  return useQuery({
-    queryKey: queryKeys.waterStations,
-    queryFn: async (): Promise<WaterStation[]> => {
-      const response = await getWaterStations();
-      return response.member || [];
+      const defaultGroupedPlaces: Record<string, Place[]> = {};
+
+      Object.values(PlaceType).forEach(type => {
+        defaultGroupedPlaces[type] = [];
+      });
+
+      const groupedPlaces = places.reduce((acc: Record<string, Place[]>, place: Place) => {
+        const type = place.type;
+        if (Array.isArray(acc[type])) {
+          acc[type].push(place);
+        }
+        return acc;
+      }, defaultGroupedPlaces);
+
+      return groupedPlaces;
     },
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
   });
 };
 
-// 廁所數據
-export const useRestrooms = () => {
-  return useQuery({
-    queryKey: queryKeys.restrooms,
-    queryFn: async (): Promise<Restroom[]> => {
-      const response = await getRestrooms();
-      return response.member || [];
+export const useInfinitePlaces = (type?: PlaceType | 'all') => {
+  const infiniteQuery = useInfiniteQuery({
+    enabled: true,
+    queryKey: queryKeys.infinitePlaces(type),
+    queryFn: async ({ pageParam }: { pageParam?: string }): Promise<PlacesResponse> => {
+      try {
+        if (pageParam) {
+          return await createApiRequest<PlacesResponse>(pageParam);
+        }
+        const apiType = type === 'all' ? undefined : type;
+        return await getPlacesAsync(apiType);
+      } catch (error) {
+        console.error('❌ API 請求失敗:', error);
+        throw error;
+      }
+    },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage: PlacesResponse) => {
+      return lastPage.next || undefined;
     },
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
-};
 
-// 洗澡點數據
-export const useShowerStations = () => {
-  return useQuery({
-    queryKey: queryKeys.showerStations,
-    queryFn: async (): Promise<ShowerStation[]> => {
-      const response = await getShowerStations();
-      return response.member || [];
-    },
-    staleTime: 5 * 60 * 1000,
-    gcTime: 10 * 60 * 1000,
-  });
-};
+  const flatData = infiniteQuery.data?.pages.flatMap(page => page.member) || [];
 
-// 醫療站數據
-export const useMedicalStations = () => {
-  return useQuery({
-    queryKey: queryKeys.medicalStations,
-    queryFn: async (): Promise<MedicalStation[]> => {
-      const response = await getMedicalStations();
-      return response.member || [];
+  const groupedData: Record<PlaceType, Place[]> = Object.values(PlaceType).reduce(
+    (acc, placeType) => {
+      acc[placeType] = [];
+      return acc;
     },
-    staleTime: 5 * 60 * 1000,
-    gcTime: 10 * 60 * 1000,
+    {} as Record<PlaceType, Place[]>
+  );
+
+  flatData.forEach(place => {
+    if (groupedData[place.type]) {
+      groupedData[place.type].push(place);
+    }
   });
+
+  return {
+    ...infiniteQuery,
+    data: groupedData,
+    flatData,
+  };
 };
