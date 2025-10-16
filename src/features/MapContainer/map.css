@@ -625,10 +625,6 @@ details:not([open]) .details-arrow {
   zoom: 1.3;
 }
 
-.leaflet-bottom {
-  z-index: 800;
-}
-
 .leaflet-left .leaflet-control {
   margin-left: 16px;
   margin-bottom: 16px;
@@ -647,4 +643,8 @@ details:not([open]) .details-arrow {
       height: 36px;
     }
   }
+}
+
+.leaflet-control-container > .leaflet-bottom {
+  z-index: 800;
 }

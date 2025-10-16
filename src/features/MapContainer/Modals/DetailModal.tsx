@@ -1,24 +1,12 @@
 'use client';
 
 import ActionButton from '@/components/ActionButton';
-import { getGoogleMapsUrl } from '@/lib/utils';
+import { formatDateRange, formatTimeRange, getGoogleMapsUrl } from '@/lib/utils';
 import { useModal } from '@/providers/ModalProvider';
-import dayjs from 'dayjs';
 import { useMemo } from 'react';
 
 const DetailModal = () => {
   const { isDetailModalOpen, detailData, closeModal, openReportModal } = useModal();
-
-  const formatDateRange = (openDate?: string, endDate?: string) => {
-    if (openDate && dayjs(openDate).isValid() && endDate && dayjs(endDate).isValid()) {
-      const formatDate = (dateStr: string) => {
-        const date = dayjs(dateStr);
-        return date.isValid() ? date.format('YYYY.MM.DD') : dateStr;
-      };
-      return `${formatDate(openDate)} ~ ${formatDate(endDate)}`;
-    }
-    return null;
-  };
 
   const formattedData = useMemo(() => {
     if (!detailData?.fullData) return [];
@@ -33,18 +21,19 @@ const DetailModal = () => {
       });
     }
 
-    const openingHours = formatDateRange(place.open_date, place.end_date);
-    if (openingHours) {
+    const displayDate = formatDateRange(place.open_date, place.end_date);
+    if (displayDate) {
       entries.push({
         label: '開放日期',
-        value: openingHours,
+        value: displayDate,
       });
     }
 
-    if (place.open_time && place.end_time) {
+    const displayTime = formatTimeRange(place.open_time, place.end_time);
+    if (displayTime) {
       entries.push({
         label: '開放時段',
-        value: `${place.open_time}-${place.end_time}`,
+        value: displayTime,
       });
     }
 

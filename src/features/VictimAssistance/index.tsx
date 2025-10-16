@@ -1,9 +1,9 @@
 'use client';
 
 import Button from '@/components/Button';
-import { PlaceType } from '@/lib/types/place';
+import { Place, PlaceType } from '@/lib/types/place';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import PlaceList from '../PlaceList';
 
 type Category = '庇護所' | '醫療站' | '心理資源';
@@ -32,6 +32,15 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
 
   const categories: Category[] = ['庇護所', '醫療站', '心理資源'];
   const serviceFormats: ServiceFormat[] = ['全部', '實體', '線上', '電話', '多種'];
+
+  const handleFilterPlaces = useCallback(
+    (place: Place) => {
+      if (selectedCategory !== '心理資源') return true;
+      if (selectedServiceFormat === '全部') return true;
+      return place?.sub_type === selectedServiceFormat;
+    },
+    [selectedCategory, selectedServiceFormat]
+  );
 
   const handleCategoryClick = (category: Category) => {
     // 設置選中的分類
@@ -72,7 +81,10 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
       )}
 
       <div className="space-y-4">
-        <PlaceList activeTab={CATEGORY_TO_PLACE_TYPE[selectedCategory]} />
+        <PlaceList
+          activeTab={CATEGORY_TO_PLACE_TYPE[selectedCategory]}
+          onFilterPlaces={handleFilterPlaces}
+        />
       </div>
     </div>
   );

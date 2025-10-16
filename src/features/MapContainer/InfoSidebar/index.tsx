@@ -4,9 +4,8 @@ import { PLACE_CONFIG } from '@/features/MapContainer/ReactLeafletMap/place.conf
 import { useAllPlaces } from '@/hooks/useMapData';
 import { UserPosition } from '@/lib/types/map';
 import { Place, PlaceCoordinates, PlaceCoordinatesType, PlaceType } from '@/lib/types/place';
-import { getGoogleMapsUrl } from '@/lib/utils';
+import { formatDateRange, getGoogleMapsUrl } from '@/lib/utils';
 import { useTab } from '@/providers/TabProvider';
-import dayjs from 'dayjs';
 import { RefObject } from 'react';
 import Legend from './Legend';
 import InfoSidebarButton from './button';
@@ -26,6 +25,8 @@ interface InfoSidebarProps {
 const getCenterCoordinates = (
   coordinates: PlaceCoordinates
 ): { lat: number; lng: number } | null => {
+  if (!coordinates) return null;
+
   switch (coordinates.type) {
     case PlaceCoordinatesType.POINT:
       return { lat: coordinates.coordinates[1], lng: coordinates.coordinates[0] };
@@ -52,21 +53,14 @@ const getCenterCoordinates = (
   }
 };
 
-const renderOpeningHours = (openTime?: string, endTime?: string) => {
-  const isOpenTimeValid = openTime && dayjs(openTime).isValid();
-  const isEndTimeValid = endTime && dayjs(endTime).isValid();
+const renderOpeningHours = (openDate?: string, endDate?: string) => {
+  const displayDate = formatDateRange(openDate, endDate);
 
-  if (!isOpenTimeValid && !isEndTimeValid) {
+  if (!displayDate) {
     return null;
   }
 
-  return (
-    <p className="text-xs font-medium">
-      🕐 {isOpenTimeValid ? dayjs(openTime).format('YYYY-MM-DD HH:mm') : ''}
-      {isOpenTimeValid && isEndTimeValid ? ' - ' : ''}
-      {isEndTimeValid ? dayjs(endTime).format('YYYY-MM-DD HH:mm') : ''}
-    </p>
-  );
+  return <p className="text-xs font-medium">🕐 {displayDate}</p>;
 };
 
 export default function InfoSidebar({
@@ -115,20 +109,20 @@ export default function InfoSidebar({
                     {place.address || place.address_description || '未提供地址'}
                   </p>
 
-                  <p className="text-xs mt-1 font-medium">
-                    {place.coordinates.type === PlaceCoordinatesType.POLYGON &&
-                      ` (${place.coordinates.coordinates.length} 個點)`}
-                    {place.coordinates.type === PlaceCoordinatesType.LINE_STRING &&
-                      ` (${place.coordinates.coordinates.length} 個節點)`}
-                  </p>
+                  {place.coordinates ? (
+                    <p className="text-xs mt-1 font-medium">
+                      {place.coordinates.type === PlaceCoordinatesType.POLYGON &&
+                        ` (${place.coordinates.coordinates.length} 個點)`}
+                      {place.coordinates.type === PlaceCoordinatesType.LINE_STRING &&
+                        ` (${place.coordinates.coordinates.length} 個節點)`}
+                    </p>
+                  ) : null}
 
-                  {place.sub_type && (
-                    <p className="text-xs mt-1 font-medium">類型: {place.sub_type}</p>
-                  )}
+                  {place.sub_type && <p className="text-xs mt-1 font-medium">{place.sub_type}</p>}
                   {place.contact_phone && (
                     <p className="text-xs font-medium">📞 {place.contact_phone}</p>
                   )}
-                  {renderOpeningHours(place.open_time, place.end_time)}
+                  {renderOpeningHours(place.open_date, place.end_date)}
                 </div>
 
                 <div className="flex flex-col gap-1 font-medium">

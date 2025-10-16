@@ -8,10 +8,9 @@ import {
   PointCoordinates,
   PolygonCoordinates,
 } from '@/lib/types/place';
-import { getGoogleMapsUrl } from '@/lib/utils';
+import { formatDateRange, formatTimeRange, getGoogleMapsUrl } from '@/lib/utils';
 import { useModal } from '@/providers/ModalProvider';
 import { useToast } from '@/providers/ToastProvider';
-import dayjs from 'dayjs';
 import { Marker, Polygon, Polyline, Popup, useMap } from 'react-leaflet';
 import { getTabIcon } from './Icons';
 import { PLACE_CONFIG } from './place.config';
@@ -29,6 +28,7 @@ const getPlaceIconConfig = (type: PlaceType | string) => {
 };
 
 const isValidCoordinates = (coordinates: PlaceCoordinates, type: PlaceCoordinatesType): boolean => {
+  if (!coordinates) return false;
   if (!coordinates?.coordinates || !Array.isArray(coordinates.coordinates)) {
     return false;
   }
@@ -39,14 +39,17 @@ const isValidCoordinates = (coordinates: PlaceCoordinates, type: PlaceCoordinate
 const isPointCoordinates = (coordinates: PlaceCoordinates): coordinates is PointCoordinates => {
   return (
     isValidCoordinates(coordinates, PlaceCoordinatesType.POINT) &&
-    coordinates.coordinates.length === 2
+    !!coordinates &&
+    coordinates?.coordinates.length === 2
   );
 };
 
 const isPolygonCoordinates = (coordinates: PlaceCoordinates): coordinates is PolygonCoordinates => {
   return (
     isValidCoordinates(coordinates, PlaceCoordinatesType.POLYGON) &&
+    !!coordinates &&
     coordinates.coordinates.length > 0 &&
+    !!coordinates &&
     coordinates.coordinates.every(coord => Array.isArray(coord) && coord.length === 2)
   );
 };
@@ -56,20 +59,9 @@ const isLineStringCoordinates = (
 ): coordinates is LineStringCoordinates => {
   return (
     isValidCoordinates(coordinates, PlaceCoordinatesType.LINE_STRING) &&
+    !!coordinates &&
     coordinates.coordinates.length >= 2
   );
-};
-
-const renderOpeningHours = (openDate?: string, endDate?: string) => {
-  if (openDate && dayjs(openDate).isValid() && endDate && dayjs(endDate).isValid()) {
-    const formatDate = (dateStr: string) => {
-      const date = dayjs(dateStr);
-      return date.isValid() ? date.format('YYYY/MM/DD') : dateStr;
-    };
-    return `${formatDate(openDate)} ~ ${formatDate(endDate)}`;
-  }
-
-  return null;
 };
 
 const createPopupContent = (
@@ -79,7 +71,8 @@ const createPopupContent = (
   onDetailModalOpen: () => void
 ) => {
   const googleMapsUrl = getGoogleMapsUrl(place.coordinates);
-  const openingHours = renderOpeningHours(place.open_date, place.end_date);
+  const displayDate = formatDateRange(place.open_date, place.end_date);
+  const displayTime = formatTimeRange(place.open_time, place.end_time);
 
   return (
     <div className="min-w-[200px] max-w-[300px]">
@@ -96,30 +89,28 @@ const createPopupContent = (
       <div className="space-y-2 text-[16px] font-normal text-[#3A3937] gap-1 mt-2">
         {place.address && (
           <div className="flex items-start gap-2">
-            <span className="text-[#838383] min-w-[80px]">地址</span>
+            <span className="text-[#838383] min-w-[80px] text-nowrap">地址</span>
             <span className="flex-1 ">{place.address}</span>
           </div>
         )}
 
-        {openingHours && (
+        {displayDate && (
           <div className="flex items-start gap-2">
-            <span className="text-[#838383] min-w-[80px]">開放日期</span>
-            <span className="flex-1">{openingHours}</span>
+            <span className="text-[#838383] min-w-[80px] text-nowrap">開放日期</span>
+            <span className="flex-1">{displayDate}</span>
           </div>
         )}
 
-        {place?.open_time && place?.end_time && (
+        {displayTime && (
           <div className="flex items-start gap-2">
-            <span className="text-[#838383] min-w-[80px]">開放時段</span>
-            <span className="flex-1">
-              {place.open_time}-{place.end_time}
-            </span>
+            <span className="text-[#838383] min-w-[80px] text-nowrap">開放時段</span>
+            <span className="flex-1">{displayTime}</span>
           </div>
         )}
 
         {place.contact_phone && (
           <div className="flex items-start gap-2">
-            <span className="text-[#838383] min-w-[80px]">聯絡</span>
+            <span className="text-[#838383] min-w-[80px] text-nowrap">聯絡</span>
             {place.contact_phone !== '-' ? (
               <div
                 className="flex gap-2 justify-between items-center cursor-pointer hover:bg-gray-50 p-1 rounded transition-colors"
@@ -149,7 +140,7 @@ const createPopupContent = (
 
         {place.notes && (
           <div className="flex items-start gap-2 line-clamp-2">
-            <span className="text-[#838383] min-w-[80px]">備註</span>
+            <span className="text-[#838383] min-w-[80px] text-nowrap">備註</span>
             <span className="flex-1">{place.notes}</span>
           </div>
         )}
