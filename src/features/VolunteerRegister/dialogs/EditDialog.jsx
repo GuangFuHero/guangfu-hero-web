@@ -18,7 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { safeApiRequest } from '../utils/helpers';
-import { API_URL } from '@/lib/api';
+import { getApiUrl } from '@/lib/api';
 
 export default function EditDialog({
   open,
@@ -57,7 +57,7 @@ export default function EditDialog({
       payload.status = 'completed';
       payload.is_completed = true;
     }
-    const result = await safeApiRequest(`${API_URL}/human_resources/${request.id}`, {
+    const result = await safeApiRequest(`${getApiUrl()}/human_resources/${request.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ import theme from './colorPalate';
 // import { Analytics } from '@vercel/analytics/react';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
-import { API_URL } from '@/lib/api';
+import { getApiUrl } from '@/lib/api';
 
 export default function MainContent() {
   const [requests, setRequests] = useState([]);
@@ -77,7 +77,7 @@ export default function MainContent() {
     setIsLoading(true);
     setRequests([]);
     const result = await safeApiRequest(
-      `${API_URL}/human_resources?limit=20&offset=${offset * 20}&status=${state}&order_by_time=desc&q_role=${listFilter}`
+      `${getApiUrl()}/human_resources?limit=20&offset=${offset * 20}&status=${state}&order_by_time=desc&q_role=${listFilter}`
     );
     if (result.success) {
       setOriginalData(result.data.member);
