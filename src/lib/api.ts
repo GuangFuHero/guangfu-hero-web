@@ -18,6 +18,7 @@ import {
 
 const API_BASE_URL = 'https://guangfu250923.pttapp.cc';
 const isProd = process.env.NODE_ENV === 'production';
+export const API_URL = isProd ? API_BASE_URL : API_BASE_URL + '/api';
 
 export async function fetchAPI<T>(
   endpoint: string,
