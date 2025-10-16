@@ -4,6 +4,7 @@ import { Card, CardContent, CardActions, Typography, Box, Button, Chip } from '@
 import CustomProgressBar from './Progress';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import dayjs from 'dayjs';
 
 import RoomIcon from '@mui/icons-material/Room';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -108,35 +109,41 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
             {request.org}
           </Typography>
           <Typography variant="body2">
-            <RoomIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top' }} />{' '}
+            <RoomIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top' }} />
             <Button
-              sx={{ textTransform: 'inherit' }}
+              sx={{ textTransform: 'inherit', textDecoration: 'underline' }}
               size="small"
               color="info"
               onClick={() => handleCopyByDomElement(request.address)}
             >
-              <u>{request.address}</u>
+              {request.address}
             </Button>
           </Typography>
 
           {!isRequestCompleted && (
             <Typography variant="body2" sx={{ marginBottom: 1 }}>
-              <PersonIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top' }} />{' '}
+              <PersonIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }} />
               {request.phone ? request.phone : '(未填寫電話號碼)'}
             </Typography>
           )}
 
           {request.created_at === request.updated_at ? (
             <Typography variant="body2" sx={{ marginBottom: 1 }}>
-              <AccessTimeIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top' }} /> 建立於{' '}
-              {getAbsoluteTime(request.created_at)} ({getRelativeTime(request.created_at)})
+              <AccessTimeIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }} />
+              建立於 {dayjs.unix(Number(request.created_at)).format('YYYY-MM-DD HH:mm')} (
+              {getRelativeTime(request.created_at)})
             </Typography>
           ) : (
-            <Typography variant="body2" sx={{ marginBottom: 1 }}>
-              <AccessTimeIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top' }} /> 建立於{' '}
-              {getAbsoluteTime(request.created_at)}，最後更新於{' '}
-              {getRelativeTime(request.updated_at)}
-            </Typography>
+            <>
+              <Typography variant="body2" sx={{ marginBottom: 1 }}>
+                <AccessTimeIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }} />
+                建立於 {dayjs.unix(Number(request.created_at)).format('YYYY-MM-DD HH:mm')}
+              </Typography>
+              <Typography variant="body2" sx={{ marginBottom: 1 }}>
+                <AccessTimeIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }} />
+                最後更新於 {getRelativeTime(request.updated_at)}
+              </Typography>
+            </>
           )}
 
           {request.assignment_notes && (
