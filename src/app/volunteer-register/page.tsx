@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Wrapper from '@/features/Wrapper';
+import { Typography } from '@mui/material';
 
 const SITE_URL = 'https://gf250923.org';
 const LOGO_URL = 'https://gf250923.org/logo_new.svg';
@@ -149,6 +150,9 @@ export default function VolunteerRegisterPage() {
       />
 
       {/* 原本 iframe */}
+      {/*
+      // Due to typhoon, close the matching pages temporarily
+
       <iframe
         src="https://hualien-volunteers-frontend-iota.vercel.app/"
         className="w-full border-0"
@@ -156,6 +160,10 @@ export default function VolunteerRegisterPage() {
         allow="geolocation"
         style={{ height: 'calc(100vh - 160px)' }}
       />
+      */}
+      <Typography sx={{ textAlign: 'center' }}>
+        因應颱風來襲，配合政府撤離志工指示，配送及志工媒合頁面暫不開放
+      </Typography>
     </Wrapper>
   );
 }
