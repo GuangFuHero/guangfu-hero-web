@@ -150,7 +150,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
           <div
             className={`flex-1 text-center font-medium whitespace-pre-wrap [&_a]:text-blue-600 [&_a]:underline [&_a]:hover:text-blue-800 ${
               typeof currentInfo.actionable === 'string'
-                ? 'text-blue-600 underline'
+                ? 'text-[var(--secondary)] underline'
                 : 'text-[var(--text-black)]'
             }`}
             dangerouslySetInnerHTML={{ __html: currentInfo.text }}
