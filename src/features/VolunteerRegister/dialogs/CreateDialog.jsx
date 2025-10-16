@@ -157,8 +157,8 @@ export default function CreateDialog({ open, onClose, onSubmittedCallback = isSu
                       24小時服務｜建物水不通
                     </li>
                     <li style={{ marginBottom: 5 }}>
-                      <Typography fontWeight={600}>水電：0972-223-354</Typography>
-                      24小時服務｜受災戶內部修繕
+                      <Typography fontWeight={600}>水電：03-8227171 #423,424</Typography>
+                      受災戶內部修繕
                     </li>
                   </ul>
                 </Alert>
