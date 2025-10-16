@@ -49,7 +49,7 @@ export const PLACE_TYPE_STRING_MAP: Record<PlaceType, string> = {
 
 type PlaceResource = {
   name: string;
-  count: number;
+  amount: number;
   unit: string;
 };
 
