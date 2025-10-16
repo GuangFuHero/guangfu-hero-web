@@ -12,10 +12,6 @@ const nextConfig: NextConfig = {
       return [
         {
           source: '/api/:path*',
-          destination: 'https://api.gf250923.org/:path*',
-        },
-        {
-          source: '/devapi/:path*',
           destination: 'https://uat-api.gf250923.org/:path*',
         },
       ];

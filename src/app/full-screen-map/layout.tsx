@@ -15,12 +15,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <QueryProvider>
-      <TabProvider>
-        <ModalProvider>
-          <ToastProvider>{children}</ToastProvider>
-        </ModalProvider>
-      </TabProvider>
-    </QueryProvider>
+    <div className="overflow-hidden h-[100svh] w-[100svw]">
+      <QueryProvider>
+        <TabProvider>
+          <ModalProvider>
+            <ToastProvider>{children}</ToastProvider>
+          </ModalProvider>
+        </TabProvider>
+      </QueryProvider>
+    </div>
   );
 }

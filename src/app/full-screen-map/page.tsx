@@ -19,6 +19,7 @@ const Modals = dynamic(() => import('@/features/MapContainer/Modals'), { ssr: fa
 const ToastContainer = dynamic(() => import('@/features/MapContainer/ToastContainer'), {
   ssr: false,
 });
+
 export default function FullscreenMapPage() {
   return (
     <div className="relative h-screen w-screen">
