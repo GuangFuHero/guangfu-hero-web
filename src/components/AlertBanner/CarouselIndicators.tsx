@@ -3,7 +3,7 @@
 import React from 'react';
 
 interface CarouselIndicatorsProps {
-  alerts: { text: string; actionable: boolean }[];
+  alerts: { text: string; actionable: boolean | string }[];
   setCurrentSlide: React.Dispatch<React.SetStateAction<number>>;
   setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
   currentSlide: number;
