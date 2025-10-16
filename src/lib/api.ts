@@ -1,19 +1,9 @@
 import {
-  AccommodationsResponse,
-  MedicalStation,
-  MedicalStationResponse,
-  MentalHealthResource,
-  MentalHealthResourceResponse,
   ReportRequest,
   ReportResponse,
   ReportSupplyProvider,
   ReportSupplyProviderResponse,
-  RestRoomsResponse,
-  Shelter,
-  ShelterResponse,
-  ShowerStationsResponse,
   SupplyResponse,
-  WaterRefillStationsResponse,
 } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.gf250923.org';
@@ -23,13 +13,8 @@ export async function fetchAPI<T>(
   endpoint: string,
   params?: Record<string, string | number>
 ): Promise<T> {
+  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-
-  let base: string;
-
-  if (isProd) base = API_BASE_URL;
-  else base = `${window.location.origin}/devapi`;
-
   const url = new URL(`${base}${path}`);
 
   if (params) {
@@ -47,97 +32,11 @@ export async function fetchAPI<T>(
   return response.json();
 }
 
-export async function getAccommodations(
-  limit: number = 50,
-  offset: number = 0
-): Promise<AccommodationsResponse> {
-  return fetchAPI<AccommodationsResponse>('/accommodations', {
-    limit,
-    offset,
-  });
-}
-
-export async function getRestrooms(
-  limit: number = 50,
-  offset: number = 0
-): Promise<RestRoomsResponse> {
-  return fetchAPI<RestRoomsResponse>('/restrooms', {
-    limit,
-    offset,
-  });
-}
-
-export async function getShowerStations(
-  limit: number = 50,
-  offset: number = 0
-): Promise<ShowerStationsResponse> {
-  return fetchAPI<ShowerStationsResponse>('/shower_stations', {
-    limit,
-    offset,
-  });
-}
-
-export async function getWaterRefillStations(
-  limit: number = 50,
-  offset: number = 0
-): Promise<WaterRefillStationsResponse> {
-  return fetchAPI<WaterRefillStationsResponse>('/water_refill_stations', {
-    limit,
-    offset,
-  });
-}
-
-export async function getShelters(
-  limit: number = 50,
-  offset: number = 0
-): Promise<ShelterResponse> {
-  const response = await fetchAPI<ShelterResponse>('/shelters', {
-    limit,
-    offset,
-  });
-  return {
-    ...response,
-    member: filterValidLocations(response.member as Shelter[]) as Shelter[],
-  };
-}
-
-export async function getMedicalStations(
-  limit: number = 50,
-  offset: number = 0
-): Promise<MedicalStationResponse> {
-  const response = await fetchAPI<MedicalStationResponse>('/medical_stations', {
-    limit,
-    offset,
-  });
-  return {
-    ...response,
-    member: filterValidLocations(response.member as MedicalStation[]) as MedicalStation[],
-  };
-}
-
-export async function getMentalHealthResources(
-  limit: number = 50,
-  offset: number = 0
-): Promise<MentalHealthResourceResponse> {
-  const response = await fetchAPI<MentalHealthResourceResponse>('/mental_health_resources', {
-    limit,
-    offset,
-  });
-  return {
-    ...response,
-    member: filterValidLocations(
-      response.member as MentalHealthResource[]
-    ) as MentalHealthResource[],
-  };
-}
-
 export async function submitReport(data: ReportRequest): Promise<ReportResponse> {
   const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
   const response = await fetch(`${base}/reports`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
 
@@ -146,14 +45,6 @@ export async function submitReport(data: ReportRequest): Promise<ReportResponse>
   }
 
   return response.json();
-}
-
-type Location = (MentalHealthResource | MedicalStation | Shelter)[];
-function filterValidLocations(locations: Location): Location {
-  return locations.filter(
-    location =>
-      location.status !== 'test' && location.status !== 'need_delete' && location.name !== ''
-  );
 }
 
 export async function getSupplies(limit: number = 50, offset: number = 0): Promise<SupplyResponse> {

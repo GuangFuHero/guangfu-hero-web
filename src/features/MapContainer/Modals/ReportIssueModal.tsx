@@ -1,5 +1,5 @@
 import { useSubmitIssueReport } from '@/hooks/useSubmitIssueReport';
-import { IssueReportData } from '@/lib/types/map';
+import { ReportRequest } from '@/lib/types';
 import { useModal } from '@/providers/ModalProvider';
 import { useToast } from '@/providers/ToastProvider';
 import { useState } from 'react';
@@ -25,13 +25,12 @@ export default function ReportIssueModal() {
       return;
     }
 
-    const report: IssueReportData = {
+    const report: ReportRequest = {
       location_type: reportData.category,
       location_id: reportData.id,
       name: reportData.name,
       reason: reason.trim(),
       status: 'false',
-      notes: '',
     };
 
     try {
@@ -95,7 +94,6 @@ export default function ReportIssueModal() {
               </div>
 
               <form onSubmit={handleReportSubmit} className="px-6 py-4 space-y-4">
-                {/* 問題點類型 */}
                 <div>
                   <label className="block text-sm font-medium text-[var(--gray)] mb-2">
                     問題點類型
@@ -108,7 +106,6 @@ export default function ReportIssueModal() {
                   />
                 </div>
 
-                {/* 問題點名稱 */}
                 <div>
                   <label className="block text-sm font-medium text-[var(--gray)] mb-2">
                     問題點名稱
@@ -121,7 +118,6 @@ export default function ReportIssueModal() {
                   />
                 </div>
 
-                {/* 問題原因 */}
                 <div>
                   <label className="block text-sm font-medium text-[var(--gray)] mb-2">
                     問題原因 <span className="text-red-500">*</span>
@@ -140,7 +136,6 @@ export default function ReportIssueModal() {
                   {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
                 </div>
 
-                {/* Footer Buttons */}
                 <div className="flex gap-3 pt-2">
                   <button
                     type="button"
@@ -162,7 +157,6 @@ export default function ReportIssueModal() {
             </>
           ) : (
             <>
-              {/* Success Screen */}
               <div className="p-6">
                 <div className="flex justify-end mb-4">
                   <button
@@ -174,7 +168,6 @@ export default function ReportIssueModal() {
                 </div>
 
                 <div className="text-center py-8">
-                  {/* 成功圖示 */}
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg
                       className="w-8 h-8 text-green-600"

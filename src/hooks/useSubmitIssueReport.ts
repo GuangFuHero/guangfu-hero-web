@@ -1,6 +1,6 @@
-import { submitIssueReport } from '@/lib/apis';
+import { submitReport } from '@/lib/api';
 import { useMutation } from '@tanstack/react-query';
 
 export const useSubmitIssueReport = () => {
-  return useMutation({ mutationFn: submitIssueReport });
+  return useMutation({ mutationFn: submitReport });
 };
