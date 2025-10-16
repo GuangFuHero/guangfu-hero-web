@@ -3,58 +3,29 @@
 import { useInfinitePlaces } from '@/hooks/useMapData';
 import { PlaceTab } from '@/lib/types/map';
 import { Place } from '@/lib/types/place';
+import { getGoogleMapsUrl } from '@/lib/utils';
 import { useCallback, useEffect, useMemo } from 'react';
 import InfoCard from './InfoCard';
 
 interface PlaceListProps {
   activeTab: PlaceTab;
+  onFilterPlaces?: (place: Place) => boolean;
   className?: string;
 }
 
-const getMapUrl = (place: Place): string | undefined => {
-  if (place.coordinates) {
-    let lat: number, lng: number;
-
-    switch (place.coordinates.type) {
-      case 'Point':
-        lat = place.coordinates.coordinates[1];
-        lng = place.coordinates.coordinates[0];
-        break;
-      case 'Polygon':
-        if (place.coordinates.coordinates.length === 0) return undefined;
-        const sumLat = place.coordinates.coordinates.reduce((sum, point) => sum + point[1], 0);
-        const sumLng = place.coordinates.coordinates.reduce((sum, point) => sum + point[0], 0);
-        lat = sumLat / place.coordinates.coordinates.length;
-        lng = sumLng / place.coordinates.coordinates.length;
-        break;
-      case 'LineString':
-        if (place.coordinates.coordinates.length === 0) return undefined;
-        const midIndex = Math.floor(place.coordinates.coordinates.length / 2);
-        lat = place.coordinates.coordinates[midIndex][1];
-        lng = place.coordinates.coordinates[midIndex][0];
-        break;
-      default:
-        return undefined;
-    }
-
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${lat},${lng}`)}`;
-  }
-
-  return undefined;
-};
-
-const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '' }) => {
+const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilterPlaces }) => {
   const listQuery = useInfinitePlaces(activeTab);
 
   const displayPlaces = useMemo(() => {
     if (!listQuery.data) return [];
 
-    if (activeTab === 'all') {
-      return Object.values(listQuery.data).flat();
-    } else {
-      return listQuery.data[activeTab] || [];
-    }
-  }, [listQuery.data, activeTab]);
+    let displayPlaces: Place[] = [];
+
+    if (activeTab === 'all') displayPlaces = Object.values(listQuery.data).flat();
+    else displayPlaces = listQuery.data[activeTab] || [];
+
+    return !!onFilterPlaces ? displayPlaces.filter(onFilterPlaces) : displayPlaces;
+  }, [listQuery.data, activeTab, onFilterPlaces]);
 
   const handleScroll = useCallback(() => {
     const scrollTop = document.documentElement.scrollTop;
@@ -87,7 +58,12 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '' }) => {
           ) : (
             <>
               {displayPlaces.map((place: Place) => (
-                <InfoCard key={place.id} place={place} mapUrl={getMapUrl(place)} className="mb-4" />
+                <InfoCard
+                  key={place.id}
+                  place={place}
+                  mapUrl={getGoogleMapsUrl(place.coordinates)}
+                  className="mb-4"
+                />
               ))}
 
               {'isFetchingNextPage' in listQuery && listQuery.isFetchingNextPage && (

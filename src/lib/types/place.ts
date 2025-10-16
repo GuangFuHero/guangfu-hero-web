@@ -19,7 +19,7 @@ export type LineStringCoordinates = {
   coordinates: [number, number][];
 };
 
-export type PlaceCoordinates = PointCoordinates | PolygonCoordinates | LineStringCoordinates;
+export type PlaceCoordinates = PointCoordinates | PolygonCoordinates | LineStringCoordinates | null;
 
 export enum PlaceType {
   ACCOMMODATION = '住宿',

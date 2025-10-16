@@ -1,11 +1,12 @@
-import { PlaceCoordinates, PlaceCoordinatesType } from '../types/place';
+import dayjs from 'dayjs';
+import { Place, PlaceCoordinates, PlaceCoordinatesType } from '../types/place';
 
 export function getAssetPath(path: string): string {
   return path;
 }
 
 export function getGoogleMapsUrl(coordinates: PlaceCoordinates): string | null {
-  if (!coordinates?.coordinates) return null;
+  if (!coordinates) return null;
 
   switch (coordinates.type) {
     case PlaceCoordinatesType.POINT:
@@ -22,3 +23,55 @@ export function getGoogleMapsUrl(coordinates: PlaceCoordinates): string | null {
       return null;
   }
 }
+
+export const formatDateRange = (
+  openDate?: Place['open_date'],
+  endDate?: Place['end_date']
+): string | null => {
+  const validOpenDate = openDate && dayjs(openDate).isValid();
+  const validEndDate = endDate && dayjs(endDate).isValid();
+
+  if (!validOpenDate && !validEndDate) {
+    return null;
+  }
+
+  let result = '';
+
+  if (validOpenDate) {
+    result += dayjs(openDate).format('YYYY/MM/DD');
+  }
+
+  result += ' ~';
+
+  if (validEndDate) {
+    result += ` ${dayjs(endDate).format('YYYY/MM/DD')}`;
+  }
+
+  return result;
+};
+
+export const formatTimeRange = (
+  openTime?: Place['open_time'],
+  endTime?: Place['end_time']
+): string | null => {
+  const validOpenTime = openTime && dayjs(openTime).isValid();
+  const validEndTime = endTime && dayjs(endTime).isValid();
+
+  if (!validOpenTime && !validEndTime) {
+    return null;
+  }
+
+  let result = '';
+
+  if (validOpenTime) {
+    result += dayjs(openTime).format('HH:mm');
+  }
+
+  result += ' ~';
+
+  if (validEndTime) {
+    result += ` ${dayjs(endTime).format('HH:mm')}`;
+  }
+
+  return result;
+};

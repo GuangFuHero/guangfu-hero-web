@@ -2,13 +2,14 @@
 
 import ActionButton from '@/components/ActionButton';
 import { Place, PLACE_TYPE_STRING_MAP } from '@/lib/types/place';
+import { formatDateRange, formatTimeRange } from '@/lib/utils';
 import { useModal } from '@/providers/ModalProvider';
 import { useToast } from '@/providers/ToastProvider';
 import React from 'react';
 
 interface InfoCardProps {
   place: Place;
-  mapUrl?: string;
+  mapUrl?: string | null;
   className?: string;
 }
 
@@ -18,14 +19,8 @@ const InfoCard: React.FC<InfoCardProps> = ({ place, mapUrl, className = '' }) =>
 
   const displayName = place.name || '未知地點';
   const displayAddress = place.address || place.address_description || '';
-  const displayDate =
-    place.open_date && place.end_date
-      ? `${place.open_date.replace(/-/g, '.')} ~`
-      : place.open_date
-        ? place.open_date.replace(/-/g, '.')
-        : '';
-  const displayTime =
-    place.open_time && place.end_time ? `${place.open_time}-${place.end_time}` : '';
+  const displayDate = formatDateRange(place.open_date, place.end_date);
+  const displayTime = formatTimeRange(place.open_time, place.end_time);
   const displayContact = place.contact_phone || '';
   const displayNotes = place.notes || '';
   const displayTags = place.tags?.map(tag => tag.name) || [];
@@ -69,34 +64,34 @@ const InfoCard: React.FC<InfoCardProps> = ({ place, mapUrl, className = '' }) =>
         <h3 className="text-lg font-bold text-[var(--gray-2)] mb-2">{displayName}</h3>
 
         <div className="flex items-start gap-2 text-[#3A3937] mb-1 leading-[20px]">
-          <div className="text-[var(--gray-2)] font-medium">類型</div>
+          <div className="text-[var(--gray-2)] font-medium text-nowrap">類型</div>
           <div className="flex-1">{PLACE_TYPE_STRING_MAP?.[place?.type] || '-'}</div>
         </div>
 
         {displayAddress && (
           <div className="flex items-start gap-2 text-[#3A3937] mb-1 leading-[20px] font-normal">
-            <div className="text-[var(--gray-2)]">地址</div>
+            <div className="text-[var(--gray-2)] text-nowrap">地址</div>
             <div className="flex-1">{displayAddress}</div>
           </div>
         )}
 
         {displayDate && (
           <div className="flex items-start gap-2 text-[#3A3937] mb-1 leading-[20px] font-normal">
-            <div className="text-[var(--gray-2)]">日期</div>
+            <div className="text-[var(--gray-2)] text-nowrap">日期</div>
             <div className="flex-1">{displayDate}</div>
           </div>
         )}
 
         {displayTime && (
           <div className="flex items-start gap-2 text-[#3A3937] mb-1 leading-[20px] font-normal">
-            <div className="text-[var(--gray-2)]">時段</div>
+            <div className="text-[var(--gray-2)] text-nowrap">時段</div>
             <div className="flex-1">{displayTime}</div>
           </div>
         )}
 
         {place.contact_phone !== '-' ? (
           <div className="flex gap-2 text-[#3A3937] mb-1 leading-[20px] items-center font-normal">
-            <div className="text-[var(--gray-2)]">聯絡</div>
+            <div className="text-[var(--gray-2)] text-nowrap">聯絡</div>
             <div
               className="flex gap-2 justify-between items-center cursor-pointer hover:bg-gray-50 p-1 rounded transition-colors"
               onClick={() => handleCopyText(place.contact_phone)}
@@ -120,14 +115,14 @@ const InfoCard: React.FC<InfoCardProps> = ({ place, mapUrl, className = '' }) =>
           </div>
         ) : (
           <div className="flex items-start gap-2 text-[#3A3937] mb-1 leading-[20px] font-normal">
-            <div className="text-[var(--gray-2)]">聯絡</div>
+            <div className="text-[var(--gray-2)] text-nowrap">聯絡</div>
             <div className="flex-1">{displayContact}</div>
           </div>
         )}
 
         {displayNotes && (
           <div className="flex items-start gap-2 text-[#3A3937] mb-2 leading-[20px] font-normal">
-            <div className="text-[var(--gray-2)]">備註</div>
+            <div className="text-[var(--gray-2)] text-nowrap">備註</div>
             <div className="flex-1">{displayNotes}</div>
           </div>
         )}
