@@ -87,8 +87,10 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
   const next = () => setCurrentSlide(prev => (prev + 1) % alerts.length);
   const prev = () => setCurrentSlide(prev => (prev - 1 + alerts.length) % alerts.length);
 
-  const handleClick = () => {
+  const handleClick = (e?: React.MouseEvent | React.TouchEvent) => {
     if (currentInfo.actionable === true) {
+      e?.stopPropagation();
+      e?.preventDefault();
       onAlertClick();
     } else if (typeof currentInfo.actionable === 'string') {
       window.open(currentInfo.actionable, '_blank');
@@ -112,6 +114,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
     onSwipeRight: prev,
     onDragStart: () => setIsPaused(true),
     onDragEnd: () => setIsPaused(false),
+    onClick: handleClick,
   });
 
   if (alerts.length === 0) {
