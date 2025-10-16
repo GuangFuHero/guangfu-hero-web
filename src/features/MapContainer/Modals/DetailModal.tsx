@@ -84,7 +84,7 @@ const DetailModal = () => {
       entries.push({
         label: '資源',
         value: place.resources
-          .map(resource => `${resource.name} (${resource.count}${resource.unit})`)
+          .map(resource => `${resource.name} (${resource?.amount || 0}${resource.unit})`)
           .join('、'),
       });
     }
