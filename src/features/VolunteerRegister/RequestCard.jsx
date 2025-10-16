@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Card, CardContent, CardActions, Typography, Box, Button, Chip } from '@mui/material';
 import CustomProgressBar from './Progress';
 import useMediaQuery from '@mui/material/useMediaQuery';

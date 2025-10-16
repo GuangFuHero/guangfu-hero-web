@@ -11,6 +11,7 @@ import {
   TextField,
   Alert,
   AlertTitle,
+  Stack,
 } from '@mui/material';
 import StyledDialog from './StyledDialog';
 import isCompleted from '../utils/isCompleted';
@@ -146,17 +147,17 @@ export default function DeliveryDialog({
               </Box>
             </>
           )}
-          <p>
+          <Stack direction="row" alignItems="center" sx={{ mt: 1 }}>
             <WarningAmberIcon sx={{ fontSize: 'inherit', verticalAlign: 'middle' }} /> 請先
-            <Typography sx={{ display: 'inline' }} color="error">
-              <b>電話聯繫</b>
+            <Typography sx={{ display: 'inline' }} color="error" fontWeight={600}>
+              電話聯繫
             </Typography>
             並
-            <Typography sx={{ display: 'inline' }} color="error">
-              <b>截圖資訊</b>
+            <Typography sx={{ display: 'inline' }} color="error" fontWeight={600}>
+              截圖資訊
             </Typography>
             ，確認無誤後再進行媒合
-          </p>
+          </Stack>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="inherit">

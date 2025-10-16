@@ -37,7 +37,6 @@ export default function EditDialog({
     role_type: '',
   });
   useEffect(() => {
-    console.log(request);
     if (request) setForm(request);
   }, [request]);
   const [isLoading, setIsLoading] = useState(false);

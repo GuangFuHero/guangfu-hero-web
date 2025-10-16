@@ -244,11 +244,19 @@ export default function CreateDialog({ open, onClose, onSubmittedCallback = isSu
             label={
               <>
                 我已理解本平台
-                <a href="https://gf250923.org/terms" target="_blank">
+                <a
+                  href="https://gf250923.org/terms"
+                  target="_blank"
+                  style={{ color: '#1976d2', textDecoration: 'underline' }}
+                >
                   服務條款
                 </a>
                 及
-                <a href="https://gf250923.org/privacy" target="_blank">
+                <a
+                  href="https://gf250923.org/privacy"
+                  target="_blank"
+                  style={{ color: '#1976d2', textDecoration: 'underline' }}
+                >
                   隱私權政策
                 </a>
                 之使用

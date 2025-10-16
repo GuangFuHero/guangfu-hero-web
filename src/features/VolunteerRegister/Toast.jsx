@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Snackbar, Alert } from '@mui/material';
 
 export default function Toast({ message, onClose }) {

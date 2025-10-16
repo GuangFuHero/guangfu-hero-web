@@ -199,9 +199,9 @@ export default function MainContent() {
               <Typography variant="h6">此頁查無符合條件的需求，您可以點選下方分頁按鈕，切換至其他分頁</Typography>
             </Stack>
           </>} */}
-          {requests.map(req => (
+          {requests.map((req, idx) => (
             <RequestCard
-              key={req.id}
+              key={idx}
               request={req}
               onEdit={data => EditRequest(data)}
               onDelivery={data => DeliveryRequest(data)}
