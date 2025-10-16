@@ -276,7 +276,7 @@ export default function MapPage() {
             item: {
               '@type': 'Place',
               name: '補水站',
-              description: '提供志工飲用水補給',
+              description: '提供志工與災民飲用水補給',
             },
           },
           {
@@ -303,7 +303,7 @@ export default function MapPage() {
             item: {
               '@type': 'Place',
               name: '臨時住宿',
-              description: '提供志工臨時住宿空間',
+              description: '提供志工與災民臨時住宿空間',
             },
           },
           {
