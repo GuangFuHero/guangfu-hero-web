@@ -5,6 +5,7 @@ interface UseDragOptions {
   onSwipeRight: () => void;
   onDragStart?: () => void;
   onDragEnd?: () => void;
+  onClick?: (e: React.TouchEvent | React.MouseEvent) => void;
   threshold?: number;
 }
 
@@ -13,12 +14,12 @@ export function useDrag({
   onSwipeRight,
   onDragStart,
   onDragEnd,
+  onClick,
   threshold = 50,
 }: UseDragOptions) {
   const [dragStartX, setDragStartX] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Mouse drag handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     setDragStartX(e.clientX);
     setIsDragging(true);
@@ -76,9 +77,17 @@ export function useDrag({
     }
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    // 如果 dragStartX 還存在，表示沒有滑動（滑動時會設為 null）
+    const shouldClick = dragStartX !== null;
+
     setDragStartX(null);
     onDragEnd?.();
+
+    // 如果沒有滑動，觸發點擊事件
+    if (shouldClick && onClick) {
+      onClick(e);
+    }
   };
 
   return {
