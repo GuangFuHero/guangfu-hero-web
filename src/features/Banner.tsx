@@ -5,10 +5,19 @@ import WarningModal from '@/components/WarningModal';
 
 const Banner = () => {
   const [showWarningModal, setShowWarningModal] = useState(false);
+
+  const handleAlertClick = () => {
+    setShowWarningModal(true);
+  };
+
+  const handleClose = () => {
+    setShowWarningModal(false);
+  };
+
   return (
     <>
-      <AlertBanner onAlertClick={() => setShowWarningModal(true)} />
-      <WarningModal isOpen={showWarningModal} onClose={() => setShowWarningModal(false)} />
+      <AlertBanner onAlertClick={handleAlertClick} />
+      <WarningModal isOpen={showWarningModal} onClose={handleClose} />
     </>
   );
 };

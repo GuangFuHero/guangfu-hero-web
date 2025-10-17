@@ -8,6 +8,8 @@ import {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.gf250923.org';
 const isProd = process.env.NODE_ENV === 'production';
+// TODO: use for volunteer register page, wait for refactor
+export const getApiUrl = () => (isProd ? API_BASE_URL : `${window.location.origin}/api`);
 
 export async function fetchAPI<T>(
   endpoint: string,
