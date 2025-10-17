@@ -36,7 +36,7 @@ export const generateMetadata = (): Metadata => {
     },
     twitter: {
       card: 'summary_large_image',
-      title: '光復超人 | 每一個人都是彼此的超人',
+      title: '光復超人 | 花蓮光復地震災區救援地圖',
       description:
         '即時災情地圖、志工媒合、物資分配、災民協助 - 光復超人（鏟子超人）讓每一個人都是彼此的超人',
       images: [LOGO_URL],
@@ -52,14 +52,19 @@ export default function MapPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
-      // Organization
       {
         '@type': 'Organization',
         '@id': `${SITE_URL}/#organization`,
         name: '光復超人',
-        alternateName: ['鏟子超人', '光復英雄', '鏟子英雄', '光復志工', '光復救災'],
+        alternateName: ['鏟子超人', '光復英雄', '鏟子英雄', '光復超人', '光復志工'],
         url: SITE_URL,
         logo: {
+          '@type': 'ImageObject',
+          url: LOGO_URL,
+          width: 1028,
+          height: 301,
+        },
+        image: {
           '@type': 'ImageObject',
           url: LOGO_URL,
           width: 1028,
@@ -69,6 +74,27 @@ export default function MapPage() {
         description:
           '花蓮光復地震災區救援志工媒合平台，提供志工招募、物資分配、災民協助、即時災情地圖等服務',
         foundingDate: '2025-09-23',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: '光復鄉',
+          addressRegion: '花蓮縣',
+          addressCountry: 'TW',
+        },
+        location: {
+          '@type': 'Place',
+          name: '花蓮縣光復鄉',
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: 23.665853,
+            longitude: 121.421125,
+          },
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: '光復鄉',
+            addressRegion: '花蓮縣',
+            addressCountry: 'TW',
+          },
+        },
         areaServed: [
           {
             '@type': 'Place',
@@ -111,7 +137,6 @@ export default function MapPage() {
           '災情地圖',
         ],
       },
-      // WebSite
       {
         '@type': 'WebSite',
         '@id': `${SITE_URL}/#website`,
@@ -119,7 +144,7 @@ export default function MapPage() {
         name: '光復超人',
         alternateName: '鏟子超人',
         description:
-          '每一個人都是彼此的超人 - 花蓮光復地震災區救援平台：即時地圖、志工媒合、配送媒合、居民協助、臨時住宿、醫療站、補水站、洗澡點',
+          '花蓮光復地震災區救援平台 - 即時災情地圖、志工媒合、物資分配、災民協助、臨時住宿、熱食供應',
         inLanguage: 'zh-TW',
         publisher: {
           '@id': `${SITE_URL}/#organization`,
@@ -139,20 +164,36 @@ export default function MapPage() {
               latitude: 23.665853,
               longitude: 121.421125,
             },
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: '光復鄉',
+              addressRegion: '花蓮縣',
+              addressCountry: 'TW',
+            },
           },
           organizer: {
             '@id': `${SITE_URL}/#organization`,
           },
+          performer: {
+            '@type': 'Organization',
+            name: '光復超人 - 遠端志工群',
+          },
+          offers: {
+            '@type': 'Offer',
+            availability: 'https://schema.org/InStock',
+            price: '0',
+            priceCurrency: 'TWD',
+            description: '免費提供災區救援服務',
+          },
         },
       },
-      // WebPage
       {
         '@type': 'WebPage',
         '@id': `${SITE_URL}/map#webpage`,
         url: `${SITE_URL}/map`,
         name: '災區救援地圖',
         description:
-          '每一個人都是彼此的超人 - 花蓮光復地震災區救援平台：即時地圖、志工媒合、配送媒合、居民協助、臨時住宿、醫療站、補水站、洗澡點',
+          '花蓮光復地震災區即時救援資源地圖，包含志工路線、物資站、補水站、洗澡點、醫療站、臨時住宿等資訊',
         inLanguage: 'zh-TW',
         isPartOf: {
           '@id': `${SITE_URL}/#website`,
@@ -184,13 +225,12 @@ export default function MapPage() {
           '@id': `${SITE_URL}/#organization`,
         },
       },
-      // Map
       {
         '@type': 'Map',
         '@id': `${SITE_URL}/map#map`,
         name: '光復災區救援資源地圖',
         description:
-          '每一個人都是彼此的超人 - 花蓮光復地震災區救援平台：即時地圖、志工媒合、配送媒合、居民協助、臨時住宿、醫療站、補水站、洗澡點',
+          '即時顯示花蓮光復地震災區救援資源位置，包含物資站、補水站、洗澡點、醫療站、臨時住宿、志工路線等超過百個標記點',
         mapType: 'VenueMap',
         url: `${SITE_URL}/map`,
         inLanguage: 'zh-TW',
@@ -214,7 +254,6 @@ export default function MapPage() {
           },
         },
       },
-      // 地圖資源類型
       {
         '@type': 'ItemList',
         '@id': `${SITE_URL}/map#itemlist`,
@@ -227,13 +266,22 @@ export default function MapPage() {
             position: 1,
             item: {
               '@type': 'Place',
-              name: '加水站',
-              description: '提供志工與居民飲用水補給',
+              name: '物資發放站',
+              description: '提供災區物資分配與發放服務',
             },
           },
           {
             '@type': 'ListItem',
             position: 2,
+            item: {
+              '@type': 'Place',
+              name: '補水站',
+              description: '提供志工與災民飲用水補給',
+            },
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
             item: {
               '@type': 'Place',
               name: '洗澡點',
@@ -242,20 +290,11 @@ export default function MapPage() {
           },
           {
             '@type': 'ListItem',
-            position: 3,
-            item: {
-              '@type': 'Place',
-              name: '廁所',
-              description: '提供志工與居民如廁服務',
-            },
-          },
-          {
-            '@type': 'ListItem',
             position: 4,
             item: {
               '@type': 'Place',
               name: '醫療站',
-              description: '提供醫療救護服務',
+              description: '提供醫療救護與健康諮詢服務',
             },
           },
           {
@@ -264,7 +303,7 @@ export default function MapPage() {
             item: {
               '@type': 'Place',
               name: '臨時住宿',
-              description: '提供志工臨時住宿空間',
+              description: '提供志工與災民臨時住宿空間',
             },
           },
           {

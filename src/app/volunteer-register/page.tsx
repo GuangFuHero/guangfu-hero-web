@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Wrapper from '@/features/Wrapper';
 import { Typography } from '@mui/material';
+import MainContent from '@/features/VolunteerRegister/MainContent';
 
 const SITE_URL = 'https://gf250923.org';
 const LOGO_URL = 'https://gf250923.org/logo_new.svg';
@@ -149,17 +150,10 @@ export default function VolunteerRegisterPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 原本 iframe */}
+      {/* TODO: refactor component */}
       {/*
       // Due to typhoon, close the matching pages temporarily
-
-      <iframe
-        src="https://hualien-volunteers-frontend-iota.vercel.app/"
-        className="w-full border-0"
-        title="志工媒合 - 光復超人災區救援志工招募系統"
-        allow="geolocation"
-        style={{ height: 'calc(100vh - 160px)' }}
-      />
+      <MainContent />
       */}
       <Typography sx={{ textAlign: 'center' }}>
         因應颱風來襲，配合政府撤離志工指示，配送及志工媒合頁面暫不開放
