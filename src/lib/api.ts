@@ -18,6 +18,8 @@ import {
 
 const API_BASE_URL = 'https://guangfu250923.pttapp.cc';
 const isProd = process.env.NODE_ENV === 'production';
+// TODO: use for volunteer register page, wait for refactor
+export const getApiUrl = () => (isProd ? API_BASE_URL : `${window.location.origin}/api`);
 
 export async function fetchAPI<T>(
   endpoint: string,
