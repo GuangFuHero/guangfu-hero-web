@@ -49,16 +49,6 @@ function getRelativeTime(timestamp) {
   return years === 1 ? '1 年前' : `${years} 年前`;
 }
 
-function getAbsoluteTime(timestamp) {
-  const date = new Date(timestamp * 1000);
-  return date.toLocaleString(undefined, {
-    month: '2-digit',
-    day: '2-digit',
-    hour12: false,
-    hour: 'numeric',
-  });
-}
-
 function getGoogleMapUrl(addr) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('花蓮 ' + addr)}`;
 }
