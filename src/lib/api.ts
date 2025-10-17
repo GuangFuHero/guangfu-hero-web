@@ -1,3 +1,4 @@
+import { env } from '@/config/env';
 import {
   ReportRequest,
   ReportResponse,
@@ -6,16 +7,15 @@ import {
   SupplyResponse,
 } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.gf250923.org';
 const isProd = process.env.NODE_ENV === 'production';
 // TODO: use for volunteer register page, wait for refactor
-export const getApiUrl = () => (isProd ? API_BASE_URL : `${window.location.origin}/api`);
+export const getApiUrl = () => (isProd ? env.NEXT_PUBLIC_API_URL : `${window.location.origin}/api`);
 
 export async function fetchAPI<T>(
   endpoint: string,
   params?: Record<string, string | number>
 ): Promise<T> {
-  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const base = getApiUrl(); // dev should have /api for proxy
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
   const url = new URL(`${base}${path}`);
 
@@ -35,7 +35,7 @@ export async function fetchAPI<T>(
 }
 
 export async function submitReport(data: ReportRequest): Promise<ReportResponse> {
-  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const base = getApiUrl(); // dev should have /api for proxy
   const response = await fetch(`${base}/reports`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -67,7 +67,7 @@ export async function submitSupplyProvider(
     throw new Error('登入資訊有問題，請重新登入');
   }
 
-  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const base = getApiUrl(); // dev should have /api for proxy
   const response = await fetch(`${base}/supply_providers`, {
     method: 'POST',
     headers: {

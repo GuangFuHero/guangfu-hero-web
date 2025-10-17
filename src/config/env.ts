@@ -9,7 +9,7 @@ export const env = {
   NEXT_PUBLIC_GA4_ID: process.env.NEXT_PUBLIC_GA4_ID || '',
 
   // API related
-  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://guangfu250923.pttapp.cc',
+  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://api.gf250923.org',
   NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY || '',
   NEXT_PUBLIC_API_KEY_DEV: process.env.NEXT_PUBLIC_API_KEY_DEV || '',
 } as const;
