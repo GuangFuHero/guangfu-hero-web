@@ -33,9 +33,9 @@ export default function Footer() {
           */}
 
           <Typography sx={{ textAlign: 'center' }} className="text-black">
-            因應颱風來襲，配合政府撤離志工指示
+            因應風神颱風來襲，配合政府志工禁入令
             <br />
-            配送及志工媒合頁面暫不開放
+            本站 配送媒合 及 志工媒合 頁面暫不開放
           </Typography>
         </div>
       </div>
