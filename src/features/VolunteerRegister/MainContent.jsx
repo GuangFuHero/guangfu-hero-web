@@ -166,26 +166,53 @@ export default function MainContent() {
             <Chip
               color={listFilter[0] === '' ? 'primary' : ''}
               label="所有需求"
-              sx={{ mr: 1 }}
+              sx={{ mr: 1, mb: 1 }}
               onClick={() => {
                 setListFilter(['']);
               }}
             />
 
             {/* filtering with string query */}
-            {/*
-            <Chip color={listFilter.includes("鏟子超人") ? "primary" : ""} label="鏟子超人" sx={{ mr: 1 }} onClick={() => { setListFilter(["鏟子超人", "鏟"]) }} />
-            <Chip color={listFilter.includes("清溝超人") ? "primary" : ""} label="清溝超人" sx={{ mr: 1 }} onClick={() => { setListFilter(["清溝超人", "溝"]) }} />
-            <Chip color={listFilter.includes("搬物超人") ? "primary" : ""} label="搬物超人" sx={{ mr: 1 }} onClick={() => { setListFilter(["搬物超人", "搬", "拖", "運"]) }} />
-            <Chip color={listFilter.includes("廚師超人") ? "primary" : ""} label="廚師超人" sx={{ mr: 1 }} onClick={() => { setListFilter(["廚師超人", "廚師", "煮"]) }} />
-            <Chip color={listFilter.includes("整理超人") ? "primary" : ""} label="整理超人" sx={{ mr: 1 }} onClick={() => { setListFilter(["整理超人", "整理"]) }} />
-            */}
-            {/*
-            <Chip color={listFilter.includes("一般志工") ? "primary" : ""} label="一般志工" sx={{ mr: 1 }} onClick={() => { setListFilter(["一般志工"]) }} />
-            <Chip color={listFilter.includes("水電") ? "primary" : ""} label="水電" sx={{ mr: 1 }} onClick={() => { setListFilter(["水電"]) }} />
-            <Chip color={listFilter.includes("機具") ? "primary" : ""} label="機具" sx={{ mr: 1 }} onClick={() => { setListFilter(["機具", "山貓", "怪手", "挖土機"]) }} />
-            <Chip color={listFilter.includes("門") ? "primary" : ""} label="門窗" sx={{ mr: 1 }} onClick={() => { setListFilter(["門", "窗"]) }} />
-            */}
+            <Chip
+              color={listFilter.includes('鏟子超人') ? 'primary' : ''}
+              label="鏟子超人"
+              sx={{ mr: 1, mb: 1 }}
+              onClick={() => {
+                setListFilter(['鏟子超人', '鏟']);
+              }}
+            />
+            <Chip
+              color={listFilter.includes('清溝超人') ? 'primary' : ''}
+              label="清溝超人"
+              sx={{ mr: 1, mb: 1 }}
+              onClick={() => {
+                setListFilter(['清溝超人', '溝']);
+              }}
+            />
+            <Chip
+              color={listFilter.includes('搬物超人') ? 'primary' : ''}
+              label="搬物超人"
+              sx={{ mr: 1, mb: 1 }}
+              onClick={() => {
+                setListFilter(['搬物超人', '搬', '拖', '運']);
+              }}
+            />
+            <Chip
+              color={listFilter.includes('廚師超人') ? 'primary' : ''}
+              label="廚師超人"
+              sx={{ mr: 1, mb: 1 }}
+              onClick={() => {
+                setListFilter(['廚師超人', '廚師', '煮']);
+              }}
+            />
+            <Chip
+              color={listFilter.includes('整理超人') ? 'primary' : ''}
+              label="整理超人"
+              sx={{ mr: 1, mb: 1 }}
+              onClick={() => {
+                setListFilter(['整理超人', '整理']);
+              }}
+            />
           </Box>
           {requests.length === 0 && isLoading && (
             <>
