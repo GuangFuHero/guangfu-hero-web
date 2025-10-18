@@ -16,8 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/victim/medical',
     '/victim/mental-health',
     '/victim/shelter',
-    // TODO: 待重構完畢後打開
-    // "/volunteer-register",
+    '/volunteer-register',
     '/volunteer/about-us',
     '/volunteer/preparation',
     '/volunteer/transportation',
