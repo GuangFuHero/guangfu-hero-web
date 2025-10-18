@@ -1,8 +1,8 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 import Wrapper from '@/features/Wrapper';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -21,6 +21,8 @@ export default function PageLayout({ children }: PageLayoutProps) {
   const noTabPages = ['/volunteer/about-us', '/privacy', '/terms'];
   const shouldShowTabs = !noTabPages.some(path => pathname.startsWith(path));
 
+  const isMapPage = pathname === '/map';
+
   // Helper function to check if current pathname matches a tab's path prefix
   const isActiveTab = (tabPath: string) => {
     if (tabPath === '/map') {
@@ -37,10 +39,11 @@ export default function PageLayout({ children }: PageLayoutProps) {
 
   return (
     <Wrapper>
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Tab Navigation */}
+      <div className={isMapPage ? 'w-full' : 'w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'}>
         {shouldShowTabs && (
-          <div className="flex border-b-2 border-[var(--gray-3)]">
+          <div
+            className={`flex border-b-2 border-[var(--gray-3)] ${isMapPage ? 'px-4 sm:px-6 lg:px-8' : ''}`}
+          >
             {tabs.map(tab => (
               <Link
                 key={tab.path}

@@ -1,31 +1,21 @@
+import { env } from '@/config/env';
 import {
-  AccommodationsResponse,
-  RestRoomsResponse,
-  ShowerStationsResponse,
-  WaterRefillStationsResponse,
-  ShelterResponse,
-  MedicalStationResponse,
-  MentalHealthResourceResponse,
   ReportRequest,
   ReportResponse,
-  MentalHealthResource,
-  MedicalStation,
-  Shelter,
-  SupplyResponse,
   ReportSupplyProvider,
   ReportSupplyProviderResponse,
+  SupplyResponse,
 } from './types';
 
-const API_BASE_URL = 'https://guangfu250923.pttapp.cc';
 const isProd = process.env.NODE_ENV === 'production';
 // TODO: use for volunteer register page, wait for refactor
-export const getApiUrl = () => (isProd ? API_BASE_URL : `${window.location.origin}/api`);
+export const getApiUrl = () => (isProd ? env.NEXT_PUBLIC_API_URL : `${window.location.origin}/api`);
 
 export async function fetchAPI<T>(
   endpoint: string,
   params?: Record<string, string | number>
 ): Promise<T> {
-  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const base = getApiUrl(); // dev should have /api for proxy
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
   const url = new URL(`${base}${path}`);
 
@@ -44,97 +34,11 @@ export async function fetchAPI<T>(
   return response.json();
 }
 
-export async function getAccommodations(
-  limit: number = 50,
-  offset: number = 0
-): Promise<AccommodationsResponse> {
-  return fetchAPI<AccommodationsResponse>('/accommodations', {
-    limit,
-    offset,
-  });
-}
-
-export async function getRestrooms(
-  limit: number = 50,
-  offset: number = 0
-): Promise<RestRoomsResponse> {
-  return fetchAPI<RestRoomsResponse>('/restrooms', {
-    limit,
-    offset,
-  });
-}
-
-export async function getShowerStations(
-  limit: number = 50,
-  offset: number = 0
-): Promise<ShowerStationsResponse> {
-  return fetchAPI<ShowerStationsResponse>('/shower_stations', {
-    limit,
-    offset,
-  });
-}
-
-export async function getWaterRefillStations(
-  limit: number = 50,
-  offset: number = 0
-): Promise<WaterRefillStationsResponse> {
-  return fetchAPI<WaterRefillStationsResponse>('/water_refill_stations', {
-    limit,
-    offset,
-  });
-}
-
-export async function getShelters(
-  limit: number = 50,
-  offset: number = 0
-): Promise<ShelterResponse> {
-  const response = await fetchAPI<ShelterResponse>('/shelters', {
-    limit,
-    offset,
-  });
-  return {
-    ...response,
-    member: filterValidLocations(response.member as Shelter[]) as Shelter[],
-  };
-}
-
-export async function getMedicalStations(
-  limit: number = 50,
-  offset: number = 0
-): Promise<MedicalStationResponse> {
-  const response = await fetchAPI<MedicalStationResponse>('/medical_stations', {
-    limit,
-    offset,
-  });
-  return {
-    ...response,
-    member: filterValidLocations(response.member as MedicalStation[]) as MedicalStation[],
-  };
-}
-
-export async function getMentalHealthResources(
-  limit: number = 50,
-  offset: number = 0
-): Promise<MentalHealthResourceResponse> {
-  const response = await fetchAPI<MentalHealthResourceResponse>('/mental_health_resources', {
-    limit,
-    offset,
-  });
-  return {
-    ...response,
-    member: filterValidLocations(
-      response.member as MentalHealthResource[]
-    ) as MentalHealthResource[],
-  };
-}
-
 export async function submitReport(data: ReportRequest): Promise<ReportResponse> {
-  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const base = getApiUrl(); // dev should have /api for proxy
   const response = await fetch(`${base}/reports`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
 
@@ -143,14 +47,6 @@ export async function submitReport(data: ReportRequest): Promise<ReportResponse>
   }
 
   return response.json();
-}
-
-type Location = (MentalHealthResource | MedicalStation | Shelter)[];
-function filterValidLocations(locations: Location): Location {
-  return locations.filter(
-    location =>
-      location.status !== 'test' && location.status !== 'need_delete' && location.name !== ''
-  );
 }
 
 export async function getSupplies(limit: number = 50, offset: number = 0): Promise<SupplyResponse> {
@@ -171,7 +67,7 @@ export async function submitSupplyProvider(
     throw new Error('登入資訊有問題，請重新登入');
   }
 
-  const base = isProd ? API_BASE_URL : `${window.location.origin}/api`; // dev should have /api for proxy
+  const base = getApiUrl(); // dev should have /api for proxy
   const response = await fetch(`${base}/supply_providers`, {
     method: 'POST',
     headers: {

@@ -1,0 +1,650 @@
+@import 'tailwindcss';
+
+/* 控制面板樣式 */
+.location-panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 左下角定位按鈕面板 */
+.location-panel-bottom {
+  position: absolute;
+  left: 16px;
+  z-index: 800;
+}
+
+/* 右上角全屏切換按鈕面板 */
+.fullscreen-panel {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 800;
+}
+
+.filter-dropdown-panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 800;
+}
+
+.filter-dropdown-wrapper {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.filter-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 38px;
+  font-size: 14px;
+  font-weight: 500;
+  gap: 8px;
+}
+
+.filter-trigger-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.filter-trigger-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.filter-trigger-text {
+  flex: 1;
+}
+
+.filter-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 900;
+  overflow: hidden;
+  min-width: 400px;
+}
+
+.filter-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.filter-options-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-options-single-column {
+  display: none;
+  flex-direction: column;
+}
+
+.filter-option {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  height: 38px;
+}
+
+.filter-option:hover {
+  background-color: #f8f9fa;
+}
+
+.filter-option.active {
+  background-color: #e3f2fd;
+}
+
+.filter-option-content {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+  height: 100%;
+}
+
+.filter-option-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.filter-option-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  padding: 4px;
+}
+
+.filter-option-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.filter-option-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.filter-option-label {
+  text-align: left;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #434343;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filter-option-count {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #434343;
+  flex-shrink: 0;
+}
+
+.more-info-panel {
+  position: absolute;
+  right: 16px;
+  z-index: 800;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.control-buttons {
+  flex: 1;
+  overflow-x: auto;
+  display: flex;
+  gap: 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.control-buttons::-webkit-scrollbar {
+  display: none;
+}
+
+.info-sidebar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 320px;
+  z-index: 900;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow-y: auto;
+  transform: translateX(110vw);
+  transition: transform 0.3s ease;
+}
+
+.info-sidebar.show {
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .filter-dropdown-wrapper {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .filter-dropdown-trigger {
+    padding: 6px 12px;
+    height: 36px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .filter-trigger-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .filter-trigger-icon svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .filter-dropdown-menu {
+    min-width: 200px;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+
+  .filter-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* 在小螢幕時隱藏雙列模式，顯示單列模式 */
+  .filter-options-column {
+    display: none;
+  }
+
+  .filter-options-single-column {
+    display: flex;
+  }
+
+  .filter-option {
+    height: 36px;
+  }
+
+  .filter-option-content {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .filter-option-indicator {
+    width: 18px;
+    height: 18px;
+  }
+
+  .filter-option-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .filter-option-icon svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .filter-option-label {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #434343;
+  }
+
+  .filter-option-count {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #434343;
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .legend-column {
+    gap: 6px;
+  }
+
+  .legend-item-compact {
+    gap: 6px;
+  }
+
+  .legend-color-compact svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .legend-label-compact {
+    font-size: 13px;
+  }
+
+  .control-buttons {
+    gap: 6px;
+  }
+
+  .info-sidebar {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+  }
+
+  .map-control-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .location-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.btn {
+  font-weight: bold;
+  padding: 10px 16px;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-primary {
+  background-color: #f4f4f5;
+  color: #434343;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+  background-color: #6b7280;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #4b5563;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.go-back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: white;
+  border: 1px solid #e6e6e6;
+}
+
+.go-back-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.location-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: white;
+  color: black;
+  border: 1px solid #e6e6e6;
+}
+
+.location-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.location-btn.has-location {
+  color: #3b82f6;
+}
+
+.location-btn.has-location:hover {
+  color: #2563eb;
+}
+
+/* 位置追蹤狀態樣式 */
+.location-btn.tracking {
+  color: #10b981;
+  animation: tracking-pulse 2s infinite;
+}
+
+.location-btn.tracking:hover {
+  color: #059669;
+}
+
+@keyframes tracking-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* 人力請求按鈕特殊樣式 */
+#requestHelpBtn {
+  background-color: #ef4444;
+  color: white;
+}
+
+#requestHelpBtn:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.status-available {
+  background-color: #10b981;
+}
+
+.status-full {
+  background-color: #ef4444;
+}
+
+.status-unknown {
+  background-color: #f59e0b;
+}
+
+/* 地圖控制按鈕樣式 */
+.map-control-btn {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.map-control-btn:hover {
+  background-color: #f3f4f6;
+  border-color: #3b82f6;
+}
+
+.map-control-btn.active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 24px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+/* 新的緊湊型圖例樣式 */
+.legend-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.legend-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-item-compact {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.legend-color-compact {
+  width: 20px;
+  height: 20px;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 8px;
+}
+
+.legend-color-compact svg {
+  width: 10px;
+  height: 10px;
+}
+
+.legend-label-compact {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3a3937;
+  line-height: 1.2;
+}
+
+/* Details 收合箭頭動畫 */
+details .details-arrow {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+}
+
+details:not([open]) .details-arrow {
+  transform: rotate(0deg);
+}
+
+/* 自定義確認對話框樣式 */
+#customConfirmModal {
+  backdrop-filter: blur(4px);
+}
+
+#customConfirmModal .bg-white {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+#customConfirmModal.hidden .bg-white {
+  animation: modalSlideOut 0.2s ease-in;
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+}
+
+.leaflet-popup-close-button {
+  transform: translate(-6px, 6px);
+  zoom: 1.3;
+}
+
+.leaflet-left .leaflet-control {
+  margin-left: 16px;
+  margin-bottom: 16px;
+  a {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.map-zoom-control-offset {
+  .leaflet-left .leaflet-control {
+    margin-left: 16px;
+    margin-bottom: 100px;
+    a {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}
+
+.leaflet-control-container > .leaflet-bottom {
+  z-index: 800;
+}

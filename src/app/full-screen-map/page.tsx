@@ -1,8 +1,9 @@
 'use client';
 
+import TabDropdownSelect from '@/features/MapContainer/TabDropdownSelect';
 import dynamic from 'next/dynamic';
 
-const MapContainer = dynamic(() => import('@/components/MapContainer'), {
+const MapContainer = dynamic(() => import('@/features/MapContainer'), {
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center h-screen bg-transparent">
@@ -13,7 +14,21 @@ const MapContainer = dynamic(() => import('@/components/MapContainer'), {
     </div>
   ),
 });
+const Modals = dynamic(() => import('@/features/MapContainer/Modals'), { ssr: false });
 
-export default function Home() {
-  return <MapContainer />;
+const ToastContainer = dynamic(() => import('@/features/MapContainer/ToastContainer'), {
+  ssr: false,
+});
+
+export default function FullscreenMapPage() {
+  return (
+    <div className="relative h-screen w-screen">
+      <div className="absolute z-1000 top-4 left-4 flex flex-row items-center justify-center gap-2">
+        <TabDropdownSelect />
+      </div>
+      <MapContainer isFullScreenMap={true} />;
+      <ToastContainer />
+      <Modals />
+    </div>
+  );
 }

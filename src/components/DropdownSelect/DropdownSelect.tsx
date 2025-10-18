@@ -45,7 +45,7 @@ export default function DropdownSelect({
     <div ref={dropdownRef} className="relative inline-block text-sm">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between gap-2 px-3 py-2 w-max bg-white border border-[var(--gray-3)] rounded-md"
+        className="flex items-center justify-between gap-2 px-3 py-2 w-max bg-white border border-[var(--gray-3)] rounded-md cursor-pointer font-medium"
       >
         <span>{selectedLabel ?? defaultLabel}</span>
         <Image
@@ -57,7 +57,7 @@ export default function DropdownSelect({
       </button>
 
       {open && (
-        <div className="min-w-[93px] w-max absolute left-0 mt-1 bg-[var(--gray-4)] rounded-md z-1001">
+        <div className="min-w-[93px] w-max absolute left-0 mt-1 bg-[var(--gray-4)] rounded-md z-1002">
           {options.map(({ value, label }) => (
             <button
               key={value}

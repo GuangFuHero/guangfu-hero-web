@@ -9,11 +9,10 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     if (!isProd) {
-      // resolve CORS issue in local dev
       return [
         {
           source: '/api/:path*',
-          destination: 'https://guangfu250923.pttapp.cc/:path*',
+          destination: 'https://uat-api.gf250923.org/:path*',
         },
       ];
     }
