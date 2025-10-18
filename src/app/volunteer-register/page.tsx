@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Wrapper from '@/features/Wrapper';
+import { Typography } from '@mui/material';
 import MainContent from '@/features/VolunteerRegister/MainContent';
 
 const SITE_URL = 'https://gf250923.org';
@@ -148,8 +149,25 @@ export default function VolunteerRegisterPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
       {/* TODO: refactor component */}
+      {/*
+      // Due to typhoon, close the matching pages temporarily
       <MainContent />
+      */}
+      <Typography sx={{ textAlign: 'center', lineHeight: 2, mb: 2 }}>
+        因風神颱風來襲
+        <br />
+        政府指示 10/18 禁止志工進入災區。
+      </Typography>
+      <Typography sx={{ textAlign: 'center', lineHeight: 2, mb: 2 }}>
+        本站「配送媒合、志工媒合」功能
+        <br />
+        於禁令期間亦暫不開放！
+      </Typography>
+      <Typography sx={{ textAlign: 'center', lineHeight: 2 }}>
+        也再次提醒志工禁令期間請勿前往！
+      </Typography>
     </Wrapper>
   );
 }
