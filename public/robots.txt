@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /401*
+Disallow: /*/401*
+Sitemap: https://gf250923.org/sitemap.xml
