@@ -84,10 +84,10 @@ export default function AboutUs() {
           />
           <IconLink
             path="/youtube_logo.svg"
-            alt="thread"
+            alt="youtube"
             href="https://www.youtube.com/@%E5%85%89%E5%BE%A9%E8%B6%85%E4%BA%BAGuangFuHero"
           />
-          <IconLink path="/line_logo.svg" alt="thread" href="line://ti/p/@hreco" />
+          <IconLink path="/line_logo.svg" alt="line" href="line://ti/p/@hreco" />
         </Stack>
       </Stack>
 
