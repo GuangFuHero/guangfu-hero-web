@@ -97,7 +97,7 @@ export default function AboutUs() {
           <Typography>
             感謝所有為了讓系統能全天運作、資訊不中斷而付出的每一位「接力超人」！
           </Typography>
-          <div className="space-y-[10px]">
+          <Stack gap={2}>
             {teamMembers.map(member => (
               <TeamGroup
                 key={member.id}
@@ -105,7 +105,7 @@ export default function AboutUs() {
                 personNames={member.personNames}
               />
             ))}
-          </div>
+          </Stack>
           <Typography>以及其他所有不願具名卻也默默地和我們一起完成任務的志工朋友！</Typography>
         </Stack>
       </Stack>
