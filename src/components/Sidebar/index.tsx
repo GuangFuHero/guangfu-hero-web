@@ -26,6 +26,7 @@ const SIDEBAR_ITEM = [
       { name: '庇護所', href: '/victim/shelter' },
       { name: '醫療站', href: '/victim/medical' },
       { name: '心理資源', href: '/victim/mental-health' },
+      { name: '居家修復', href: '/victim/house-repair' },
     ],
   },
   { name: '配送媒合', href: '/resources' },

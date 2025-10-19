@@ -14,7 +14,11 @@ export const env = {
   NEXT_PUBLIC_API_KEY_DEV: process.env.NEXT_PUBLIC_API_KEY_DEV || '',
 
   // outsource data
-  NEXT_PUBLIC_GOOGLE_SHEET_ID: process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID || '',
+  NEXT_PUBLIC_BANNER_GOOGLE_SHEET_ID: process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID || '',
+  NEXT_PUBLIC_HOUSE_REPAIR_GOOGLE_SHEET_ID:
+    process.env.NEXT_PUBLIC_HOUSE_REPAIR_GOOGLE_SHEET_ID || '',
+  NEXT_PUBLIC_HOUSE_REPAIR_GOOGLE_SHEET_GID:
+    process.env.NEXT_PUBLIC_HOUSE_REPAIR_GOOGLE_SHEET_GID || '',
 } as const;
 
 export type EnvConfig = typeof env;

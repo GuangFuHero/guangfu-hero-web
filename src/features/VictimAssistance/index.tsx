@@ -5,20 +5,23 @@ import { Place, PlaceType } from '@/lib/types/place';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import PlaceList from '../PlaceList';
+import HouseRepairList from './HouseRepairList';
 
-type Category = '庇護所' | '醫療站' | '心理資源';
+type Category = '庇護所' | '醫療站' | '心理資源' | '居家修復';
 type ServiceFormat = '全部' | '實體' | '線上' | '電話' | '多種';
 
-const CATEGORY_TO_PLACE_TYPE: Record<Category, PlaceType> = {
+const CATEGORY_TO_PLACE_TYPE: Record<Category, PlaceType | null> = {
   庇護所: PlaceType.SHELTER,
   醫療站: PlaceType.MEDICAL_STATION,
   心理資源: PlaceType.MENTAL_HEALTH_RESOURCE,
+  居家修復: null,
 };
 
 const CATEGORY_TO_ROUTE: Record<Category, string> = {
   庇護所: '/victim/shelter',
   醫療站: '/victim/medical',
   心理資源: '/victim/mental-health',
+  居家修復: '/victim/house-repair',
 };
 
 interface VictimAssistanceProps {
@@ -30,7 +33,7 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
   const [selectedCategory, setSelectedCategory] = useState<Category>(initialCategory);
   const [selectedServiceFormat, setSelectedServiceFormat] = useState<ServiceFormat>('全部');
 
-  const categories: Category[] = ['庇護所', '醫療站', '心理資源'];
+  const categories: Category[] = ['庇護所', '醫療站', '心理資源', '居家修復'];
   const serviceFormats: ServiceFormat[] = ['全部', '實體', '線上', '電話', '多種'];
 
   const handleFilterPlaces = useCallback(
@@ -81,10 +84,14 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
       )}
 
       <div className="space-y-4">
-        <PlaceList
-          activeTab={CATEGORY_TO_PLACE_TYPE[selectedCategory]}
-          onFilterPlaces={handleFilterPlaces}
-        />
+        {CATEGORY_TO_PLACE_TYPE[selectedCategory] !== null ? (
+          <PlaceList
+            activeTab={CATEGORY_TO_PLACE_TYPE[selectedCategory]}
+            onFilterPlaces={handleFilterPlaces}
+          />
+        ) : (
+          <HouseRepairList />
+        )}
       </div>
     </div>
   );

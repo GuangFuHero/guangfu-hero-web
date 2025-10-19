@@ -23,7 +23,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
     async function fetchBanners() {
       try {
         // 直接從客戶端抓取 Google Sheets（避免伺服器端權限問題）
-        const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+        const sheetId = env.NEXT_PUBLIC_BANNER_GOOGLE_SHEET_ID;
         if (!sheetId) {
           throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
         }
