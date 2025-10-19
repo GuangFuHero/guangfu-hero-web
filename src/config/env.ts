@@ -12,6 +12,9 @@ export const env = {
   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://api.gf250923.org',
   NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY || '',
   NEXT_PUBLIC_API_KEY_DEV: process.env.NEXT_PUBLIC_API_KEY_DEV || '',
+
+  // outsource data
+  NEXT_PUBLIC_GOOGLE_SHEET_ID: process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID || '',
 } as const;
 
 export type EnvConfig = typeof env;
