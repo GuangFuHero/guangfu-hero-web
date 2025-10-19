@@ -15,6 +15,7 @@ type HouseRepairData = HouseRepairDataRow[];
 export default function HouseRepairList() {
   const { showToast } = useToast();
 
+  const [fetchDataFail, setFetchDataFail] = useState<boolean>(false);
   const [houseRepairTypes, setHouseRepairTypes] = useState<string[]>([]);
   const [houseRepairData, setHouseRepairData] = useState<HouseRepairData>([]);
   const [currentType, setCurrentType] = useState<string>('全部');
@@ -100,6 +101,7 @@ export default function HouseRepairList() {
         setHouseRepairTypes(houseRepairTypes);
         setHouseRepairData(houseRepairData);
       } catch (error) {
+        setFetchDataFail(true);
         console.error('Failed to fetch house repair data:', error);
       }
     }
@@ -108,9 +110,17 @@ export default function HouseRepairList() {
   }, []);
 
   return houseRepairTypes.length === 0 ? (
-    <>
+    fetchDataFail ? (
+      <div className="text-center text-base/9 py-8 text-[var(--gray)] mb-[80vh]">
+        載入資料失敗
+        <br />
+        您可以試著重新整理頁面
+        <br />
+        若此問題仍持續發生，煩請利用回報功能通知管理員
+      </div>
+    ) : (
       <div className="text-center py-8 text-[var(--gray)] mb-[80vh]">載入中...</div>
-    </>
+    )
   ) : (
     <>
       {/* type buttons */}
