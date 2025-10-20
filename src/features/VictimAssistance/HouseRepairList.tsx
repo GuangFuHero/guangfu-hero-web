@@ -37,12 +37,12 @@ export default function HouseRepairList() {
     async function fetchRepairData() {
       try {
         // fetch Google sheet at client side
-        const sheetId = env.NEXT_PUBLIC_HOUSE_REPAIR_GOOGLE_SHEET_ID;
-        const gid = env.NEXT_PUBLIC_HOUSE_REPAIR_GOOGLE_SHEET_GID;
+        const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+        const gid = env.NEXT_PUBLIC_HOUSE_REPAIR_SHEET_GID;
         if (!sheetId) {
-          throw new Error('NEXT_PUBLIC_HOUSE_REPAIR_GOOGLE_SHEET_ID not configured');
+          throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
         } else if (!gid) {
-          throw new Error('NEXT_PUBLIC_HOUSE_REPAIR_GOOGLE_SHEET_GID not configured');
+          throw new Error('NEXT_PUBLIC_HOUSE_REPAIR_SHEET_GID not configured');
         }
 
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
