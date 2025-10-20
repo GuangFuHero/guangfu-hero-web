@@ -124,7 +124,7 @@ export default function HouseRepairList() {
   ) : (
     <>
       {/* type buttons */}
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-2 mb-3 sm:flex-wrap">
         {houseRepairTypes.map(type => (
           <Button
             key={type}
@@ -157,11 +157,11 @@ export default function HouseRepairList() {
                   </div>
                 )}
                 <h3 className="text-lg font-bold text-[var(--gray-2)] mb-2">{row.name}</h3>
-                <div className="flex items-start gap-2 text-[#3A3937] mb-1 leading-[20px] font-normal">
+                <div className="flex items-start gap-2 text-[var(--black)] mb-1 leading-[20px] font-normal">
                   <div className="text-[var(--gray-2)] text-nowrap">聯絡人</div>
                   <div className="flex-1">{row.contact}</div>
                 </div>
-                <div className="flex gap-2 text-[#3A3937] mb-1 leading-[20px] items-center font-normal">
+                <div className="flex gap-2 text-[var(--black)] mb-1 leading-[20px] items-center font-normal">
                   <div className="text-[var(--gray-2)] text-nowrap">電話</div>
                   <div
                     className="flex gap-2 justify-between items-center cursor-pointer hover:bg-gray-50 p-1 rounded transition-colors"
