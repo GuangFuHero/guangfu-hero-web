@@ -3,6 +3,7 @@ import CarouselIndicators from './CarouselIndicators';
 import { useDrag } from '@/hooks/useDrag';
 import PrevButton from './PrevButton';
 import NextButton from './NextButton';
+import { env } from '@/config/env';
 
 interface AlertBannerProps {
   onAlertClick: () => void;
@@ -22,7 +23,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
     async function fetchBanners() {
       try {
         // 直接從客戶端抓取 Google Sheets（避免伺服器端權限問題）
-        const sheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+        const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
         if (!sheetId) {
           throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
         }
