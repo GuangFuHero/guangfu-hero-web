@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import {
   DialogTitle,
   DialogContent,
@@ -97,6 +98,27 @@ export default function CreateDialog({ open, onClose, onSubmittedCallback = isSu
         <DialogContent>
           <Box sx={{ mb: 2, pt: 1 }}>
             <Grid container spacing={2}>
+              {/* Notation */}
+              <Grid size={12} height="100%">
+                <Alert severity="warning" color="error" icon={false}>
+                  <AlertTitle className="text-[var(--red)]">
+                    ⚠ 提醒：此處為申請「一般志工」
+                  </AlertTitle>
+                  <Typography className="text-[var(--gray)]" sx={{ marginBottom: 3 }}>
+                    若需以下專業服務，請前往專區聯繫：
+                  </Typography>
+                  <Typography className="text-[var(--gray)]" sx={{ marginBottom: 2 }}>
+                    門窗、水肥、水電、結構
+                  </Typography>
+                  <Link
+                    href={'/victim/house-repair'}
+                    className="text-base text-[var(--black)] font-medium underline"
+                  >
+                    查找廠商名單
+                  </Link>
+                </Alert>
+              </Grid>
+
               <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                   fullWidth
@@ -143,25 +165,6 @@ export default function CreateDialog({ open, onClose, onSubmittedCallback = isSu
                   value={form.assignment_notes}
                   onChange={handleChange}
                 />
-              </Grid>
-              <Grid size={12} height="100%">
-                <Alert severity="info" icon={false}>
-                  <AlertTitle>如有以下需求可先撥打專線</AlertTitle>
-                  <ul style={{ margin: 0, paddingLeft: 15 }}>
-                    <li style={{ marginBottom: 5 }}>
-                      <Typography fontWeight={600}>機具：0982-233-415</Typography>
-                      可支援大小機具：山貓、夾子車、怪手、清溝車等
-                    </li>
-                    <li style={{ marginBottom: 5 }}>
-                      <Typography fontWeight={600}>排水：0972-223-354</Typography>
-                      24小時服務｜建物水不通
-                    </li>
-                    <li style={{ marginBottom: 5 }}>
-                      <Typography fontWeight={600}>水電：03-8227171 #423,424</Typography>
-                      受災戶內部修繕
-                    </li>
-                  </ul>
-                </Alert>
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>

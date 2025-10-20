@@ -88,6 +88,12 @@ export default function AboutUs() {
             href="https://www.youtube.com/@%E5%85%89%E5%BE%A9%E8%B6%85%E4%BA%BAGuangFuHero"
           />
           <IconLink path="/line_logo.svg" alt="line" href="line://ti/p/@hreco" />
+          <IconLink
+            path="/instagram_logo.svg"
+            alt="instagram"
+            href="https://www.instagram.com/gunangfu250927/"
+          />
+          <IconLink path="/fb_logo.svg" alt="fb" href="https://www.facebook.com/gunangfu250927" />
         </Stack>
       </Stack>
 
