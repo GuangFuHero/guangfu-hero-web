@@ -35,11 +35,11 @@ const SIDEBAR_ITEM = [
   { name: '隱私權政策', href: '/privacy' },
   { name: '服務條款', href: '/terms' },
   {
-    name: '網站回報問題',
+    name: '網站問題回報',
     href: 'https://docs.google.com/forms/d/e/1FAIpQLSewjwY0hhJMEIPIDhM_KLSgtZ_Q4nMPq4fHmolk0DyjRcGiqw/viewform',
   },
   {
-    name: '配送媒合 / 志工媒合回報',
+    name: '媒合功能回饋',
     href: 'https://docs.google.com/forms/d/17VyOi9B43ouZ3_s5MdS1fs80fVR-lNvsV7Q4eG-2o68/viewform',
   },
 ];
