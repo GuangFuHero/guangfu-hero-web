@@ -283,8 +283,10 @@ export interface SupplyItem {
   supply_id: string;
   tag: string;
   name: string;
-  recieved_count: number;
-  total_count: number;
+  recieved_count: number | null; // defined in old API
+  received_count: number | null; // defined in new API
+  total_count: number | null; // defined in old API
+  total_number: number | null; // defined in new API
   unit: string;
 }
 
