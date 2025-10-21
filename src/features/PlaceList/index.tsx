@@ -3,8 +3,8 @@
 import { useInfinitePlaces } from '@/hooks/useMapData';
 import { PlaceTab } from '@/lib/types/map';
 import { Place } from '@/lib/types/place';
-import { getGoogleMapsUrl } from '@/lib/utils';
-import { useCallback, useEffect, useMemo } from 'react';
+import { getGoogleMapsUrl, throttle } from '@/lib/utils';
+import { useEffect, useMemo } from 'react';
 import InfoCard from './InfoCard';
 
 interface PlaceListProps {
@@ -21,21 +21,21 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilt
 
     let displayPlaces: Place[] = [];
 
-    if (activeTab === 'all') displayPlaces = Object.values(listQuery.data).flat();
+    if (activeTab === 'all') displayPlaces = listQuery.flatData;
     else displayPlaces = listQuery.data[activeTab] || [];
 
     return !!onFilterPlaces ? displayPlaces.filter(onFilterPlaces) : displayPlaces;
   }, [listQuery.data, activeTab, onFilterPlaces]);
 
-  const handleScroll = useCallback(() => {
+  const handleScroll = throttle(() => {
     const scrollTop = document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
 
-    if (scrollTop + clientHeight >= scrollHeight - 200) {
+    if (scrollTop + clientHeight >= scrollHeight - 100) {
       listQuery.fetchNextPage();
     }
-  }, [listQuery]);
+  }, 500);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
