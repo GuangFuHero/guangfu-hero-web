@@ -8,7 +8,7 @@ import {
 } from './types';
 
 // TODO: use for volunteer register page, wait for refactor
-export const getEditApiUrl = () => 'https://guangfu250923.pttapp.cc'; // env.NEXT_PUBLIC_API_URL
+export const getEditApiUrl = () => env.NEXT_PUBLIC_API_URL;
 
 export async function fetchAPI<T>(
   endpoint: string,
