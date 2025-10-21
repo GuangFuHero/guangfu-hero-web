@@ -243,7 +243,9 @@ export default function CreateDialog({ open, onClose, onSubmittedCallback = isSu
 
           <FormControlLabel
             required
-            control={<Checkbox onChange={e => setAgreeTerms(x => !x)} value={agreeTerms} />}
+            control={
+              <Checkbox onChange={e => setAgreeTerms(e.target.checked)} checked={agreeTerms} />
+            }
             label={
               <>
                 我已理解本平台
