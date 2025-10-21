@@ -8,7 +8,7 @@ const LOGO_URL = 'https://gf250923.org/logo_new.svg';
 
 export const generateMetadata = (): Metadata => {
   return {
-    title: '光復超人 | 每一個人都是彼此的超人',
+    title: '每一個人都是彼此的超人',
     description:
       '花蓮光復地震災區即時救援地圖 - 光復超人（鏟子超人、光復英雄）提供志工路線、志工報名、物資分配、補水站、洗澡點、醫療站、臨時住宿等完整救災資訊。災民需求即時配對，熱食供應，光復小蜜蜂接駁服務。',
     keywords:
