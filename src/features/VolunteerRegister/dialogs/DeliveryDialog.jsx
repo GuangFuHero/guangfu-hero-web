@@ -20,7 +20,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { safeApiRequest } from '../utils/helpers';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { getApiUrl } from '@/lib/api';
+import { getEditApiUrl } from '@/lib/api';
 
 function getRoleTypeColor(role_type, is_completed) {
   if (is_completed) return '';
@@ -61,7 +61,7 @@ export default function DeliveryDialog({
           ? 'completed'
           : 'active',
     };
-    const result = await safeApiRequest(`${getApiUrl()}/human_resources/${request.id}`, {
+    const result = await safeApiRequest(`${getEditApiUrl()}/human_resources/${request.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
