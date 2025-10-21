@@ -14,6 +14,7 @@ import {
 import { NormalizedSupplyItem } from '@/features/SupplyDepot/useFetchAllData';
 import { useFormContext } from 'react-hook-form';
 import { ReportedSupplies } from '@/lib/supplyLocalStorage';
+import { env } from '@/config/env';
 
 interface SupplyRequirementListProps {
   supplies?: NormalizedSupplyItem[];
@@ -105,74 +106,89 @@ const SupplyRequirementList = ({
             </Grid>
           </Grid>
           <Stack spacing={1} sx={{ maxHeight: '70dvh', overflow: 'auto' }} ref={scrollContainerRef}>
-            {supplies?.map(({ id, name, total_count, recieved_count, unit, requestor }, idx) => {
-              const isReported = !!reportedSupplies[id];
-              const fieldError = errors[`quantity_${id}`];
-              return (
-                <Grid container spacing={1} key={idx}>
-                  <Grid size={9}>
-                    <ToggleButton
-                      value="check"
-                      selected={selectedItems?.[id] || false}
-                      color="success"
-                      fullWidth
-                      size="small"
-                      sx={{ fontSize: 14 }}
-                    >
-                      <Stack alignItems="center">
-                        <Typography fontSize={12} textAlign="center">
-                          {requestor}
-                        </Typography>
-                        <Stack direction="row" alignItems="center" spacing={1}>
-                          {isReported && (
-                            <Chip
-                              label="已回報"
-                              color="success"
-                              size="small"
-                              sx={{ fontSize: 10, mr: 2 }}
-                            />
-                          )}
-                          <Typography textAlign="center" color="black" fontWeight={600}>
-                            {name} {recieved_count}/{total_count} {unit}
+            {supplies?.map(
+              (
+                {
+                  id,
+                  name,
+                  total_number,
+                  total_count,
+                  received_count,
+                  recieved_count,
+                  unit,
+                  requestor,
+                },
+                idx
+              ) => {
+                const isReported = !!reportedSupplies[id];
+                const fieldError = errors[`quantity_${id}`];
+                return (
+                  <Grid container spacing={1} key={idx}>
+                    <Grid size={9}>
+                      <ToggleButton
+                        value="check"
+                        selected={selectedItems?.[id] || false}
+                        color="success"
+                        fullWidth
+                        size="small"
+                        sx={{ fontSize: 14 }}
+                      >
+                        <Stack alignItems="center">
+                          <Typography fontSize={12} textAlign="center">
+                            {requestor}
                           </Typography>
+                          <Stack direction="row" alignItems="center" spacing={1}>
+                            {isReported && (
+                              <Chip
+                                label="已回報"
+                                color="success"
+                                size="small"
+                                sx={{ fontSize: 10, mr: 2 }}
+                              />
+                            )}
+                            <Typography textAlign="center" color="black" fontWeight={600}>
+                              {name} {env.IS_USE_NEW_API ? received_count : recieved_count}/
+                              {env.IS_USE_NEW_API ? total_number : total_count} {unit}
+                            </Typography>
+                          </Stack>
                         </Stack>
-                      </Stack>
-                    </ToggleButton>
-                  </Grid>
-                  <Grid size={3} alignItems="center" display="flex">
-                    <TextField
-                      placeholder="數量"
-                      variant="outlined"
-                      type="number"
-                      {...register(`quantity_${id}`, {
-                        valueAsNumber: true,
-                        validate: value => {
-                          // Validate that quantity must be greater than 0
-                          if (value && value <= 0) {
-                            return '數量必須大於 0';
-                          }
-                          return true;
-                        },
-                        onChange: e => {
-                          handleQuantityChange(id, e.target.value);
-                        },
-                      })}
-                      error={!!fieldError}
-                      slotProps={{
-                        htmlInput: { min: 0, step: 1, inputMode: 'numeric' },
-                      }}
-                    />
-                  </Grid>
-                  {fieldError && (
-                    <Grid size={12}>
-                      <Typography fontSize={12} color="error" textAlign="end">
-                        {fieldError?.message as string}
-                      </Typography>
+                      </ToggleButton>
                     </Grid>
-                  )}
-                </Grid>
-              );
-            })}
+                    <Grid size={3} alignItems="center" display="flex">
+                      <TextField
+                        placeholder="數量"
+                        variant="outlined"
+                        type="number"
+                        {...register(`quantity_${id}`, {
+                          valueAsNumber: true,
+                          validate: value => {
+                            // Validate that quantity must be greater than 0
+                            if (value && value <= 0) {
+                              return '數量必須大於 0';
+                            }
+                            return true;
+                          },
+                          onChange: e => {
+                            handleQuantityChange(id, e.target.value);
+                          },
+                        })}
+                        error={!!fieldError}
+                        slotProps={{
+                          htmlInput: { min: 0, step: 1, inputMode: 'numeric' },
+                        }}
+                      />
+                    </Grid>
+                    {fieldError && (
+                      <Grid size={12}>
+                        <Typography fontSize={12} color="error" textAlign="end">
+                          {fieldError?.message as string}
+                        </Typography>
+                      </Grid>
+                    )}
+                  </Grid>
+                );
+              }
+            )}
             {loadingMore && (
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
                 <CircularProgress size={24} />

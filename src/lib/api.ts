@@ -8,13 +8,13 @@ import {
 } from './types';
 
 // TODO: use for volunteer register page, wait for refactor
-export const getApiUrl = () => env.NEXT_PUBLIC_API_URL;
+export const getEditApiUrl = () => env.NEXT_PUBLIC_API_URL;
 
 export async function fetchAPI<T>(
   endpoint: string,
   params?: Record<string, string | number>
 ): Promise<T> {
-  const base = getApiUrl();
+  const base = env.NEXT_PUBLIC_API_URL;
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
   const url = new URL(`${base}${path}`);
 
@@ -34,7 +34,7 @@ export async function fetchAPI<T>(
 }
 
 export async function submitReport(data: ReportRequest): Promise<ReportResponse> {
-  const base = getApiUrl();
+  const base = getEditApiUrl();
   const response = await fetch(`${base}/reports`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -66,7 +66,7 @@ export async function submitSupplyProvider(
     throw new Error('登入資訊有問題，請重新登入');
   }
 
-  const base = getApiUrl();
+  const base = getEditApiUrl();
   const response = await fetch(`${base}/supply_providers`, {
     method: 'POST',
     headers: {

@@ -118,8 +118,7 @@ src/
 │   │   └── accommodations/ # 住宿資訊
 │   ├── resources/        # 物資媒合系統
 │   ├── volunteer-register/ # 志工登記
-│   ├── supply-depot-form/ # 物資站表單
-│   ├── supply-depot-form-2/
+│   ├── supply-depot-form-2/ # 物資站表單
 │   ├── auth/             # 身份驗證
 │   │   └── line/         # LINE 登入
 │   ├── privacy/          # 隱私權政策

@@ -1,18 +1,19 @@
 'use client';
 import React from 'react';
+import { env } from '@/config/env';
 
 const UnAuthBlock = () => {
   const startLineLogin = () => {
     if (typeof window === 'undefined') return;
 
-    const next = encodeURIComponent(
-      (window.location.pathname || '/') + (window.location.search || '')
+    const LINE_AUTH_API_BASE = env.IS_USE_NEW_API
+      ? `${env.NEXT_PUBLIC_API_URL}/line/authorize`
+      : `${env.NEXT_PUBLIC_API_URL}/auth/line/start`;
+    const LINE_AUTH_CALLBACK_URI = encodeURIComponent(
+      `${window.location.origin}/auth/line/callback`
     );
 
-    const state = encodeURIComponent(JSON.stringify({ next }));
-    window.location.href = `https://guangfu250923.pttapp.cc/auth/line/start?state=${encodeURIComponent(
-      state
-    )}&redirect_uri=${encodeURIComponent(`${window.location.origin}/auth/line/callback`)}`;
+    window.location.href = `${LINE_AUTH_API_BASE}?redirect_uri=${LINE_AUTH_CALLBACK_URI}`;
   };
 
   return (

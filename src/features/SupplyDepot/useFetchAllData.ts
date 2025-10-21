@@ -1,5 +1,6 @@
 import { getSupplies } from '@/lib/api';
 import { Supply, SupplyItem } from '@/lib/types';
+import { env } from '@/config/env';
 import { useCallback, useEffect, useRef, useState } from 'react';
 // import mock from "@/lib/mock.json";
 
@@ -84,7 +85,13 @@ function normalizeData(data: Supply[]): NormalizedSupplyItem[] {
   const supplySet = [] as NormalizedSupplyItem[];
   data.map(({ supplies, address, name, updated_at }) => {
     supplies.forEach(s => {
-      if (s.total_count > s.recieved_count) {
+      // the two field names are different between old/new API
+      // to check whether the proper data are brought
+      const total = env.IS_USE_NEW_API ? (s.total_number ?? -1) : (s.total_count ?? -1);
+      const received = env.IS_USE_NEW_API ? (s.received_count ?? -1) : (s.recieved_count ?? -1);
+      if (total === -1 || received === -1) return;
+
+      if (total > received) {
         supplySet.push({
           ...s,
           requestor: name,

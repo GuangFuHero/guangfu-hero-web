@@ -22,7 +22,7 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Select from '@mui/material/Select';
 import { safeApiRequest } from '../utils/helpers';
-import { getApiUrl } from '@/lib/api';
+import { getEditApiUrl } from '@/lib/api';
 
 export default function CreateDialog({ open, onClose, onSubmittedCallback = isSuccess => {} }) {
   const [form, setForm] = useState({
@@ -53,7 +53,7 @@ export default function CreateDialog({ open, onClose, onSubmittedCallback = isSu
       role_status: 'pending',
       is_completed: false,
     };
-    const result = await safeApiRequest(`${getApiUrl()}/human_resources`, {
+    const result = await safeApiRequest(`${getEditApiUrl()}/human_resources`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -243,7 +243,9 @@ export default function CreateDialog({ open, onClose, onSubmittedCallback = isSu
 
           <FormControlLabel
             required
-            control={<Checkbox onChange={e => setAgreeTerms(x => !x)} value={agreeTerms} />}
+            control={
+              <Checkbox onChange={e => setAgreeTerms(e.target.checked)} checked={agreeTerms} />
+            }
             label={
               <>
                 我已理解本平台

@@ -118,8 +118,7 @@ src/
 │   │   └── accommodations/ # Accommodation info
 │   ├── resources/        # Resource matching system
 │   ├── volunteer-register/ # Volunteer registration
-│   ├── supply-depot-form/ # Supply depot forms
-│   ├── supply-depot-form-2/
+│   ├── supply-depot-form-2/ # Supply depot forms
 │   ├── auth/             # Authentication
 │   │   └── line/         # LINE login
 │   ├── privacy/          # Privacy policy
