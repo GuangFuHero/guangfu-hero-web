@@ -106,6 +106,7 @@ The app will automatically redirect to the map page (`/map`).
 src/
 ├── app/
 │   ├── map/              # Interactive disaster area map
+│   ├── full-screen-map/  # Full-screen map view
 │   ├── victim/           # Victim assistance pages
 │   │   ├── medical/      # Medical assistance
 │   │   ├── mental-health/# Mental health resources
@@ -113,15 +114,40 @@ src/
 │   ├── volunteer/        # Volunteer information
 │   │   ├── about-us/     # Team information
 │   │   ├── preparation/  # Equipment checklists
-│   │   └── transportation/ # Transport info
+│   │   ├── transportation/ # Transport info
+│   │   └── accommodations/ # Accommodation info
 │   ├── resources/        # Resource matching system
 │   ├── volunteer-register/ # Volunteer registration
+│   ├── supply-depot-form/ # Supply depot forms
+│   ├── supply-depot-form-2/
+│   ├── auth/             # Authentication
+│   │   └── line/         # LINE login
 │   ├── privacy/          # Privacy policy
 │   └── terms/            # Terms of service
 ├── components/           # Reusable UI components
+│   ├── ActionButton/     # Action buttons
+│   ├── AlertBanner/      # Alert notifications
+│   ├── Button/           # Basic buttons
+│   ├── DropdownSelect/   # Dropdown components
+│   ├── PageLayout/       # Page layout wrapper
+│   ├── Sidebar/          # Navigation sidebar
+│   ├── Toast/            # Toast notifications
 ├── features/             # Feature-specific components
+│   ├── MapContainer/     # Map functionality
+│   │   ├── ReactLeafletMap/ # Leaflet map integration
+│   │   ├── InfoSidebar/  # Map information panel
+│   │   ├── Modals/       # Map-related modals
+│   │   └── ...          # Other map features
+│   ├── SiteMap/          # Site map component
+│   ├── PlaceList/        # Place listing functionality
+│   ├── VictimAssistance/ # Victim support features
+│   ├── VolunteerInfo/    # Volunteer information
+│   ├── SupplyDepot/      # Supply management
+│   ├── Resources/        # Resource matching
+│   ├── AboutUs/          # About team page
 ├── lib/                  # Utilities and API
-└── hooks/                # Custom React hooks
+├── hooks/                # Custom React hooks
+├── providers/            # React Context
 ```
 
 ## 👥 Team

@@ -75,3 +75,42 @@ export const formatTimeRange = (
 
   return result;
 };
+
+export function throttle<T extends (...args: unknown[]) => void>(
+  func: T,
+  limit: number = 400,
+  options: { leading?: boolean; trailing?: boolean } = {
+    leading: true,
+    trailing: true,
+  }
+) {
+  let lastCall = 0;
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+  let lastArgs: unknown[];
+  let lastThis: ThisParameterType<T>;
+
+  const { leading = true, trailing = false } = options;
+
+  return function (this: ThisParameterType<T>, ...args: unknown[]) {
+    const now = Date.now();
+    const remaining = limit - (now - lastCall);
+    lastArgs = args;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    lastThis = this;
+
+    if (remaining <= 0) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      lastCall = now;
+      if (leading) func.apply(lastThis, lastArgs);
+    } else if (trailing && !timeout) {
+      timeout = setTimeout(() => {
+        lastCall = leading ? Date.now() : 0;
+        timeout = null;
+        func.apply(lastThis, lastArgs);
+      }, remaining);
+    }
+  };
+}

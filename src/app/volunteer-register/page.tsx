@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Wrapper from '@/features/Wrapper';
+import MainContent from '@/features/VolunteerRegister/MainContent';
 
 const SITE_URL = 'https://gf250923.org';
 const LOGO_URL = 'https://gf250923.org/logo_new.svg';
@@ -147,15 +148,8 @@ export default function VolunteerRegisterPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      {/* 原本 iframe */}
-      <iframe
-        src="https://hualien-volunteers-frontend-iota.vercel.app/"
-        className="w-full border-0"
-        title="志工媒合 - 光復超人災區救援志工招募系統"
-        allow="geolocation"
-        style={{ height: 'calc(100vh - 160px)' }}
-      />
+      {/* TODO: refactor component */}
+      <MainContent />
     </Wrapper>
   );
 }

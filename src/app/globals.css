@@ -19,6 +19,8 @@
   --gray-3: #e6e6e6;
   --gray-4: #f4f4f5;
   --black-overlay: #00000033;
+  --black: #3a3937;
+  --red: #d34746;
 }
 
 @theme inline {
