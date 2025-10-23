@@ -3,6 +3,7 @@ import Button from '@/components/Button';
 import { useToast } from '@/providers/ToastProvider';
 import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
+import ReactGA from 'react-ga4';
 
 type HouseRepairDataRow = {
   name: string;
@@ -19,6 +20,11 @@ export default function HouseRepairList() {
   const [houseRepairTypes, setHouseRepairTypes] = useState<string[]>([]);
   const [houseRepairData, setHouseRepairData] = useState<HouseRepairData>([]);
   const [currentType, setCurrentType] = useState<string>('全部');
+
+  const handleTypeClick = (type: string) => {
+    ReactGA.event(`居家修復_${type}`);
+    setCurrentType(type);
+  };
 
   const handleCopyText = (text: string) => {
     navigator.clipboard
@@ -128,7 +134,7 @@ export default function HouseRepairList() {
         {houseRepairTypes.map(type => (
           <Button
             key={type}
-            onClick={() => setCurrentType(type)}
+            onClick={() => handleTypeClick(type)}
             active={type === currentType}
             variant="sub"
           >
