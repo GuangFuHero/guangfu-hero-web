@@ -65,10 +65,7 @@ export default function LocationButton({
   const { startPress, endPress } = handleButtonPress(onLocationToggle);
 
   return (
-    <div
-      className="location-panel-bottom"
-      style={{ bottom: isFullScreenMap ? '110px' : 'calc(110px + 80px)' }}
-    >
+    <div className="location-panel-bottom">
       <button
         className={locationButtonClass}
         onMouseDown={startPress}

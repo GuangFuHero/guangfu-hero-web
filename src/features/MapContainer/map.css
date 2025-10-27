@@ -15,6 +15,7 @@
 .location-panel-bottom {
   position: absolute;
   left: 16px;
+  bottom: 110px;
   z-index: 800;
 }
 
@@ -184,6 +185,7 @@
 
 .more-info-panel {
   position: absolute;
+  bottom: 16px;
   right: 16px;
   z-index: 800;
 }
@@ -211,6 +213,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
+  bottom: 80px;
   width: 320px;
   z-index: 900;
   background: rgba(255, 255, 255, 0.95);
@@ -637,7 +640,7 @@ details:not([open]) .details-arrow {
 .map-zoom-control-offset {
   .leaflet-left .leaflet-control {
     margin-left: 16px;
-    margin-bottom: 100px;
+    margin-bottom: 16px;
     a {
       width: 36px;
       height: 36px;
