@@ -131,7 +131,7 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                       sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }}
                     />
                     建立於 {dayjs.unix(Number(request.created_at)).format('YYYY-MM-DD HH:mm')}{' '}
-                    {getRelativeTime(request.updated_at)}
+                    {getRelativeTime(request.created_at)}
                   </Typography>
                 </>
               )}
@@ -165,9 +165,9 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                   borderBottom: '1px dotted #e6e6e6',
                 }}
               >
-                <Typography variant="body">需要20人</Typography>
+                <Typography variant="body">需要{request.headcount_need}人</Typography>
                 <Typography variant="body" color="error">
-                  尚需5人
+                  尚需 {request.headcount_got} 人
                 </Typography>
               </Box>
               {/* <Box sx={{ mt: isNotPhone ? 0 : 1 }}>
