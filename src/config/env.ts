@@ -21,6 +21,8 @@ export const env = {
   // outsource data
   NEXT_PUBLIC_GOOGLE_SHEET_ID: process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID || '',
   NEXT_PUBLIC_HOUSE_REPAIR_SHEET_GID: process.env.NEXT_PUBLIC_HOUSE_REPAIR_SHEET_GID || '',
+  NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID:
+    process.env.NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID || '',
 } as const;
 
 export type EnvConfig = typeof env;

@@ -43,8 +43,13 @@ export default function HouseRepairList() {
     async function fetchRepairData() {
       try {
         // fetch Google sheet at client side
+        /*
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
         const gid = env.NEXT_PUBLIC_HOUSE_REPAIR_SHEET_GID;
+        */
+        //開發測試用表單
+        const sheetId = '1FHW_TMy4ufBTxdAyy98gmOeSawI2m7AvU17_wW6W4rg';
+        const gid = '203217287';
         if (!sheetId) {
           throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
         } else if (!gid) {
