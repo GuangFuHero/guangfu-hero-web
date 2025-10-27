@@ -112,29 +112,14 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
               {request.org}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.25, ml: { sm: 'auto' } }}>
-              {request.created_at === request.updated_at ? (
-                <Typography
-                  variant="body2"
-                  sx={{ marginBottom: 1, color: '#838383', fontSize: '12px' }}
-                >
-                  <AccessTimeIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }} />
-                  建立於 {dayjs.unix(Number(request.created_at)).format('YYYY-MM-DD HH:mm')} (
-                  {getRelativeTime(request.created_at)})
-                </Typography>
-              ) : (
-                <>
-                  <Typography
-                    variant="body2"
-                    sx={{ marginBottom: 1, color: '#838383', fontSize: '12px' }}
-                  >
-                    <AccessTimeIcon
-                      sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }}
-                    />
-                    建立於 {dayjs.unix(Number(request.created_at)).format('YYYY-MM-DD HH:mm')}{' '}
-                    {getRelativeTime(request.created_at)}
-                  </Typography>
-                </>
-              )}
+              <Typography
+                variant="body2"
+                sx={{ marginBottom: 1, color: '#838383', fontSize: '12px' }}
+              >
+                <AccessTimeIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }} />
+                建立於 {dayjs.unix(Number(request.created_at)).format('YYYY-MM-DD HH:mm')}{' '}
+                {getRelativeTime(request.created_at)}
+              </Typography>
             </Box>
           </Box>
 
