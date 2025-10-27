@@ -230,7 +230,7 @@ export default function SupportInformationList() {
                   >
                     輔助對象
                   </div>
-                  <div className="font-bold flex-1 mb-3" style={{ whiteSpace: 'pre-wrap' }}>
+                  <div className="font-bold flex-1 mb-4" style={{ whiteSpace: 'pre-wrap' }}>
                     {row.target.replace(/^"|"$/g, '')}
                   </div>
                 </div>
@@ -241,27 +241,32 @@ export default function SupportInformationList() {
                   >
                     輔助內容
                   </div>
-                  <div className="font-bold flex-1 mb-3" style={{ whiteSpace: 'pre-wrap' }}>
+                  <div className="font-bold flex-1 mb-4" style={{ whiteSpace: 'pre-wrap' }}>
                     {row.support_detail.replace(/^"|"$/g, '')}
                   </div>
                 </div>
-                <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                  <div
-                    className="flex justify-center items-center text-xs text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
-                    style={{ height: '20px', width: '60px', borderRadius: '4px' }}
-                  >
-                    申請期限
+                {row.deadline && (
+                  <div className="text-[var(--black)] leading-[20px] items-center font-normal">
+                    <div
+                      className="flex justify-center items-center text-xs text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
+                      style={{ height: '20px', width: '60px', borderRadius: '4px' }}
+                    >
+                      申請期限
+                    </div>
+                    <div className="font-bold flex-1 mb-4" style={{ whiteSpace: 'pre-wrap' }}>
+                      {row.deadline.replace(/^"|"$/g, '')}
+                    </div>
                   </div>
-                  <div className="font-bold flex-1 mb-3" style={{ whiteSpace: 'pre-wrap' }}>
-                    {row.deadline.replace(/^"|"$/g, '')}
-                  </div>
-                </div>
+                )}
               </div>
               <div className="px-4 pt-4 pb-6 flex flex-col pr-1">
-                {row.apply_place !== '暫無' && (
-                  <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                    <div className="font-bold text-[var(--primary)] text-nowrap mb-2">申請地點</div>
-                    <div className="flex gap-1 mb-3" style={{ whiteSpace: 'pre-wrap' }}>
+                <div className="text-[var(--black)] leading-[20px] items-center font-normal">
+                  <div className="font-bold text-[var(--primary)] text-nowrap mb-2">聯絡資訊</div>
+                  {row.apply_place && (
+                    <div
+                      className="flex gap-1 mb-4 items-center"
+                      style={{ whiteSpace: 'pre-wrap' }}
+                    >
                       <svg
                         width="20"
                         height="20"
@@ -276,13 +281,75 @@ export default function SupportInformationList() {
                       </svg>
                       {row.apply_place.replace(/^"|"$/g, '')}
                     </div>
-                  </div>
-                )}
+                  )}
+                  {row.office_Hours && (
+                    <div
+                      className="flex gap-1 mb-4 items-center"
+                      style={{ whiteSpace: 'pre-wrap' }}
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6.66683 10.8346C6.2066 10.8346 5.8335 10.4616 5.8335 10.0013C5.8335 9.54105 6.2066 9.16797 6.66683 9.16797C7.12706 9.16797 7.50016 9.54105 7.50016 10.0013C7.50016 10.4616 7.12706 10.8346 6.66683 10.8346Z"
+                          fill="#838383"
+                        />
+                        <path
+                          d="M6.66683 14.1667C6.2066 14.1667 5.8335 13.7936 5.8335 13.3333C5.8335 12.8731 6.2066 12.5 6.66683 12.5C7.12706 12.5 7.50016 12.8731 7.50016 13.3333C7.50016 13.7936 7.12706 14.1667 6.66683 14.1667Z"
+                          fill="#838383"
+                        />
+                        <path
+                          d="M9.1665 13.3333C9.1665 13.7936 9.53959 14.1667 9.99984 14.1667C10.4601 14.1667 10.8332 13.7936 10.8332 13.3333C10.8332 12.8731 10.4601 12.5 9.99984 12.5C9.53959 12.5 9.1665 12.8731 9.1665 13.3333Z"
+                          fill="#838383"
+                        />
+                        <path
+                          d="M13.3333 14.1667C12.8731 14.1667 12.5 13.7936 12.5 13.3333C12.5 12.8731 12.8731 12.5 13.3333 12.5C13.7936 12.5 14.1667 12.8731 14.1667 13.3333C14.1667 13.7936 13.7936 14.1667 13.3333 14.1667Z"
+                          fill="#838383"
+                        />
+                        <path
+                          d="M9.1665 10.0013C9.1665 10.4616 9.53959 10.8346 9.99984 10.8346C10.4601 10.8346 10.8332 10.4616 10.8332 10.0013C10.8332 9.54105 10.4601 9.16797 9.99984 9.16797C9.53959 9.16797 9.1665 9.54105 9.1665 10.0013Z"
+                          fill="#838383"
+                        />
+                        <path
+                          d="M13.3333 10.8346C12.8731 10.8346 12.5 10.4616 12.5 10.0013C12.5 9.54105 12.8731 9.16797 13.3333 9.16797C13.7936 9.16797 14.1667 9.54105 14.1667 10.0013C14.1667 10.4616 13.7936 10.8346 13.3333 10.8346Z"
+                          fill="#838383"
+                        />
+                        <path
+                          d="M6.66683 5.83203C6.2066 5.83203 5.8335 6.20513 5.8335 6.66536C5.8335 7.1256 6.2066 7.4987 6.66683 7.4987H13.3335C13.7937 7.4987 14.1668 7.1256 14.1668 6.66536C14.1668 6.20513 13.7937 5.83203 13.3335 5.83203H6.66683Z"
+                          fill="#838383"
+                        />
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M5 2.5C3.61929 2.5 2.5 3.61929 2.5 5V15C2.5 16.3807 3.61929 17.5 5 17.5H15C16.3807 17.5 17.5 16.3807 17.5 15V5C17.5 3.61929 16.3807 2.5 15 2.5H5ZM15 4.16667H5C4.53977 4.16667 4.16667 4.53977 4.16667 5V15C4.16667 15.4602 4.53977 15.8333 5 15.8333H15C15.4602 15.8333 15.8333 15.4602 15.8333 15V5C15.8333 4.53977 15.4602 4.16667 15 4.16667Z"
+                          fill="#838383"
+                        />
+                      </svg>
+                      {row.office_Hours.replace(/^"|"$/g, '')}
+                    </div>
+                  )}
+                  {row.apply_address && (
+                    <div
+                      className="flex gap-1 mb-4 items-center"
+                      style={{ whiteSpace: 'pre-wrap' }}
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10.0002 9.99935C10.4585 9.99935 10.8509 9.83615 11.1772 9.50977C11.5036 9.18338 11.6668 8.79102 11.6668 8.33268C11.6668 7.87435 11.5036 7.48199 11.1772 7.1556C10.8509 6.82921 10.4585 6.66602 10.0002 6.66602C9.54183 6.66602 9.14947 6.82921 8.82308 7.1556C8.49669 7.48199 8.3335 7.87435 8.3335 8.33268C8.3335 8.79102 8.49669 9.18338 8.82308 9.50977C9.14947 9.83615 9.54183 9.99935 10.0002 9.99935ZM10.0002 16.1243C11.6946 14.5688 12.9516 13.1556 13.771 11.8848C14.5904 10.6139 15.0002 9.48546 15.0002 8.49935C15.0002 6.98546 14.5175 5.74588 13.5522 4.7806C12.587 3.81532 11.4029 3.33268 10.0002 3.33268C8.59738 3.33268 7.41336 3.81532 6.44808 4.7806C5.4828 5.74588 5.00016 6.98546 5.00016 8.49935C5.00016 9.48546 5.40988 10.6139 6.22933 11.8848C7.04877 13.1556 8.30572 14.5688 10.0002 16.1243ZM10.0002 18.3327C7.76405 16.4299 6.09391 14.6625 4.98975 13.0306C3.88558 11.3987 3.3335 9.88824 3.3335 8.49935C3.3335 6.41602 4.00363 4.75629 5.34391 3.52018C6.68419 2.28407 8.23627 1.66602 10.0002 1.66602C11.7641 1.66602 13.3161 2.28407 14.6564 3.52018C15.9967 4.75629 16.6668 6.41602 16.6668 8.49935C16.6668 9.88824 16.1147 11.3987 15.0106 13.0306C13.9064 14.6625 12.2363 16.4299 10.0002 18.3327Z"
+                          fill="#838383"
+                        />
+                      </svg>
 
-                {row.apply_address !== '暫無' && (
-                  <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                    <div className="font-bold text-[var(--primary)] text-nowrap mb-2">地點地址</div>
-                    <div className="flex-1 mb-3" style={{ whiteSpace: 'pre-wrap' }}>
                       <a
                         href={
                           'https://www.google.com/maps/search/?api=1&query=' + row.apply_address
@@ -295,22 +362,13 @@ export default function SupportInformationList() {
                         {row.apply_address.replace(/^"|"$/g, '')}
                       </a>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {row.office_Hours !== '暫無' && (
-                  <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                    <div className="font-bold text-[var(--primary)] text-nowrap mb-2">開放時間</div>
-                    <div className="flex-1 mb-3" style={{ whiteSpace: 'pre-wrap' }}>
-                      {row.office_Hours.replace(/^"|"$/g, '')}
-                    </div>
-                  </div>
-                )}
-
-                {row.phone !== '暫無' && (
-                  <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                    <div className="font-bold text-[var(--primary)] text-nowrap mb-2">電話窗口</div>
-                    <div className="flex gap-1 mb-3" style={{ whiteSpace: 'pre-wrap' }}>
+                  {row.phone && (
+                    <div
+                      className="flex gap-1 mb-4 items-center"
+                      style={{ whiteSpace: 'pre-wrap' }}
+                    >
                       <svg
                         width="20"
                         height="20"
@@ -325,19 +383,19 @@ export default function SupportInformationList() {
                       </svg>
                       {row.phone.replace(/^"|"$/g, '')}
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
 
-                {row.apply_detail !== '暫無' && (
+                {row.apply_detail && (
                   <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                    <div className="font-bold text-[var(--primary)] text-nowrap mb-2">申請資料</div>
-                    <div className="flex-1 mb-3" style={{ whiteSpace: 'pre-wrap' }}>
+                    <div className="font-bold text-[var(--primary)] text-nowrap mb-2">申請方式</div>
+                    <div className="flex-1 mb-4" style={{ whiteSpace: 'pre-wrap' }}>
                       {row.apply_detail.replace(/^"|"$/g, '')}
                     </div>
                   </div>
                 )}
 
-                {row.source !== '暫無' && (
+                {row.source && (
                   <div className="text-[var(--black)] leading-[20px] items-center font-normal ">
                     <div className="font-bold text-[var(--primary)] text-nowrap mb-2">資料來源</div>
                     <div className="flex gap-2">
