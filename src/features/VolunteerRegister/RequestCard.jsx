@@ -6,10 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import dayjs from 'dayjs';
 
-import RoomIcon from '@mui/icons-material/Room';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import PhoneIcon from '@mui/icons-material/Phone';
-import PersonIcon from '@mui/icons-material/Person';
 import isCompleted from './utils/isCompleted';
 
 function getRelativeTime(timestamp) {
@@ -158,23 +155,6 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                   尚需 {request.headcount_got} 人
                 </Typography>
               </Box>
-              {/* <Box sx={{ mt: isNotPhone ? 0 : 1 }}>
-                {!isRequestCompleted ? (
-                  <>
-                    已到位 {request.headcount_got}/{request.headcount_need}
-                    {request.headcount_unit}，還需要{' '}
-                    <Typography sx={{ display: 'inline-block' }} color="error">
-                      {request.headcount_need - request.headcount_got}
-                      {request.headcount_unit}
-                    </Typography>{' '}
-                  </>
-                ) : (
-                  <Typography color="success">
-                    總共需 {request.headcount_got}
-                    {request.headcount_unit}，已全部到位!
-                  </Typography>
-                )}
-              </Box> */}
             </Box>
 
             <Typography variant="body2" sx={{ fontSize: '12px', fontWeight: 'bold', py: 1 }}>
@@ -182,7 +162,6 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
             </Typography>
 
             <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {/* <RoomIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top' }} /> */}
               <svg
                 width="14"
                 height="17"
@@ -211,7 +190,6 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                 variant="body2"
                 sx={{ marginBottom: 1, display: 'flex', alignItems: 'center', gap: 1 }}
               >
-                {/* <PhoneIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }} /> */}
                 <svg
                   width="15"
                   height="15"
@@ -237,14 +215,9 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                 </Typography>
               )}
             </Box>
-
-            {/* <Box sx={{ mt: 1 }}>
-              <CustomProgressBar
-                percentage={(request.headcount_got / request.headcount_need) * 100}
-              />
-            </Box> */}
           </Box>
         </CardContent>
+
         {!isRequestCompleted ? (
           <CardActions
             sx={{
