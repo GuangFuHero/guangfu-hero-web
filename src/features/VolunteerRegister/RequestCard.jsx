@@ -118,8 +118,10 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                 sx={{ marginBottom: 1, color: '#838383', fontSize: '12px' }}
               >
                 <AccessTimeIcon sx={{ fontSize: 'inherit', verticalAlign: 'text-top', mr: 1 }} />
-                建立於 {dayjs.unix(Number(request.created_at)).format('YYYY-MM-DD HH:mm')}{' '}
+                建立於 {dayjs.unix(Number(request.created_at)).format('YYYY-MM-DD HH:mm')}
+                {' ('}
                 {getRelativeTime(request.created_at)}
+                {')'}
               </Typography>
             </Box>
           </Box>
