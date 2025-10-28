@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Container, Box, ThemeProvider, CssBaseline, Chip } from '@mui/material';
+import { Container, Box, ThemeProvider, CssBaseline, Chip, Button } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Header from './Header';
@@ -147,6 +147,48 @@ export default function MainContent() {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Box sx={{ backgroundColor: '#FEF2E7', p: 3, textAlign: 'center' }}>
+          <p>
+            因應災區需求減少，媒合功能將於 <span style={{ color: '#D34746' }}>10/30</span> 關閉，
+            志工請至「大馬太鞍活動中心」接受分配
+            <br />
+            居民若有專業志工需求，請至專區聯繫廠商
+          </p>
+          <Button
+            href="/victim/house-repair"
+            component="a"
+            sx={{
+              border: '1px solid #F37C0E',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 1,
+              mt: 2,
+              width: { xs: '100%', md: '240px' },
+              color: '#F37C0E',
+              '&:hover': {
+                backgroundColor: '#F37C0E',
+                color: '#fff',
+                '& svg path': {
+                  fill: '#fff',
+                },
+              },
+            }}
+          >
+            <span>查看廠商名單</span>
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 11 11"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.16667 10.8333L0 9.66667L8 1.66667H0.833333V0H10.8333V10H9.16667V2.83333L1.16667 10.8333Z"
+                fill="#F37C0E"
+              />
+            </svg>
+          </Button>
+        </Box>
         <Header onCreate={() => setOpenCreate(true)} />
         <Container sx={{ mt: 3 }}>
           <Box sx={{ width: '100%', mb: 1 }}>
@@ -163,56 +205,65 @@ export default function MainContent() {
             </Tabs>
           </Box>
           <Box sx={{ width: '100%', mb: 1, userSelect: 'none' }}>
-            <Chip
-              color={listFilter[0] === '' ? 'primary' : ''}
-              label="所有需求"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['']);
-              }}
-            />
-
             {/* filtering with string query */}
-            <Chip
-              color={listFilter.includes('鏟子超人') ? 'primary' : ''}
-              label="鏟子超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['鏟子超人', '鏟']);
-              }}
-            />
-            <Chip
-              color={listFilter.includes('清溝超人') ? 'primary' : ''}
-              label="清溝超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['清溝超人', '溝']);
-              }}
-            />
-            <Chip
-              color={listFilter.includes('搬物超人') ? 'primary' : ''}
-              label="搬物超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['搬物超人', '搬', '拖', '運']);
-              }}
-            />
-            <Chip
-              color={listFilter.includes('廚師超人') ? 'primary' : ''}
-              label="廚師超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['廚師超人', '廚師', '煮']);
-              }}
-            />
-            <Chip
-              color={listFilter.includes('整理超人') ? 'primary' : ''}
-              label="整理超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['整理超人', '整理']);
-              }}
-            />
+            {[
+              { key: 'all', label: '所有需求', keywords: [''] },
+              { key: 'shovel', label: '鏟子超人', keywords: ['鏟子超人', '鏟'] },
+              { key: 'clean', label: '清溝超人', keywords: ['清溝超人', '溝'] },
+              { key: 'move', label: '搬物超人', keywords: ['搬物超人', '搬', '拖', '運'] },
+              { key: 'chef', label: '廚師超人', keywords: ['廚師超人', '廚師', '煮'] },
+              { key: 'organize', label: '整理超人', keywords: ['整理超人', '整理'] },
+            ].map(item => (
+              <Chip
+                key={item.key}
+                color={
+                  item.key === 'all'
+                    ? listFilter[0] === ''
+                      ? 'primary'
+                      : ''
+                    : listFilter.includes(item.label)
+                      ? 'primary'
+                      : ''
+                }
+                label={
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    {((item.key === 'all' && listFilter[0] === '') ||
+                      (item.key !== 'all' && listFilter.includes(item.label))) && (
+                      <svg
+                        width="12"
+                        height="9"
+                        viewBox="0 0 12 9"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M3.72667 7.05333L0.946666 4.27333L0 5.21333L3.72667 8.94L11.7267 0.94L10.7867 0L3.72667 7.05333Z"
+                          fill="white"
+                        />
+                      </svg>
+                    )}
+                    {item.label}
+                  </Box>
+                }
+                sx={{
+                  mr: 1,
+                  mb: 1,
+                  borderRadius: '4px',
+                  fontSize: '16px',
+                  ...(((item.key === 'all' && listFilter[0] === '') ||
+                    (item.key !== 'all' && listFilter.includes(item.label))) && {
+                    backgroundColor: '#434343',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#434343',
+                    },
+                  }),
+                }}
+                onClick={() => {
+                  setListFilter(item.key === 'all' ? [''] : item.keywords);
+                }}
+              />
+            ))}
           </Box>
           {requests.length === 0 && isLoading && (
             <>
