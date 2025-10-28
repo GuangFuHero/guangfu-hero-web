@@ -104,10 +104,11 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
           >
             <Typography variant="h6" sx={{ mb: { xs: 0, sm: 1 } }}>
               {isRequestCompleted && (
-                <>
-                  <Chip color="success" label="已完成" sx={{ verticalAlign: 'bottom' }} />
-                  &nbsp;&nbsp;
-                </>
+                <Chip
+                  color="success"
+                  label="已完成"
+                  sx={{ verticalAlign: 'bottom', marginRight: 1 }}
+                />
               )}
               {request.org}
             </Typography>
@@ -133,7 +134,7 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                   sx={{ mr: 1, borderRadius: '2px', fontSize: '12px' }}
                 />
                 <Typography variant="body">
-                  <b>{request.role_name}</b>&nbsp;
+                  <b>{request.role_name}</b>
                 </Typography>
               </Box>
               <Box
