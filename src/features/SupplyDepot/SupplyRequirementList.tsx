@@ -1,19 +1,19 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import { NormalizedSupplyItem } from '@/features/SupplyDepot/useFetchAllData';
+import { ReportedSupplies } from '@/lib/supplyLocalStorage';
 import {
+  Box,
   Card,
-  Typography,
-  Stack,
-  TextField,
-  Grid,
-  ToggleButton,
   Chip,
   CircularProgress,
-  Box,
+  Grid,
+  Stack,
+  TextField,
+  ToggleButton,
+  Typography,
 } from '@mui/material';
-import { NormalizedSupplyItem } from '@/features/SupplyDepot/useFetchAllData';
+import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ReportedSupplies } from '@/lib/supplyLocalStorage';
 
 interface SupplyRequirementListProps {
   supplies?: NormalizedSupplyItem[];
@@ -88,6 +88,7 @@ const SupplyRequirementList = ({
       scrollContainer.removeEventListener('scroll', handleScroll);
     };
   }, [hasMore, loadingMore, fetchNextBatch]);
+
   return (
     <section aria-labelledby="station-info" className="space-y-6">
       <Card variant="outlined" sx={{ p: 2 }}>
@@ -105,7 +106,7 @@ const SupplyRequirementList = ({
             </Grid>
           </Grid>
           <Stack spacing={1} sx={{ maxHeight: '70dvh', overflow: 'auto' }} ref={scrollContainerRef}>
-            {supplies?.map(({ id, name, total_count, recieved_count, unit, requestor }, idx) => {
+            {supplies?.map(({ id, name, total_number, received_count, unit, requestor }, idx) => {
               const isReported = !!reportedSupplies[id];
               const fieldError = errors[`quantity_${id}`];
               return (
@@ -133,7 +134,7 @@ const SupplyRequirementList = ({
                             />
                           )}
                           <Typography textAlign="center" color="black" fontWeight={600}>
-                            {name} {recieved_count}/{total_count} {unit}
+                            {name} {received_count}/{total_number} {unit}
                           </Typography>
                         </Stack>
                       </Stack>

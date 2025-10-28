@@ -10,6 +10,52 @@ interface ToastItemProps {
   onRemove: (id: string) => void;
 }
 
+const getTypeStyles = (type: ToastItemProps['type']) => {
+  switch (type) {
+    case 'success':
+      return 'bg-[var(--success)] border-[var(--green)] border text-[var(--black)]';
+    case 'error':
+      return 'bg-[var(--red)] border-[var(--red)] border text-[var(--black)]';
+    case 'warning':
+      return 'bg-yellow-600 border-yellow-500 border text-[var(--black)]';
+    default:
+      return 'bg-gray-800 border-gray-700 border text-[var(--black)]';
+  }
+};
+
+const ToastIconComponent = ({ type }: { type: ToastItemProps['type'] }) => {
+  switch (type) {
+    case 'success':
+      return (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clipPath="url(#clip0_5330_27992)">
+            <path
+              d="M9.00016 16.1737L4.83016 12.0037L3.41016 13.4137L9.00016 19.0037L21.0002 7.00375L19.5902 5.59375L9.00016 16.1737Z"
+              fill="var(--green)"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_5330_27992">
+              <rect width="24" height="24" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      );
+
+    case 'error':
+    case 'warning':
+    case 'info':
+    default:
+      return null;
+  }
+};
+
 const ToastItem = ({ id, message, type, onRemove }: ToastItemProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -22,36 +68,36 @@ const ToastItem = ({ id, message, type, onRemove }: ToastItemProps) => {
     setTimeout(() => onRemove(id), 300);
   };
 
-  const getTypeStyles = () => {
-    switch (type) {
-      case 'success':
-        return 'bg-green-600 border-green-500';
-      case 'error':
-        return 'bg-red-600 border-red-500';
-      case 'warning':
-        return 'bg-yellow-600 border-yellow-500';
-      case 'info':
-      default:
-        return 'bg-gray-800 border-gray-700';
-    }
-  };
-
   return (
     <div
       className={`
-        flex items-center justify-between p-4 mb-2 rounded-lg shadow-lg text-white border-l-4
+        flex items-center justify-between p-4 mb-2 rounded-lg gap-[12px]
         transition-all duration-300 transform
-        ${getTypeStyles()}
+        ${getTypeStyles(type)}
         ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}
       `}
     >
-      <span className="text-sm font-medium">{message}</span>
+      <div className="flex row items-start gap-[12px] justify-start flex-1">
+        <ToastIconComponent type={type} />
+        <span className="text-[16px] leading-[24px] font-medium font-[inherit]">{message}</span>
+      </div>
       <button
         onClick={handleRemove}
-        className="ml-4 text-white hover:text-gray-200 transition-colors"
+        className="text-[var(--gray-2)] hover:text-[var(--gray-3)] transition-colors"
         aria-label="關閉通知"
       >
-        ✕
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z"
+            fill="currentColor"
+          />
+        </svg>
       </button>
     </div>
   );
@@ -63,7 +109,7 @@ export default function ToastContainer() {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-20 md:bottom-25 right-5 z-2000 max-w-sm w-full">
+    <div className="fixed bottom-5 md:bottom-5 right-5 z-2000 max-w-sm w-full">
       {toasts.map(toast => (
         <ToastItem
           key={toast.id}

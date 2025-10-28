@@ -385,7 +385,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                   <div className="flex my-3">
                     <ActionButton
                       href={'https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip112/gobytime'}
-                      variant="secondary"
+                      variant="secondary-light"
                       icon="/icon_arrow_outward.svg"
                     >
                       列車班次資訊
@@ -394,7 +394,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                   <div className="flex my-3">
                     <ActionButton
                       href={'https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip121/query'}
-                      variant="secondary"
+                      variant="secondary-light"
                       icon="/icon_arrow_outward.svg"
                     >
                       前往訂票
@@ -426,7 +426,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                           href={
                             'https://www.facebook.com/timefortaiwan101/posts/1240379071467098?rdid=rHjplZG0zRYAL8Dw#'
                           }
-                          variant="secondary"
+                          variant="secondary-light"
                           icon="/icon_arrow_outward.svg"
                         >
                           點此看官方公告
@@ -591,7 +591,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                   <div className="flex my-3">
                     <ActionButton
                       href={'https://gobus.moushih.com/'}
-                      variant="secondary"
+                      variant="secondary-light"
                       icon="/icon_arrow_outward.svg"
                     >
                       遊覽車媒合去Gobus
@@ -608,7 +608,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                       href={
                         'https://line.me/ti/g2/gitK-a3bK9FWZPLET55pxfGo0CyDT1NenIt8mQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default'
                       }
-                      variant="secondary"
+                      variant="secondary-light"
                       icon="/icon_arrow_outward.svg"
                     >
                       光復救災 北區共乘
@@ -619,7 +619,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                       href={
                         'https://line.me/ti/g2/t15dvRs84e71Bv3W4GNKPlFcqycQFxaAeP3pRg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default'
                       }
-                      variant="secondary"
+                      variant="secondary-light"
                       icon="/icon_arrow_outward.svg"
                     >
                       光復救災 中區共乘
@@ -630,7 +630,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                       href={
                         'https://line.me/ti/g2/rSzI8t-udCwxDYITMl2WzdCyAnyjgATWkdg5Zw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default'
                       }
-                      variant="secondary"
+                      variant="secondary-light"
                       icon="/icon_arrow_outward.svg"
                     >
                       光復救災 南區共乘

@@ -15,11 +15,7 @@ interface LocationButtonProps {
   onLocationToggle: () => void;
 }
 
-export default function LocationButton({
-  isFullScreenMap,
-  geolocation,
-  onLocationToggle,
-}: LocationButtonProps) {
+export default function LocationButton({ geolocation, onLocationToggle }: LocationButtonProps) {
   const handleLocationButtonPress = async () => {
     if (!geolocation.hasLocationPermission || !geolocation.userPosition) {
       onLocationToggle();
@@ -65,10 +61,7 @@ export default function LocationButton({
   const { startPress, endPress } = handleButtonPress(onLocationToggle);
 
   return (
-    <div
-      className="location-panel-bottom"
-      style={{ bottom: isFullScreenMap ? '110px' : 'calc(110px + 80px)' }}
-    >
+    <div className="location-panel-bottom">
       <button
         className={locationButtonClass}
         onMouseDown={startPress}

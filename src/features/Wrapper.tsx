@@ -1,5 +1,4 @@
 import Banner from '@/features/Banner';
-import Footer from '@/features/Footer';
 import Header from '@/features/Header';
 import clsx from 'clsx';
 import React from 'react';
@@ -15,7 +14,7 @@ interface WrapperProps {
 
 const Wrapper = ({
   hideBanner = false,
-  hideFooter = false,
+  // hideFooter = false,
   hideShare = false,
   noMainScroll = false,
   children,
@@ -35,7 +34,7 @@ const Wrapper = ({
         {children}
       </main>
 
-      {!hideFooter && <Footer />}
+      {/* {!hideFooter && <Footer />} */}
     </div>
   );
 };

@@ -50,7 +50,7 @@ export async function submitReport(data: ReportRequest): Promise<ReportResponse>
 
 export async function getSupplies(limit: number = 50, offset: number = 0): Promise<SupplyResponse> {
   const response = await fetchAPI<SupplyResponse>('/supplies', {
-    embed: 'all',
+    // embed: 'all',
     limit,
     offset,
     // filterOutComplete: "true",

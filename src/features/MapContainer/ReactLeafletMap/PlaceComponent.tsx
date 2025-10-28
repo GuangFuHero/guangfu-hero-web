@@ -148,12 +148,12 @@ const createPopupContent = (
 
       <div className="flex items-start gap-2 mt-2">
         {googleMapsUrl && (
-          <ActionButton href={googleMapsUrl} variant="primary" icon="/nav.svg" className="flex-1">
+          <ActionButton href={googleMapsUrl} variant="secondary" icon="/nav.svg" className="flex-1">
             <p className="text-white">導航</p>
           </ActionButton>
         )}
 
-        <ActionButton variant="secondary" icon="/info.svg" onClick={onDetailModalOpen}>
+        <ActionButton variant="secondary-light" icon="/info.svg" onClick={onDetailModalOpen}>
           查看資訊
         </ActionButton>
 

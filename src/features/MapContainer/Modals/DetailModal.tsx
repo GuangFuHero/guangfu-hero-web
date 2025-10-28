@@ -176,7 +176,7 @@ const DetailModal = () => {
               {googleMapsUrl && (
                 <ActionButton
                   href={googleMapsUrl}
-                  variant="primary"
+                  variant="secondary"
                   icon="/nav.svg"
                   className="flex-1"
                 >

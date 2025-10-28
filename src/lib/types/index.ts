@@ -283,8 +283,8 @@ export interface SupplyItem {
   supply_id: string;
   tag: string;
   name: string;
-  recieved_count: number;
-  total_count: number;
+  received_count: number;
+  total_number: number;
   unit: string;
 }
 

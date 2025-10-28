@@ -63,9 +63,7 @@ export default function MapContainer({ isFullScreenMap = true }: { isFullScreenM
 
   return (
     <div
-      className={`relative overflow-hidden transition-all duration-300 ${
-        isFullScreenMap ? 'h-[100svh] w-[100svw]' : 'h-[100%] w-[100%] map-zoom-control-offset'
-      }`}
+      className={`relative overflow-hidden transition-all duration-300 h-[100%] w-[100%] map-zoom-control-offset`}
     >
       <ReactLeafletMap
         ref={mapRef}

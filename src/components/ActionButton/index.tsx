@@ -1,72 +1,96 @@
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface ActionButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
+  openInNewTab?: boolean;
   href?: string;
   className?: string;
-  icon?: string;
+  icon?: ReactNode;
   iconPosition?: 'left' | 'right';
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'secondary-light' | 'tertiary' | 'secondary-outline';
 }
+
+const getClassNameByVariant = (variant: ActionButtonProps['variant']) => {
+  switch (variant) {
+    case 'secondary-light':
+      return 'bg-[var(--secondary-light)] text-[var(--secondary)]';
+    case 'secondary':
+      return 'bg-[var(--secondary)] text-white hover:bg-[var(--secondary-hover)]';
+    case 'tertiary':
+      return 'bg-[var(--tertiary)] text-[var(--black)]';
+    case 'secondary-outline':
+      return 'bg-white text-[var(--secondary)] border border-[2px] border-[var(--secondary)]';
+    default:
+      return '';
+  }
+};
+
+const getIconElement = (icon: ReactNode, variant: ActionButtonProps['variant']) => {
+  if (typeof icon === 'string') {
+    return (
+      <Image
+        src={getAssetPath(icon)}
+        alt=""
+        width={20}
+        height={20}
+        className={variant === 'secondary' || variant === 'secondary-light' ? 'invert' : ''}
+        style={
+          variant === 'secondary-light'
+            ? {
+                filter:
+                  'invert(54%) sepia(89%) saturate(447%) hue-rotate(153deg) brightness(94%) contrast(91%)',
+              }
+            : undefined
+        }
+      />
+    );
+  }
+
+  return icon;
+};
 
 const ActionButton: React.FC<ActionButtonProps> = ({
   children,
   onClick,
   href,
+  openInNewTab = true,
   className = '',
-  icon = '/nav.svg',
+  icon,
   iconPosition = 'right',
-  variant = 'primary',
+  variant,
 }) => {
   const buttonClasses = `
     h-[36px] py-2 px-3
     min-w-[80px]
     text-sm
-    ${
-      variant === 'primary'
-        ? 'bg-[var(--secondary)] text-white hover:bg-[var(--secondary-hover)]'
-        : 'bg-[var(--secondary-light)] text-[var(--secondary)]'
-    }
     rounded-lg
     cursor-pointer
     flex items-center justify-center gap-1
     whitespace-nowrap
     transition-colors
+    ${getClassNameByVariant(variant)}  
     ${className}
   `;
 
-  const iconElement = (
-    <Image
-      src={getAssetPath(icon)}
-      alt=""
-      width={20}
-      height={20}
-      className={variant === 'primary' ? 'invert' : ''}
-      style={
-        variant === 'secondary'
-          ? {
-              filter:
-                'invert(54%) sepia(89%) saturate(447%) hue-rotate(153deg) brightness(94%) contrast(91%)',
-            }
-          : undefined
-      }
-    />
-  );
-
   const content = (
     <>
-      {iconPosition === 'left' && iconElement}
+      {icon && iconPosition === 'left' && getIconElement(icon, variant)}
       {children}
-      {iconPosition === 'right' && iconElement}
+      {icon && iconPosition === 'right' && getIconElement(icon, variant)}
     </>
   );
 
   if (href) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={buttonClasses}>
+      <a
+        href={href}
+        target={openInNewTab ? '_blank' : '_self'}
+        rel="noopener noreferrer"
+        className={buttonClasses}
+      >
         {content}
       </a>
     );

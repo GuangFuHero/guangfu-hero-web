@@ -84,7 +84,7 @@ function normalizeData(data: Supply[]): NormalizedSupplyItem[] {
   const supplySet = [] as NormalizedSupplyItem[];
   data.map(({ supplies, address, name, updated_at }) => {
     supplies.forEach(s => {
-      if (s.total_count > s.recieved_count) {
+      if (s.total_number > s.received_count) {
         supplySet.push({
           ...s,
           requestor: name,

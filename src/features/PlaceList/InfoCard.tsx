@@ -128,9 +128,13 @@ const InfoCard: React.FC<InfoCardProps> = ({ place, mapUrl, className = '' }) =>
         )}
       </div>
       <div className="flex gap-2">
-        {mapUrl && <ActionButton href={mapUrl}>導航</ActionButton>}
+        {mapUrl && (
+          <ActionButton variant="secondary" icon="/nav.svg" href={mapUrl}>
+            導航
+          </ActionButton>
+        )}
         <ActionButton
-          variant="secondary"
+          variant="secondary-light"
           icon="/info.svg"
           onClick={() => openDetailModal(place.type, displayName, place)}
         >

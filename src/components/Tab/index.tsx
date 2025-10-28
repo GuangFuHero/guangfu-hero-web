@@ -12,7 +12,7 @@ const Tab: React.FC<TabProps> = ({ children, active = false, onClick, className 
     <button
       onClick={onClick}
       className={`
-        px-6 py-3
+        p-3
         font-medium
         cursor-pointer
         transition-colors
