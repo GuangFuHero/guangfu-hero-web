@@ -12,26 +12,45 @@ const Button: React.FC<ButtonProps> = ({
   children,
   active = false,
   onClick,
-  className = '',
+  className = 'flex items-center border rounded-lg cursor-pointer whitespace-nowrap transition-all duration-150',
   variant = 'default',
 }) => {
+  let variantBaseClassName = '';
+  let activeClassName = '';
+  let noActiveClassName = '';
+  switch (variant) {
+    case 'sub':
+      variantBaseClassName = 'font-bold h-[36px] px-3';
+      activeClassName = 'text-[var(--background)] bg-[var(--gray)] border-[var(--gray)]';
+      noActiveClassName = 'text-[var(--gray)] bg-[var(--gray-4)] border-[var(--gray-3)]';
+      break;
+    case 'default':
+    default:
+      variantBaseClassName = 'h-[44px] px-4';
+      activeClassName = 'border-2 font-medium text-[var(--primary)] border-[var(--primary)] ]';
+      noActiveClassName = 'text-[var(--gray-2)] bg-white border-[var(--gray-2)]';
+      break;
+  }
+
   return (
     <button
       onClick={onClick}
       className={`
-        border rounded-lg
-        bg-white
-        cursor-pointer
-        whitespace-nowrap
-        ${variant === 'sub' ? 'text-sm h-[36px] px-3' : 'h-[44px] px-4'}
-        ${
-          active
-            ? 'border-2 font-medium border-[var(--primary)] text-[var(--primary)]'
-            : 'border-[var(--gray-2)] text-[var(--gray-2)]'
-        }
         ${className}
+        ${variantBaseClassName}
+        ${active ? activeClassName : noActiveClassName}
       `}
     >
+      {variant === 'sub' && active && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-4 h-4 me-1"
+        >
+          <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+        </svg>
+      )}
       {children}
     </button>
   );

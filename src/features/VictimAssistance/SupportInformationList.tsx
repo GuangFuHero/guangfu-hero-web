@@ -36,7 +36,7 @@ export default function SupportInformationList() {
     async function fetchRepairData() {
       try {
         // fetch Google sheet at client side
-        /*
+        /* 請於正式分頁完成後，於env內更改「NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID」參數，下方是測試用key
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
         const gid = env.NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID;
         */
@@ -113,7 +113,7 @@ export default function SupportInformationList() {
                 source: source.trim(),
               });
             } else {
-              console.log('重複的活動：');
+              console.log('重複的補助資訊：');
               console.log(`${type} - ${name}`);
               console.log(
                 `前一筆的電話: ${supportInformationData[indexFound].phone} || 新一筆的電話: ${phone}`
@@ -157,7 +157,7 @@ export default function SupportInformationList() {
   ) : (
     <>
       {/* type buttons */}
-      <div className="flex gap-2 mb-3 sm:flex-wrap">
+      <div className="flex gap-2 mb-3 sm:flex-wrap overflow-y-auto">
         {supportInformationTypes.map(type => (
           <Button
             key={type}
@@ -181,92 +181,79 @@ export default function SupportInformationList() {
               style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
             >
               <div className="px-4 pt-6 flex flex-col pr-1 bg-[var(--light-gray-background)]">
-                {currentType === '全部' && (
-                  <div
-                    className={`flex size-fit px-3 py-1 text-[var(--gray-2)] mb-1 text-sm rounded`}
-                    style={
-                      tagTypeCssList[row.type as tag_type] ?? {
-                        backgroundColor: '#fff',
-                        color: '#000',
-                      }
+                <div
+                  className={`flex size-fit px-3 py-1 text-[var(--gray-2)] rounded`}
+                  style={
+                    tagTypeCssList[row.type as tag_type] ?? {
+                      backgroundColor: '#fff',
+                      color: '#000',
                     }
-                  >
-                    {row.type}
-                  </div>
-                )}
-                <h3 className="flex items-center justify-between text-xl font-bold text-[var(--gray-2)] mb-2">
-                  {row.name}
+                  }
+                >
+                  {row.type}
+                </div>
 
-                  <a
-                    className="flex gap-2 justify-between items-center cursor-pointer hover:bg-gray-50 p-1 rounded transition-colors"
-                    href={row.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg
-                      width="28"
-                      height="28"
-                      viewBox="0 0 28 28"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                <h3 className="flex items-center justify-between text-2xl font-bold text-[var(--black)] my-3">
+                  {row.name}
+                  {/* title url button*/}
+                  {row.url && (
+                    <a
+                      className="flex gap-2 justify-between items-center cursor-pointer hover:bg-gray-50 p-1 rounded transition-colors"
+                      href={row.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <path
-                        d="M0 8C0 3.58172 3.58172 0 8 0H20C24.4183 0 28 3.58172 28 8V20C28 24.4183 24.4183 28 20 28H8C3.58172 28 0 24.4183 0 20V8Z"
-                        fill="#3A3937"
-                        fillOpacity="0.1"
-                      />
-                      <path
-                        d="M19.8333 19.8333H8.16667V8.16667H14V6.5H8.16667C7.72464 6.5 7.30072 6.67559 6.98816 6.98816C6.67559 7.30072 6.5 7.72464 6.5 8.16667V19.8333C6.5 20.2754 6.67559 20.6993 6.98816 21.0118C7.30072 21.3244 7.72464 21.5 8.16667 21.5H19.8333C20.75 21.5 21.5 20.75 21.5 19.8333V14H19.8333V19.8333ZM15.6667 6.5V8.16667H18.6583L10.4667 16.3583L11.6417 17.5333L19.8333 9.34167V12.3333H21.5V6.5H15.6667Z"
-                        fill="#3A3937"
-                      />
-                    </svg>
-                  </a>
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 28 28"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 8C0 3.58172 3.58172 0 8 0H20C24.4183 0 28 3.58172 28 8V20C28 24.4183 24.4183 28 20 28H8C3.58172 28 0 24.4183 0 20V8Z"
+                          fill="#3A3937"
+                          fillOpacity="0.1"
+                        />
+                        <path
+                          d="M19.8333 19.8333H8.16667V8.16667H14V6.5H8.16667C7.72464 6.5 7.30072 6.67559 6.98816 6.98816C6.67559 7.30072 6.5 7.72464 6.5 8.16667V19.8333C6.5 20.2754 6.67559 20.6993 6.98816 21.0118C7.30072 21.3244 7.72464 21.5 8.16667 21.5H19.8333C20.75 21.5 21.5 20.75 21.5 19.8333V14H19.8333V19.8333ZM15.6667 6.5V8.16667H18.6583L10.4667 16.3583L11.6417 17.5333L19.8333 9.34167V12.3333H21.5V6.5H15.6667Z"
+                          fill="#3A3937"
+                        />
+                      </svg>
+                    </a>
+                  )}
                 </h3>
 
-                <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                  <div
-                    className="flex justify-center items-center text-xs text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
-                    style={{ height: '20px', width: '60px', borderRadius: '4px' }}
-                  >
-                    輔助對象
-                  </div>
-                  <div className="font-bold flex-1 mb-4" style={{ whiteSpace: 'pre-wrap' }}>
-                    {row.target.replace(/^"|"$/g, '')}
-                  </div>
-                </div>
-                <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                  <div
-                    className="flex justify-center items-center text-xs text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
-                    style={{ height: '20px', width: '60px', borderRadius: '4px' }}
-                  >
-                    輔助內容
-                  </div>
-                  <div className="font-bold flex-1 mb-4" style={{ whiteSpace: 'pre-wrap' }}>
-                    {row.support_detail.replace(/^"|"$/g, '')}
-                  </div>
-                </div>
-                {row.deadline && (
-                  <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                    <div
-                      className="flex justify-center items-center text-xs text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
-                      style={{ height: '20px', width: '60px', borderRadius: '4px' }}
-                    >
-                      申請期限
-                    </div>
-                    <div className="font-bold flex-1 mb-4" style={{ whiteSpace: 'pre-wrap' }}>
-                      {row.deadline.replace(/^"|"$/g, '')}
-                    </div>
-                  </div>
+                {[
+                  { name: '輔助對象', information: row.target },
+                  { name: '輔助內容', information: row.support_detail },
+                  { name: '申請期限', information: row.deadline },
+                ].map(
+                  ({ name, information }) =>
+                    information && (
+                      <div
+                        key={name}
+                        className="text-[var(--black)] leading-[20px] items-center font-normal"
+                      >
+                        <div
+                          className="flex justify-center items-center text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
+                          style={{ height: '32px', width: '82px', borderRadius: '4px' }}
+                        >
+                          {name}
+                        </div>
+                        <div className="text-xl flex-1 mb-4 whitespace-pre-wrap">
+                          {information.replace(/^"|"$/g, '')}
+                        </div>
+                      </div>
+                    )
                 )}
               </div>
+
               <div className="px-4 pt-4 pb-6 flex flex-col pr-1">
-                <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                  <div className="font-bold text-[var(--primary)] text-nowrap mb-2">聯絡資訊</div>
+                <div className="text-xl text-[var(--black)] leading-[20px] items-center font-normal border-b border-dashed border-[var(--gray-3)]">
+                  <div className="font-bold text-[var(--primary)] text-nowrap my-3">聯絡資訊</div>
                   {row.apply_place && (
-                    <div
-                      className="flex gap-1 mb-4 items-center"
-                      style={{ whiteSpace: 'pre-wrap' }}
-                    >
+                    <div className="flex gap-1 mb-4 items-center whitespace-pre-wrap">
                       <svg
                         width="20"
                         height="20"
@@ -283,10 +270,7 @@ export default function SupportInformationList() {
                     </div>
                   )}
                   {row.office_Hours && (
-                    <div
-                      className="flex gap-1 mb-4 items-center"
-                      style={{ whiteSpace: 'pre-wrap' }}
-                    >
+                    <div className="flex gap-1 mb-4 items-center whitespace-pre-wrap">
                       <svg
                         width="20"
                         height="20"
@@ -333,10 +317,7 @@ export default function SupportInformationList() {
                     </div>
                   )}
                   {row.apply_address && (
-                    <div
-                      className="flex gap-1 mb-4 items-center"
-                      style={{ whiteSpace: 'pre-wrap' }}
-                    >
+                    <div className="flex gap-1 mb-4 items-center whitespace-pre-wrap">
                       <svg
                         width="20"
                         height="20"
@@ -364,79 +345,84 @@ export default function SupportInformationList() {
                     </div>
                   )}
 
-                  {row.phone && (
-                    <div
-                      className="flex gap-1 mb-4 items-center"
-                      style={{ whiteSpace: 'pre-wrap' }}
-                    >
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M16.625 17.5C14.8889 17.5 13.1736 17.1215 11.4792 16.3646C9.78472 15.6076 8.24306 14.5347 6.85417 13.1458C5.46528 11.7569 4.39236 10.2153 3.63542 8.52083C2.87847 6.82639 2.5 5.11111 2.5 3.375C2.5 3.125 2.58333 2.91667 2.75 2.75C2.91667 2.58333 3.125 2.5 3.375 2.5H6.75C6.94444 2.5 7.11806 2.56597 7.27083 2.69792C7.42361 2.82986 7.51389 2.98611 7.54167 3.16667L8.08333 6.08333C8.11111 6.30556 8.10417 6.49306 8.0625 6.64583C8.02083 6.79861 7.94444 6.93056 7.83333 7.04167L5.8125 9.08333C6.09028 9.59722 6.42014 10.0938 6.80208 10.5729C7.18403 11.0521 7.60417 11.5139 8.0625 11.9583C8.49306 12.3889 8.94444 12.7882 9.41667 13.1562C9.88889 13.5243 10.3889 13.8611 10.9167 14.1667L12.875 12.2083C13 12.0833 13.1632 11.9896 13.3646 11.9271C13.566 11.8646 13.7639 11.8472 13.9583 11.875L16.8333 12.4583C17.0278 12.5139 17.1875 12.6146 17.3125 12.7604C17.4375 12.9062 17.5 13.0694 17.5 13.25V16.625C17.5 16.875 17.4167 17.0833 17.25 17.25C17.0833 17.4167 16.875 17.5 16.625 17.5ZM5.02083 7.5L6.39583 6.125L6.04167 4.16667H4.1875C4.25694 4.73611 4.35417 5.29861 4.47917 5.85417C4.60417 6.40972 4.78472 6.95833 5.02083 7.5ZM12.4792 14.9583C13.0208 15.1944 13.5729 15.3819 14.1354 15.5208C14.6979 15.6597 15.2639 15.75 15.8333 15.7917V13.9583L13.875 13.5625L12.4792 14.9583Z"
-                          fill="#838383"
-                        />
-                      </svg>
-                      {row.phone.replace(/^"|"$/g, '')}
-                    </div>
-                  )}
+                  {row.phone &&
+                    row.phone
+                      .replace(/^"|"$/g, '')
+                      .split('\n') // 支援換行填寫多個電話
+                      .filter(phone_number => phone_number.trim() !== '')
+                      .map(phone_number => (
+                        <div
+                          key={phone_number}
+                          className="flex gap-1 mb-4 items-center whitespace-pre-wrap"
+                        >
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16.625 17.5C14.8889 17.5 13.1736 17.1215 11.4792 16.3646C9.78472 15.6076 8.24306 14.5347 6.85417 13.1458C5.46528 11.7569 4.39236 10.2153 3.63542 8.52083C2.87847 6.82639 2.5 5.11111 2.5 3.375C2.5 3.125 2.58333 2.91667 2.75 2.75C2.91667 2.58333 3.125 2.5 3.375 2.5H6.75C6.94444 2.5 7.11806 2.56597 7.27083 2.69792C7.42361 2.82986 7.51389 2.98611 7.54167 3.16667L8.08333 6.08333C8.11111 6.30556 8.10417 6.49306 8.0625 6.64583C8.02083 6.79861 7.94444 6.93056 7.83333 7.04167L5.8125 9.08333C6.09028 9.59722 6.42014 10.0938 6.80208 10.5729C7.18403 11.0521 7.60417 11.5139 8.0625 11.9583C8.49306 12.3889 8.94444 12.7882 9.41667 13.1562C9.88889 13.5243 10.3889 13.8611 10.9167 14.1667L12.875 12.2083C13 12.0833 13.1632 11.9896 13.3646 11.9271C13.566 11.8646 13.7639 11.8472 13.9583 11.875L16.8333 12.4583C17.0278 12.5139 17.1875 12.6146 17.3125 12.7604C17.4375 12.9062 17.5 13.0694 17.5 13.25V16.625C17.5 16.875 17.4167 17.0833 17.25 17.25C17.0833 17.4167 16.875 17.5 16.625 17.5ZM5.02083 7.5L6.39583 6.125L6.04167 4.16667H4.1875C4.25694 4.73611 4.35417 5.29861 4.47917 5.85417C4.60417 6.40972 4.78472 6.95833 5.02083 7.5ZM12.4792 14.9583C13.0208 15.1944 13.5729 15.3819 14.1354 15.5208C14.6979 15.6597 15.2639 15.75 15.8333 15.7917V13.9583L13.875 13.5625L12.4792 14.9583Z"
+                              fill="#838383"
+                            />
+                          </svg>
+                          {phone_number}
+                        </div>
+                      ))}
                 </div>
 
                 {row.apply_detail && (
-                  <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                    <div className="font-bold text-[var(--primary)] text-nowrap mb-2">申請方式</div>
-                    <div className="flex-1 mb-4" style={{ whiteSpace: 'pre-wrap' }}>
-                      {row.apply_detail.replace(/^"|"$/g, '')}
-                    </div>
-                  </div>
-                )}
-
-                {row.source && (
-                  <div className="text-[var(--black)] leading-[20px] items-center font-normal ">
-                    <div className="font-bold text-[var(--primary)] text-nowrap mb-2">資料來源</div>
-                    <div className="flex gap-2">
-                      {row.source
+                  <div className="text-xl text-[var(--black)] leading-[20px] items-center font-normal">
+                    <div className="font-bold text-[var(--primary)] text-nowrap my-3">申請方式</div>
+                    <div className="text-xl flex-1 mb-4 whitespace-pre-wrap">
+                      {row.apply_detail
                         .replace(/^"|"$/g, '')
-                        .split('\n') //支援多網址
-                        .filter(url => url.trim() !== '') // 避免空字串
-                        .map((url, index) => (
-                          <a
-                            key={index}
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="
-                            h-[36px] py-2 px-3
-                            min-w-[80px]
-                            text-sm
-                            bg-[var(--secondary-light)] text-[var(--secondary)]
-                            rounded-lg
-                            cursor-pointer
-                            flex items-center justify-center gap-1
-                            whitespace-nowrap
-                            transition-colors
-                          "
-                            title="點擊開啟輔助連結資訊"
-                          >
-                            開啟連結
-                            <svg
-                              width="11"
-                              height="11"
-                              viewBox="0 0 11 11"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M1.16667 10.8333L0 9.66667L8 1.66667H0.833333V0H10.8333V10H9.16667V2.83333L1.16667 10.8333Z"
-                                fill="#179BC6"
-                              />
-                            </svg>
-                          </a>
-                        ))}
+                        .split(/(\n)/) // 保留換行
+                        .map((part, index) => {
+                          // 偵測https開頭至換行符號結束，轉換成<a>標籤的按鈕，並將其餘文字轉為span和br
+                          const urlMatch = part.match(/https?:\/\/[^\s]+/g);
+                          if (urlMatch) {
+                            return urlMatch.map((url, i) => (
+                              <a
+                                key={`${index}-${i}`}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="
+                                size-fit h-[36px] py-2 px-3
+                                min-w-[80px]
+                                text-lg
+                                bg-[var(--secondary-light)] text-[var(--secondary)]
+                                rounded-lg
+                                cursor-pointer
+                                flex items-center justify-center gap-1
+                                whitespace-nowrap
+                                transition-colors
+                              "
+                                title="點擊開啟輔助連結資訊"
+                              >
+                                連結
+                                <svg
+                                  width="11"
+                                  height="11"
+                                  viewBox="0 0 11 11"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M1.16667 10.8333L0 9.66667L8 1.66667H0.833333V0H10.8333V10H9.16667V2.83333L1.16667 10.8333Z"
+                                    fill="#179BC6"
+                                  />
+                                </svg>
+                              </a>
+                            ));
+                          } else if (part === '\n') {
+                            return <br key={index} />;
+                          } else {
+                            return <span key={index}>{part}</span>;
+                          }
+                        })}
                     </div>
                   </div>
                 )}

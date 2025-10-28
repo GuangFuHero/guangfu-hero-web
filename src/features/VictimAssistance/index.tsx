@@ -73,7 +73,7 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
 
   return (
     <div>
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-2 mb-3 overflow-y-auto">
         {categories.map(category => (
           <Button
             key={category}
@@ -86,7 +86,7 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
       </div>
 
       {selectedCategory === '心理資源' && (
-        <div className="flex gap-2 mb-3">
+        <div className="flex gap-2 mb-3 overflow-y-auto">
           {serviceFormats.map(format => (
             <Button
               key={format}
