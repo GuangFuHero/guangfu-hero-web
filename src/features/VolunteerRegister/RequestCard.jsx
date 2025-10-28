@@ -51,6 +51,13 @@ function getGoogleMapUrl(addr) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('花蓮 ' + addr)}`;
 }
 
+function getRemainNumber(need, got) {
+  const needNum = parseInt(need);
+  const gotNum = parseInt(got);
+
+  return !isNaN(needNum) && !isNaN(gotNum) && needNum > gotNum ? needNum - gotNum : 0;
+}
+
 export default function RequestCard({ request, onEdit, onDelivery, showToastMsg }) {
   const isRequestCompleted = isCompleted(request);
   const theme = useTheme();
@@ -150,10 +157,16 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                   borderBottom: '1px dotted #e6e6e6',
                 }}
               >
-                <Typography variant="body">需要{request.headcount_need}人</Typography>
-                <Typography variant="body" color="error">
-                  尚需 {request.headcount_got} 人
-                </Typography>
+                <Typography variant="body">需要 {request.headcount_need} 人</Typography>
+                {isRequestCompleted ? (
+                  <Typography variant="body" color="success">
+                    已完成
+                  </Typography>
+                ) : (
+                  <Typography variant="body" color="error">
+                    尚需 {getRemainNumber(request.headcount_need, request.headcount_got)} 人
+                  </Typography>
+                )}
               </Box>
             </Box>
 
