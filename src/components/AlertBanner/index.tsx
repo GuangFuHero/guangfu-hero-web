@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Box, Button } from '@mui/material';
 import CarouselIndicators from './CarouselIndicators';
 import { useDrag } from '@/hooks/useDrag';
 import PrevButton from './PrevButton';
@@ -165,6 +166,47 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
         setIsPaused={setIsPaused}
         currentSlide={currentSlide}
       />
+
+      <Box sx={{ backgroundColor: '#FEF2E7', p: 3, textAlign: 'center' }}>
+        <p>
+          因應災區需求減少，媒合功能將於 <span style={{ color: '#D34746' }}>10/30</span> 關閉，
+          志工請至「大馬太鞍活動中心」接受分配 居民若有專業志工需求，請至專區聯繫廠商
+        </p>
+        <Button
+          href="/victim/house-repair"
+          component="a"
+          sx={{
+            border: '1px solid #F37C0E',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 1,
+            mt: 2,
+            width: { xs: '100%', md: '240px' },
+            color: '#F37C0E',
+            '&:hover': {
+              backgroundColor: '#F37C0E',
+              color: '#fff',
+              '& svg path': {
+                fill: '#fff',
+              },
+            },
+          }}
+        >
+          <span>查看廠商名單</span>
+          <svg
+            width="11"
+            height="11"
+            viewBox="0 0 11 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.16667 10.8333L0 9.66667L8 1.66667H0.833333V0H10.8333V10H9.16667V2.83333L1.16667 10.8333Z"
+              fill="#F37C0E"
+            />
+          </svg>
+        </Button>
+      </Box>
     </div>
   );
 }
