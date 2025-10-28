@@ -151,9 +151,19 @@ export default function RequestCard({ request, onEdit, onDelivery, showToastMsg 
                 }}
               >
                 <Typography variant="body">需要{request.headcount_need}人</Typography>
-                <Typography variant="body" color="error">
-                  尚需 {request.headcount_got} 人
-                </Typography>
+                {isRequestCompleted ? (
+                  <Typography variant="body" color="success">
+                    已完成
+                  </Typography>
+                ) : (
+                  <Typography variant="body" color="error">
+                    尚需{' '}
+                    {request.headcount_need > request.headcount_got
+                      ? request.headcount_need - request.headcount_got
+                      : 0}{' '}
+                    人
+                  </Typography>
+                )}
               </Box>
             </Box>
 
