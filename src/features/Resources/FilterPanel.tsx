@@ -1,6 +1,6 @@
 import StatefulTag from '@/components/StatefulTag';
 import Tab from '@/components/Tab';
-import { TYPE_MAP } from '@/lib/types/resource';
+import { typeOptions } from '@/lib/types/resource';
 import { Box, Stack } from '@mui/material';
 import React from 'react';
 
@@ -17,11 +17,6 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   showMode,
   onModeChange,
 }) => {
-  const typeOptions = Object.keys(TYPE_MAP).map(value => ({
-    value,
-    label: TYPE_MAP[value as keyof typeof TYPE_MAP].label,
-  }));
-
   const statusOptions: Array<{ value: typeof showMode; label: string }> = [
     { value: 'default', label: '全部' },
     { value: 'only-pending', label: '未配送' },

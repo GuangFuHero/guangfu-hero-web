@@ -1,7 +1,7 @@
 'use client';
 
 import ActionButton from '@/components/ActionButton';
-import { CreateFormData, TYPE_MAP } from '@/lib/types/resource';
+import { CreateFormData, typeOptions } from '@/lib/types/resource';
 import { Add as AddIcon } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
@@ -30,11 +30,6 @@ import { Control, Controller, UseFormReturn, useFieldArray } from 'react-hook-fo
 import { INDEX_TO_CHINESE_NUMBERS } from '../constants';
 
 const SupplyItemsList = ({ control }: { control: Control<CreateResourceFormData> }) => {
-  const typeOptions = Object.keys(TYPE_MAP).map(value => ({
-    value,
-    label: TYPE_MAP[value as keyof typeof TYPE_MAP].label,
-  }));
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'items',

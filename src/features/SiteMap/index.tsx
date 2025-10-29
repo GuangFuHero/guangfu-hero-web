@@ -30,9 +30,8 @@ type ShowMode = 'mapShow' | 'listShow';
 
 export default function SiteMap() {
   const searchParams = useSearchParams();
-  const { activeTab } = useTab();
+  const { activeTab, setActiveTab } = useTab();
   const [showMode, setShowMode] = useState<ShowMode>('mapShow');
-  const { setActiveTab } = useTab();
 
   useEffect(() => {
     const view = searchParams.get('view');
