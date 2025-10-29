@@ -33,14 +33,19 @@ export interface DeliveryData extends Omit<CreateFormData, 'items'> {
 }
 
 export const TYPE_MAP = {
-  '食物/水': { label: '飲食', order: 0, color: '#14b8a6' },
-  醫療用品: { label: '醫療用品', order: 1, color: '#f59e0b' },
-  生活用品: { label: '生活用品', order: 2, color: '#22c55e' },
-  大型機具: { label: '大型機具', order: 3, color: '#3b82f6' },
-  動物醫療: { label: '動物醫療', order: 4, color: '#934f36' },
-  水電: { label: '水電', order: 5, color: '#8b5cf6' },
-  其他: { label: '其他', order: 6, color: '#a855f7' },
-};
+  '食物/水': { label: '飲食', order: 0, color: '#00A9F1' },
+  醫療用品: { label: '醫療用品', order: 1, color: '#FF981F' },
+  生活用品: { label: '生活用品', order: 2, color: '#8BC255' },
+  大型機具: { label: '大型機具', order: 3, color: '#7A5548' },
+  動物醫療: { label: '動物醫療', order: 4, color: '#FFC02D' },
+  水電: { label: '水電', order: 5, color: '#3F51B2' },
+  其他: { label: '其他', order: 6, color: '#607D8A' },
+} as const;
+
+export const typeOptions = Object.keys(TYPE_MAP).map(value => ({
+  value,
+  label: TYPE_MAP[value as keyof typeof TYPE_MAP].label,
+}));
 
 export type SupplyType = keyof typeof TYPE_MAP;
 
