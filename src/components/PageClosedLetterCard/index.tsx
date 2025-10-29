@@ -36,9 +36,11 @@ function Paragraph() {
           如果您是志工
         </p>
         <p className="mb-0">
-          請統一至
-          <span className="font-['Noto_Sans_TC:Medium',sans-serif] font-medium">大馬太鞍</span>
-          接收現場任務分派；
+          請至
+          <span className="font-['Noto_Sans_TC:Medium',sans-serif] font-medium">
+            大馬太鞍活動中心
+          </span>
+          接收現場任務分派
         </p>
         <p className="mb-0">&nbsp;</p>
         <p className="font-['Noto_Sans_TC:Bold',sans-serif] font-bold mb-0 text-[#3a3937]">
