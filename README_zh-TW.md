@@ -112,7 +112,7 @@ src/
 │   │   ├── medical/      # 醫療協助
 │   │   ├── mental-health/# 心理健康資源
 │   │   ├── shelter/      # 收容所資訊
-│   │   └── support-information/ # 輔助資訊
+│   │   └── support-information/ # 補助資訊
 │   ├── volunteer/        # 志工資訊
 │   │   ├── about-us/     # 團隊資訊
 │   │   ├── preparation/  # 裝備清單

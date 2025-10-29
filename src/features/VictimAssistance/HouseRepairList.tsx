@@ -114,7 +114,7 @@ export default function HouseRepairList() {
     }
 
     fetchRepairData();
-  }, []);
+  }, [currentType]);
 
   return houseRepairTypes.length === 0 ? (
     fetchDataFail ? (
