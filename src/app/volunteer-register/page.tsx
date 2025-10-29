@@ -1,6 +1,6 @@
-import { Metadata } from 'next';
+import VolunteersComponent from '@/features/VolunteerRegister';
 import Wrapper from '@/features/Wrapper';
-import MainContent from '@/features/VolunteerRegister/MainContent';
+import { Metadata } from 'next';
 
 const SITE_URL = 'https://gf250923.org';
 const LOGO_URL = 'https://gf250923.org/logo_new.svg';
@@ -143,13 +143,14 @@ export default function VolunteerRegisterPage() {
   };
 
   return (
-    <Wrapper hideFooter>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* TODO: refactor component */}
-      <MainContent />
-    </Wrapper>
+      <Wrapper hideFooter>
+        <VolunteersComponent />
+      </Wrapper>
+    </>
   );
 }

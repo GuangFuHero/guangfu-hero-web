@@ -1,26 +1,24 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { Container, Box, ThemeProvider, CssBaseline, Chip } from '@mui/material';
-import Tabs from '@mui/material/Tabs';
+import { Box, Chip, Container } from '@mui/material';
 import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
-import RequestCard from './RequestCard';
 import Pagination from './Pagination';
+import RequestCard from './RequestCard';
 import Toast from './Toast';
 
 // dialogs
 import CreateDialog from './dialogs/CreateDialog';
-import EditDialog from './dialogs/EditDialog';
 import DeliveryDialog from './dialogs/DeliveryDialog';
+import EditDialog from './dialogs/EditDialog';
 
 import { safeApiRequest } from './utils/helpers';
 
-import theme from './colorPalate';
-
 // import { Analytics } from '@vercel/analytics/react';
+import { getApiUrl } from '@/lib/api';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
-import { getApiUrl } from '@/lib/api';
 
 export default function MainContent() {
   const [requests, setRequests] = useState([]);
@@ -145,123 +143,117 @@ export default function MainContent() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Header onCreate={() => setOpenCreate(true)} />
-        <Container sx={{ mt: 3 }}>
-          <Box sx={{ width: '100%', mb: 1 }}>
-            <Tabs
-              value={requestState}
-              onChange={(e, v) => {
-                setRequestState(v);
-                setRequests([]);
-                setPage(0);
-              }}
-            >
-              <Tab value="active" label="尚缺志工" />
-              <Tab value="completed" label="已完成" />
-            </Tabs>
-          </Box>
-          <Box sx={{ width: '100%', mb: 1, userSelect: 'none' }}>
-            <Chip
-              color={listFilter[0] === '' ? 'primary' : ''}
-              label="所有需求"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['']);
-              }}
-            />
+      <Header onCreate={() => setOpenCreate(true)} />
+      <Container sx={{ mt: 3 }}>
+        <Box sx={{ width: '100%', mb: 1 }}>
+          <Tabs
+            value={requestState}
+            onChange={(e, v) => {
+              setRequestState(v);
+              setRequests([]);
+              setPage(0);
+            }}
+          >
+            <Tab value="active" label="尚缺志工" />
+            <Tab value="completed" label="已完成" />
+          </Tabs>
+        </Box>
+        <Box sx={{ width: '100%', mb: 1, userSelect: 'none' }}>
+          <Chip
+            color={listFilter[0] === '' ? 'primary' : ''}
+            label="所有需求"
+            sx={{ mr: 1, mb: 1 }}
+            onClick={() => {
+              setListFilter(['']);
+            }}
+          />
 
-            {/* filtering with string query */}
-            <Chip
-              color={listFilter.includes('鏟子超人') ? 'primary' : ''}
-              label="鏟子超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['鏟子超人', '鏟']);
-              }}
-            />
-            <Chip
-              color={listFilter.includes('清溝超人') ? 'primary' : ''}
-              label="清溝超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['清溝超人', '溝']);
-              }}
-            />
-            <Chip
-              color={listFilter.includes('搬物超人') ? 'primary' : ''}
-              label="搬物超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['搬物超人', '搬', '拖', '運']);
-              }}
-            />
-            <Chip
-              color={listFilter.includes('廚師超人') ? 'primary' : ''}
-              label="廚師超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['廚師超人', '廚師', '煮']);
-              }}
-            />
-            <Chip
-              color={listFilter.includes('整理超人') ? 'primary' : ''}
-              label="整理超人"
-              sx={{ mr: 1, mb: 1 }}
-              onClick={() => {
-                setListFilter(['整理超人', '整理']);
-              }}
-            />
-          </Box>
-          {requests.length === 0 && isLoading && (
-            <>
-              <Stack spacing={1}>
-                <Skeleton variant="text" sx={{ fontSize: '5rem' }} />
-              </Stack>
-            </>
-          )}
-          {/* {(requests.length === 0 && !isLoading) && <>
+          {/* filtering with string query */}
+          <Chip
+            color={listFilter.includes('鏟子超人') ? 'primary' : ''}
+            label="鏟子超人"
+            sx={{ mr: 1, mb: 1 }}
+            onClick={() => {
+              setListFilter(['鏟子超人', '鏟']);
+            }}
+          />
+          <Chip
+            color={listFilter.includes('清溝超人') ? 'primary' : ''}
+            label="清溝超人"
+            sx={{ mr: 1, mb: 1 }}
+            onClick={() => {
+              setListFilter(['清溝超人', '溝']);
+            }}
+          />
+          <Chip
+            color={listFilter.includes('搬物超人') ? 'primary' : ''}
+            label="搬物超人"
+            sx={{ mr: 1, mb: 1 }}
+            onClick={() => {
+              setListFilter(['搬物超人', '搬', '拖', '運']);
+            }}
+          />
+          <Chip
+            color={listFilter.includes('廚師超人') ? 'primary' : ''}
+            label="廚師超人"
+            sx={{ mr: 1, mb: 1 }}
+            onClick={() => {
+              setListFilter(['廚師超人', '廚師', '煮']);
+            }}
+          />
+          <Chip
+            color={listFilter.includes('整理超人') ? 'primary' : ''}
+            label="整理超人"
+            sx={{ mr: 1, mb: 1 }}
+            onClick={() => {
+              setListFilter(['整理超人', '整理']);
+            }}
+          />
+        </Box>
+        {requests.length === 0 && isLoading && (
+          <>
+            <Stack spacing={1}>
+              <Skeleton variant="text" sx={{ fontSize: '5rem' }} />
+            </Stack>
+          </>
+        )}
+        {/* {(requests.length === 0 && !isLoading) && <>
             <Stack spacing={1}>
               <Typography variant="h6">此頁查無符合條件的需求，您可以點選下方分頁按鈕，切換至其他分頁</Typography>
             </Stack>
           </>} */}
-          {requests.map((req, idx) => (
-            <RequestCard
-              key={idx}
-              request={req}
-              onEdit={data => EditRequest(data)}
-              onDelivery={data => DeliveryRequest(data)}
-              showToastMsg={m => setToastMsg(m)}
-            />
-          ))}
+        {requests.map((req, idx) => (
+          <RequestCard
+            key={idx}
+            request={req}
+            onEdit={data => EditRequest(data)}
+            onDelivery={data => DeliveryRequest(data)}
+            showToastMsg={m => setToastMsg(m)}
+          />
+        ))}
 
-          <Pagination page={page + 1} onPageChange={handlePageChange} count={totalPage} />
-        </Container>
+        <Pagination page={page + 1} onPageChange={handlePageChange} count={totalPage} />
+      </Container>
 
-        <CreateDialog
-          open={openCreate}
-          onSubmittedCallback={onCreateSubmittedCallback}
-          onClose={() => setOpenCreate(false)}
-        />
-        <EditDialog
-          open={openEdit}
-          onSubmittedCallback={onEditSubmittedCallback}
-          request={editData}
-          onClose={() => setOpenEdit(false)}
-        />
-        <DeliveryDialog
-          open={openDelivery}
-          onSubmittedCallback={onDeliverySubmittedCallback}
-          onClose={() => setOpenDelivery(false)}
-          request={deliveryData}
-        />
+      <CreateDialog
+        open={openCreate}
+        onSubmittedCallback={onCreateSubmittedCallback}
+        onClose={() => setOpenCreate(false)}
+      />
+      <EditDialog
+        open={openEdit}
+        onSubmittedCallback={onEditSubmittedCallback}
+        request={editData}
+        onClose={() => setOpenEdit(false)}
+      />
+      <DeliveryDialog
+        open={openDelivery}
+        onSubmittedCallback={onDeliverySubmittedCallback}
+        onClose={() => setOpenDelivery(false)}
+        request={deliveryData}
+      />
 
-        {/* <Maintenance/> */}
-
-        <Toast message={toastMsg} onClose={() => setToastMsg('')} />
-        {/* <Analytics /> */}
-      </ThemeProvider>
+      <Toast message={toastMsg} onClose={() => setToastMsg('')} />
     </>
   );
 }

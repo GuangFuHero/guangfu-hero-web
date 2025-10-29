@@ -5,7 +5,7 @@ import { Add as AddIcon } from '@mui/icons-material';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import { Divider, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import React from 'react';
+import React, { memo } from 'react';
 import DonationInfo from './DonationInfo';
 
 interface HeaderProps {
@@ -34,7 +34,7 @@ const LabelAndActionButton = ({ onCreateOpen }: HeaderProps) => {
           fontSize: '24px',
         }}
       >
-        我要配送
+        物資配送
       </Typography>
       <Stack
         direction="row"
@@ -92,4 +92,4 @@ const Header: React.FC<HeaderProps> = ({ onCreateOpen }) => {
   );
 };
 
-export default Header;
+export default memo(Header);

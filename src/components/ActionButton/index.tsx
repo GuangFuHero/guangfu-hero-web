@@ -15,6 +15,8 @@ interface ActionButtonProps {
 
 const getClassNameByVariant = (variant: ActionButtonProps['variant']) => {
   switch (variant) {
+    case 'primary':
+      return 'bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)]';
     case 'secondary-light':
       return 'bg-[var(--secondary-light)] text-[var(--secondary)]';
     case 'secondary':

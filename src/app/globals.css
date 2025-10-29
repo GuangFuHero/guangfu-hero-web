@@ -3,6 +3,7 @@
 :root {
   color-scheme: light;
   --primary: #f37c0e;
+  --primary-hover: #d96b0c;
   --primary-point: #feca5f;
   --light-primary: #f9e6c0;
   --secondary: #179bc6;
