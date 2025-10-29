@@ -198,17 +198,17 @@ export default function SupportInformationList() {
                   </Typography>
                 </div>
 
-                <Stack direction="row" justifyContent="space-between" alignItems="center" gap="8px">
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="flex-start"
+                  gap="8px"
+                >
                   <Typography fontSize={20} fontWeight={500}>
                     {row.name}
                   </Typography>
                   {row.url && (
-                    <a
-                      className="flex gap-2 justify-between items-center cursor-pointer hover:bg-gray-50 p-1 rounded transition-colors"
-                      href={row.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <a href={row.url} target="_blank" rel="noopener noreferrer">
                       <Image
                         src={getAssetPath('/icon/open_new_page.svg')}
                         alt="官方連結"
