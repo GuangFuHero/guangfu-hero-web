@@ -1,5 +1,5 @@
 import ToastContainer from '@/features/MapContainer/ToastContainer';
-import ResourcesComponent from '@/features/Resources/ResourcesComponent';
+import ResourcesComponent from '@/features/Resources';
 import { generateResourcesMetadata } from '@/features/Resources/metadata';
 import Wrapper from '@/features/Wrapper';
 import { QueryProvider } from '@/providers/QueryProvider';
