@@ -1,4 +1,4 @@
-import VolunteersComponent from '@/features/VolunteerRegister';
+import MainContent from '@/features/VolunteerRegister';
 import Wrapper from '@/features/Wrapper';
 import { Metadata } from 'next';
 
@@ -149,7 +149,7 @@ export default function VolunteerRegisterPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Wrapper hideFooter>
-        <VolunteersComponent />
+        <MainContent />
       </Wrapper>
     </>
   );
