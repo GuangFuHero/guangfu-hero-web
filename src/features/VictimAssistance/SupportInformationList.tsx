@@ -59,11 +59,12 @@ export default function SupportInformationList() {
 
         const supportInformationTypes: string[] = [
           '全部',
-          '個人',
-          '家戶',
-          '團體',
+          '一般個人',
+          '一般家戶',
+          '弱勢扶助',
           '農民/養殖戶',
           '商家與企業',
+          '外縣市補助',
         ];
         const supportInformationData: SupportInformationData = [];
         dataLines.forEach(line => {
@@ -124,20 +125,27 @@ export default function SupportInformationList() {
         setSupportInformationData(supportInformationData);
       } catch (error) {
         setFetchDataFail(true);
-        console.error('Failed to fetch house repair data:', error);
+        console.error('Failed to fetch support information data:', error);
       }
     }
 
     fetchSupportData();
   }, [currentType]);
 
-  type tag_type = '個人' | '家戶' | '團體' | '農民/養殖戶' | '商家與企業';
+  type tag_type =
+    | '一般個人'
+    | '一般家戶'
+    | '弱勢扶助'
+    | '農民/養殖戶'
+    | '商家與企業'
+    | '外縣市補助';
   const tagTypeCssList = {
-    個人: { backgroundColor: '#3F51B2', color: '#FFFFFF' },
-    家戶: { backgroundColor: '#9D28AC', color: '#FFFFFF' },
-    團體: { backgroundColor: '#9C5D1D', color: '#FFFFFF' },
+    一般個人: { backgroundColor: '#3F51B2', color: '#FFFFFF' },
+    一般家戶: { backgroundColor: '#9D28AC', color: '#FFFFFF' },
+    弱勢扶助: { backgroundColor: '#607D8A', color: '#FFFFFF' },
     '農民/養殖戶': { backgroundColor: '#009689', color: '#FFFFFF' },
     商家與企業: { backgroundColor: '#8BC255', color: '#FFFFFF' },
+    外縣市補助: { backgroundColor: '#9C5D1D', color: '#FFFFFF' },
   };
 
   return supportInformationTypes.length === 0 ? (
