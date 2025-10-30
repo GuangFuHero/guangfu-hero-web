@@ -38,12 +38,8 @@ export default function SupportInformationList() {
     async function fetchSupportData() {
       try {
         // fetch Google sheet at client side
-        /* env新增「NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID」參數之後，確定PR前會改用以下參數：
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
         const gid = env.NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID;
-        */
-        const sheetId = '1FHW_TMy4ufBTxdAyy98gmOeSawI2m7AvU17_wW6W4rg';
-        const gid = '1828376559';
 
         if (!sheetId) {
           throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
@@ -208,7 +204,12 @@ export default function SupportInformationList() {
                     {row.name}
                   </Typography>
                   {row.url && (
-                    <a href={row.url} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={row.url}
+                      className="flex-shrink-0"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <Image
                         src={getAssetPath('/icon/open_new_page.svg')}
                         alt="官方連結"
