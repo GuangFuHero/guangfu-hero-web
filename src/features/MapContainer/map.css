@@ -185,6 +185,7 @@
 
 .more-info-panel {
   position: absolute;
+  bottom: 16px;
   right: 16px;
   bottom: 16px;
   z-index: 800;
@@ -213,6 +214,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
+  bottom: 80px;
   width: 320px;
   z-index: 900;
   background: rgba(255, 255, 255, 0.95);

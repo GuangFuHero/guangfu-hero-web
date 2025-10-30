@@ -241,12 +241,7 @@ export default function InfoSidebar({
         onToggleSidebarOpen={onToggleSidebarOpen}
         isSidebarOpen={isOpen}
       />
-      <div
-        className={`info-sidebar ${isOpen ? 'show' : ''}`}
-        style={{
-          bottom: isFullScreenMap ? '80px' : 'calc(80px + 80px)',
-        }}
-      >
+      <div className={`info-sidebar ${isOpen ? 'show' : ''}`}>
         <Legend />
         <div id="dynamicListContainer">{renderContent()}</div>
       </div>

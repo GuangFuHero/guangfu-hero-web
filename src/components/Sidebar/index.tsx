@@ -39,7 +39,7 @@ const SIDEBAR_ITEM = [
     href: 'https://docs.google.com/forms/d/e/1FAIpQLSewjwY0hhJMEIPIDhM_KLSgtZ_Q4nMPq4fHmolk0DyjRcGiqw/viewform',
   },
   {
-    name: '媒合功能回饋',
+    name: '媒合內容修改',
     href: 'https://docs.google.com/forms/d/17VyOi9B43ouZ3_s5MdS1fs80fVR-lNvsV7Q4eG-2o68/viewform',
   },
 ];

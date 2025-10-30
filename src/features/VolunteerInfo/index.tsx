@@ -183,7 +183,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                 2.將識別證掛胸前/背後,卡貼在車窗前
               </div>
               <Image
-                src={getAssetPath('/volunteer_card-1.svg')}
+                src={getAssetPath('/volunteer_card-1.webp')}
                 alt="車輛辨識卡1"
                 width={400}
                 height={300}
@@ -198,7 +198,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                 下載專才識別證
               </a>
               <Image
-                src={getAssetPath('/car_card-4.svg')}
+                src={getAssetPath('/car_card-4.webp')}
                 alt="車輛辨識卡1"
                 width={400}
                 height={300}
@@ -434,14 +434,14 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                       </div>
                     </div>
                     <Image
-                      src={getAssetPath('/station_1.svg')}
+                      src={getAssetPath('/station_1.webp')}
                       alt="花蓮車站 A"
                       width={200}
                       height={300}
                       className="my-2 w-full h-auto"
                     />
                     <Image
-                      src={getAssetPath('/station_2.svg')}
+                      src={getAssetPath('/station_2.webp')}
                       alt="花蓮車站 B"
                       width={200}
                       height={300}
@@ -465,7 +465,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                       </div>
                       <div className="bg-white rounded-lg overflow-hidden border border-[var(--gray-3)]">
                         <Image
-                          src={getAssetPath('/sign.svg')}
+                          src={getAssetPath('/sign.webp')}
                           alt="sign"
                           width={200}
                           height={300}
@@ -562,7 +562,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                   </p>
                   <div className="bg-white overflow-hidden my-4">
                     <Image
-                      src={getAssetPath('/alt_road.svg')}
+                      src={getAssetPath('/alt_road.webp')}
                       alt="alt-road"
                       width={200}
                       height={300}
@@ -578,7 +578,7 @@ export default function VolunteerInfo({ initialCategory = '行前必讀' }: Volu
                     遊覽車媒合
                   </p>
                   <Image
-                    src={getAssetPath('/go_bus_banner.jpg')}
+                    src={getAssetPath('/go_bus_banner.webp')}
                     alt="go-bus-banner"
                     width={335}
                     height={335}

@@ -109,7 +109,7 @@ export default function ToastContainer() {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-5 md:bottom-5 right-5 z-2000 max-w-sm w-full">
+    <div className="fixed bottom-20 md:bottom-25 right-5 z-2000 max-w-[85svw] w-full md:max-w-sm">
       {toasts.map(toast => (
         <ToastItem
           key={toast.id}
