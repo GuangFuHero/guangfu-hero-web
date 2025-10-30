@@ -1,5 +1,6 @@
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
 interface ActionButtonProps {
@@ -10,7 +11,13 @@ interface ActionButtonProps {
   className?: string;
   icon?: ReactNode;
   iconPosition?: 'left' | 'right';
-  variant?: 'primary' | 'secondary' | 'secondary-light' | 'tertiary' | 'secondary-outline';
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'secondary-light'
+    | 'tertiary'
+    | 'secondary-outline'
+    | 'primary-outline';
 }
 
 const getClassNameByVariant = (variant: ActionButtonProps['variant']) => {
@@ -25,6 +32,8 @@ const getClassNameByVariant = (variant: ActionButtonProps['variant']) => {
       return 'bg-[var(--tertiary)] text-[var(--black)]';
     case 'secondary-outline':
       return 'bg-white text-[var(--secondary)] border border-[2px] border-[var(--secondary)]';
+    case 'primary-outline':
+      return 'bg-white text-[var(--primary)] border border-[2px] border-[var(--primary)]';
     default:
       return '';
   }
@@ -87,14 +96,14 @@ const ActionButton: React.FC<ActionButtonProps> = ({
 
   if (href) {
     return (
-      <a
+      <Link
         href={href}
         target={openInNewTab ? '_blank' : '_self'}
         rel="noopener noreferrer"
         className={buttonClasses}
       >
         {content}
-      </a>
+      </Link>
     );
   }
 

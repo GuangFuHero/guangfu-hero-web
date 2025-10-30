@@ -7,8 +7,8 @@ import React from 'react';
 interface FilterPanelProps {
   selectedTag: string;
   onTagChange: (tag: string) => void;
-  showMode: 'default' | 'only-pending' | 'only-completed';
-  onModeChange: (mode: 'default' | 'only-pending' | 'only-completed') => void;
+  showMode: 'pending' | 'completed';
+  onModeChange: (mode: 'pending' | 'completed') => void;
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
@@ -18,9 +18,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   onModeChange,
 }) => {
   const statusOptions: Array<{ value: typeof showMode; label: string }> = [
-    { value: 'default', label: '全部' },
-    { value: 'only-pending', label: '未配送' },
-    { value: 'only-completed', label: '已完成' },
+    { value: 'pending', label: '未配送' },
+    { value: 'completed', label: '已完成' },
   ];
 
   const categoryOptions = [{ value: '', label: '全部' }, ...typeOptions];

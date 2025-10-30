@@ -307,215 +307,203 @@ const CreateResourceDialog: React.FC<CreateResourceDialogProps> = ({
   const { control, formState } = form;
 
   return (
-    <>
-      <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-        <DialogTitle
-          sx={{
-            p: '16px',
-            flexDirection: 'row',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid var(--gray-3)',
-          }}
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+      <DialogTitle
+        sx={{
+          p: '16px',
+          flexDirection: 'row',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: '1px solid var(--gray-3)',
+        }}
+      >
+        <Typography
+          sx={{ fontWeight: 500, fontSize: '20px', lineHeight: '25px', color: 'var(--black)' }}
         >
-          <Typography
-            sx={{ fontWeight: 500, fontSize: '20px', lineHeight: '25px', color: 'var(--black)' }}
-          >
-            新增配送需求
-          </Typography>
-          <IconButton sx={{ p: 0 }} onClick={onClose}>
-            <CloseIcon fontSize="medium" htmlColor="var(--gray-2)" />
-          </IconButton>
-        </DialogTitle>
+          新增配送需求
+        </Typography>
+        <IconButton sx={{ p: 0 }} onClick={onClose}>
+          <CloseIcon fontSize="medium" htmlColor="var(--gray-2)" />
+        </IconButton>
+      </DialogTitle>
 
-        <DialogContent
-          sx={{
-            m: '12px 16px',
-            p: 0,
-            overflow: 'auto',
-            gap: '12px',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Stack spacing={1.5}>
-            <Controller
-              name="org"
-              control={control}
-              rules={{
-                required: '單位名稱為必填',
-                validate: value => value.trim().length > 0 || '單位名稱不能為空白',
-              }}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  required
-                  size="small"
-                  placeholder="單位名稱*"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                  sx={{ fontWeight: 500 }}
-                />
-              )}
-            />
-
-            <Controller
-              name="phone"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  type="tel"
-                  placeholder="電話*"
-                  size="small"
-                  sx={{ '.MuiFormHelperText-root': { ml: 0 } }}
-                  helperText={
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      sx={{
-                        fontSize: '14px',
-                        lineHeight: '18px',
-                        fontWeight: 400,
-                        color: 'var(--gray-2)',
-                      }}
-                    >
-                      <InfoOutlineIcon sx={{ color: 'inherit' }} fontSize="small" />
-                      <Typography sx={{ font: 'inherit' }}>
-                        填寫將公開顯示電話，取得物資後自動隱藏
-                      </Typography>
-                    </Stack>
-                  }
-                />
-              )}
-            />
-
-            <Controller
-              name="address"
-              control={control}
-              rules={{
-                required: '地址為必填',
-                validate: value => value.trim().length > 0 || '地址不能為空白',
-              }}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  required
-                  size="small"
-                  placeholder="地址*"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                  sx={{ fontWeight: 500 }}
-                />
-              )}
-            />
-          </Stack>
-
-          <SupplyItemsList control={control} />
-        </DialogContent>
-
-        <DialogActions
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', sm: 'row' },
-            p: '12px 16px',
-            borderTop: '1px solid var(--gray-3)',
-            gap: '16px',
-          }}
-        >
+      <DialogContent
+        sx={{
+          m: '12px 16px',
+          p: 0,
+          overflow: 'auto',
+          gap: '12px',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Stack spacing={1.5}>
           <Controller
-            name="policyAccepted"
+            name="org"
             control={control}
             rules={{
-              required: '請同意服務條款和隱私權政策',
-              validate: value => value === true || '請同意服務條款和隱私權政策',
+              required: '單位名稱為必填',
+              validate: value => value.trim().length > 0 || '單位名稱不能為空白',
             }}
             render={({ field, fieldState }) => (
-              <Stack direction="row" flex={1}>
-                <FormControlLabel
-                  sx={{ m: 0, p: 0 }}
-                  control={<Checkbox {...field} checked={field.value} size="small" sx={{ p: 0 }} />}
-                  label={
-                    <Typography
-                      sx={{
-                        fontSize: '14px',
-                        lineHeight: '18px',
-                        fontWeight: 400,
-                        letterSpacing: 0,
-                        color: 'var(--black)',
-                      }}
-                    >
-                      <Typography component="span" sx={{ font: 'inherit', color: 'var(--red)' }}>
-                        *
-                      </Typography>
-                      我已理解本平台
-                      <MuiLink
-                        component={Link}
-                        href="https://gf250923.org/terms"
-                        target="_blank"
-                        onClick={e => e.stopPropagation()}
-                        sx={{ font: 'inherit', color: 'var(--secondary)' }}
-                      >
-                        服務條款
-                      </MuiLink>
-                      及
-                      <MuiLink
-                        component={Link}
-                        href="https://gf250923.org/privacy"
-                        target="_blank"
-                        onClick={e => e.stopPropagation()}
-                        sx={{ font: 'inherit', color: 'var(--secondary)' }}
-                      >
-                        隱私權政策
-                      </MuiLink>
-                      之使用
-                    </Typography>
-                  }
-                />
-                {fieldState.error && (
-                  <Typography variant="caption" color="error" sx={{ ml: 2 }}>
-                    {fieldState.error.message}
-                  </Typography>
-                )}
-              </Stack>
+              <TextField
+                {...field}
+                fullWidth
+                required
+                size="small"
+                placeholder="單位名稱*"
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                sx={{ fontWeight: 500 }}
+              />
             )}
           />
-          <Stack
-            direction="row"
-            alignItems="center"
-            flex={{ xs: 1, sm: 0 }}
-            width="100%"
-            spacing={1}
+
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                type="tel"
+                placeholder="電話*"
+                size="small"
+                sx={{ '.MuiFormHelperText-root': { ml: 0 } }}
+                helperText={
+                  <Stack
+                    direction="row"
+                    alignItems="flex-start"
+                    sx={{
+                      fontSize: '14px',
+                      lineHeight: '18px',
+                      fontWeight: 400,
+                      color: 'var(--gray-2)',
+                    }}
+                  >
+                    <InfoOutlineIcon sx={{ color: 'inherit' }} fontSize="small" />
+                    <Typography sx={{ font: 'inherit' }}>
+                      填寫將公開顯示電話，取得物資後自動隱藏
+                    </Typography>
+                  </Stack>
+                }
+              />
+            )}
+          />
+
+          <Controller
+            name="address"
+            control={control}
+            rules={{
+              required: '地址為必填',
+              validate: value => value.trim().length > 0 || '地址不能為空白',
+            }}
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                fullWidth
+                required
+                size="small"
+                placeholder="地址*"
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+                sx={{ fontWeight: 500 }}
+              />
+            )}
+          />
+        </Stack>
+
+        <SupplyItemsList control={control} />
+      </DialogContent>
+
+      <DialogActions
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          p: '12px 16px',
+          borderTop: '1px solid var(--gray-3)',
+          gap: '16px',
+        }}
+      >
+        <Controller
+          name="policyAccepted"
+          control={control}
+          rules={{
+            required: '請同意服務條款和隱私權政策',
+            validate: value => value === true || '請同意服務條款和隱私權政策',
+          }}
+          render={({ field, fieldState }) => (
+            <Stack direction="row" flex={1}>
+              <FormControlLabel
+                sx={{ m: 0, p: 0 }}
+                control={<Checkbox {...field} checked={field.value} size="small" sx={{ p: 0 }} />}
+                label={
+                  <Typography
+                    sx={{
+                      fontSize: '14px',
+                      lineHeight: '18px',
+                      fontWeight: 400,
+                      letterSpacing: 0,
+                      color: 'var(--black)',
+                    }}
+                  >
+                    <Typography component="span" sx={{ font: 'inherit', color: 'var(--red)' }}>
+                      *
+                    </Typography>
+                    我已理解本平台
+                    <MuiLink
+                      component={Link}
+                      href="https://gf250923.org/terms"
+                      target="_blank"
+                      onClick={e => e.stopPropagation()}
+                      sx={{ font: 'inherit', color: 'var(--secondary)' }}
+                    >
+                      服務條款
+                    </MuiLink>
+                    及
+                    <MuiLink
+                      component={Link}
+                      href="https://gf250923.org/privacy"
+                      target="_blank"
+                      onClick={e => e.stopPropagation()}
+                      sx={{ font: 'inherit', color: 'var(--secondary)' }}
+                    >
+                      隱私權政策
+                    </MuiLink>
+                    之使用
+                  </Typography>
+                }
+              />
+              {fieldState.error && (
+                <Typography variant="caption" color="error" sx={{ ml: 2 }}>
+                  {fieldState.error.message}
+                </Typography>
+              )}
+            </Stack>
+          )}
+        />
+        <Stack direction="row" alignItems="center" flex={{ xs: 1, sm: 0 }} width="100%" spacing={1}>
+          <ActionButton variant="secondary-outline" className="flex-1 rounded-sm" onClick={onClose}>
+            取消
+          </ActionButton>
+          <ActionButton
+            variant="secondary"
+            className={
+              !formState.isValid || formState.isSubmitting
+                ? 'opacity-50 flex-1 rounded-sm'
+                : 'flex-1 rounded-sm'
+            }
+            onClick={() => {
+              if (!formState.isValid || formState.isSubmitting) return;
+              onConfirm();
+            }}
           >
-            <ActionButton
-              variant="secondary-outline"
-              className="flex-1 rounded-sm"
-              onClick={onClose}
-            >
-              取消
-            </ActionButton>
-            <ActionButton
-              variant="secondary"
-              className={
-                !formState.isValid || formState.isSubmitting
-                  ? 'opacity-50 flex-1 rounded-sm'
-                  : 'flex-1 rounded-sm'
-              }
-              onClick={() => {
-                if (!formState.isValid || formState.isSubmitting) return;
-                onConfirm();
-              }}
-            >
-              預覽資訊
-            </ActionButton>
-          </Stack>
-        </DialogActions>
-      </Dialog>
-    </>
+            預覽資訊
+          </ActionButton>
+        </Stack>
+      </DialogActions>
+    </Dialog>
   );
 };
 

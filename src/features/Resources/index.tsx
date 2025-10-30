@@ -4,7 +4,7 @@ import { useInfiniteSupplies } from '@/hooks/useInfiniteSupplies';
 import { Supply } from '@/lib/types';
 import { CreateFormData, Station } from '@/lib/types/resource';
 import { Alert, Box, CircularProgress, Skeleton, Typography } from '@mui/material';
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createSupplyRequest, updateDeliveryProgress } from './api';
 import {
@@ -50,9 +50,7 @@ const ResourcesComponent: React.FC = () => {
   });
 
   const [selectedTag, setSelectedTag] = useState('');
-  const [showMode, setShowMode] = useState<'default' | 'only-pending' | 'only-completed'>(
-    'default'
-  );
+  const [showMode, setShowMode] = useState<'pending' | 'completed'>('pending');
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [deliveryDialogOpen, setDeliveryDialogOpen] = useState(false);
@@ -75,7 +73,7 @@ const ResourcesComponent: React.FC = () => {
   const allRequests: Supply[] = data?.pages.flatMap(page => page.member) || [];
   const totalItems = data?.pages[data.pages.length - 1]?.totalItems || allRequests.length;
 
-  const loaderRef = React.useRef<HTMLDivElement>(null);
+  const loaderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
@@ -110,9 +108,9 @@ const ResourcesComponent: React.FC = () => {
     if (selectedTag) {
       list = list.filter((req: Supply) => req.supplies.some(item => item.tag === selectedTag));
     }
-    if (showMode === 'only-pending') {
+    if (showMode === 'pending') {
       list = list.filter(req => !isCompleted(req));
-    } else if (showMode === 'only-completed') {
+    } else if (showMode === 'completed') {
       list = list.filter(isCompleted);
     }
     return list;
