@@ -1,4 +1,5 @@
 import Wrapper from '@/features/Wrapper';
+import PageClosedLetterCard from '@/components/PageClosedLetterCard';
 import { Metadata } from 'next';
 import { env } from '@/config/env';
 
@@ -22,13 +23,15 @@ export const generateMetadata = (): Metadata => {
 export default function ResourcesPage() {
   return (
     <Wrapper hideFooter>
-      <iframe
+      {/** Turn these pages offline as the requirements are getting less **/}
+      {/* <iframe
         src="https://pinkowo.github.io/hualien-bees/"
         className="w-full border-0"
         title="配送媒合"
         allow="geolocation"
         style={{ height: 'calc(100vh - 160px)' }} // header 4 rem + footer 140 px
-      />
+      /> */}
+      <PageClosedLetterCard />
     </Wrapper>
   );
 }

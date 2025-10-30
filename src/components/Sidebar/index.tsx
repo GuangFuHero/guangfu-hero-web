@@ -29,8 +29,11 @@ const SIDEBAR_ITEM = [
       { name: '居家修復', href: '/victim/house-repair' },
     ],
   },
+  /*
+  ** Turn these pages offline as the requirements are getting less **
   { name: '配送媒合', href: '/resources' },
   { name: '志工媒合', href: '/volunteer-register' },
+   */
   { name: '關於我們', href: '/volunteer/about-us' },
   { name: '隱私權政策', href: '/privacy' },
   { name: '服務條款', href: '/terms' },

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Wrapper from '@/features/Wrapper';
-import MainContent from '@/features/VolunteerRegister/MainContent';
+// import MainContent from '@/features/VolunteerRegister/MainContent';
+import PageClosedLetterCard from '@/components/PageClosedLetterCard';
 
 const SITE_URL = 'https://gf250923.org';
 const LOGO_URL = 'https://gf250923.org/logo_new.svg';
@@ -148,8 +149,9 @@ export default function VolunteerRegisterPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* TODO: refactor component */}
-      <MainContent />
+      {/** Turn these pages offline as the requirements are getting less **/}
+      {/* <MainContent /> */}
+      <PageClosedLetterCard />
     </Wrapper>
   );
 }
