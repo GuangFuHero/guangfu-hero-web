@@ -1,5 +1,6 @@
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 
 function DearName() {
   return (
@@ -55,9 +56,12 @@ function Paragraph() {
         </p>
         <p className="mb-0">
           需要專業志工請至
-          <span className="[text-underline-position:from-font] decoration-solid font-['Noto_Sans_TC:Medium',sans-serif] font-medium text-[#3a3937] underline">
+          <Link
+            href="/victim/house-repair"
+            className="[text-underline-position:from-font] decoration-solid font-['Noto_Sans_TC:Medium',sans-serif] font-medium text-[#179BC6] underline"
+          >
             居家修復
-          </span>
+          </Link>
           <span className="font-['Noto_Sans_TC:Regular',sans-serif] font-normal">聯繫廠商</span>
         </p>
         <p className="mb-0">&nbsp;</p>
@@ -93,7 +97,7 @@ function SignName() {
 export default function PageClosedLetterCard() {
   return (
     <div
-      className="bg-[#fef2e7] relative rounded-[12px] shadow-[0px_2px_10px_0px_rgba(0,0,0,0.1)] shrink-0 w-full"
+      className="bg-[#fef2e7] relative rounded-[12px] shadow-[0px_2px_10px_0px_rgba(0,0,0,0.1)] shrink-0 w-full max-w-[600px]"
       data-name="Letter"
     >
       <div className="flex flex-col items-center justify-center size-full">
