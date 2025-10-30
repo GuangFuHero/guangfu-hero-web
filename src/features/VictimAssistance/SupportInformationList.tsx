@@ -57,7 +57,7 @@ export default function SupportInformationList() {
         }
         const dataLines = csvText.split('\r\n');
 
-        const supportInformationTypes: string[] = [
+        let supportInformationTypes: string[] = [
           '全部',
           '一般個人',
           '一般家戶',
@@ -66,6 +66,9 @@ export default function SupportInformationList() {
           '商家與企業',
           '外縣市補助',
         ];
+        supportInformationTypes = supportInformationTypes.filter(
+          type => type === '全部' || csvText.includes(type)
+        );
         const supportInformationData: SupportInformationData = [];
         dataLines.forEach(line => {
           //依序為：Tag、補助名稱、官方連結、補助對象、補助內容、最後期限、申請地點、地點地址、開放時間、電話及窗口、申請資料、資料來源
