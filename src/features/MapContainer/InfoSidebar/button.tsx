@@ -12,10 +12,7 @@ export default function InfoSidebarButton({
   isFullScreenMap,
 }: InfoSidebarButtonProps) {
   return (
-    <div
-      className="more-info-panel"
-      style={{ bottom: isFullScreenMap ? '16px' : 'calc(16px + 80px)' }}
-    >
+    <div className="more-info-panel">
       <button
         className="btn btn-primary text-[16px] leading-5 font-semibold border-[#E6E6E6] border border-solid "
         onClick={onToggleSidebarOpen}

@@ -1,5 +1,4 @@
 import Banner from '@/features/Banner';
-import Footer from '@/features/Footer';
 import Header from '@/features/Header';
 import clsx from 'clsx';
 import React from 'react';
@@ -35,7 +34,7 @@ const Wrapper = ({
         {children}
       </main>
 
-      {!hideFooter && <Footer />}
+      {/* {!hideFooter && <Footer />} */}
     </div>
   );
 };
