@@ -28,6 +28,7 @@ export default function SupportInformationList() {
   const [supportInformationTypes, setSupportInformationTypes] = useState<string[]>([]);
   const [supportInformationData, setSupportInformationData] = useState<SupportInformationData>([]);
   const [currentType, setCurrentType] = useState<string>('全部');
+  const [supportInformationDataLength, setSupportInformationDataLength] = useState<number>(0);
 
   const handleTypeClick = (type: string) => {
     ReactGA.event(`補助資訊_${type}`);
@@ -67,6 +68,7 @@ export default function SupportInformationList() {
           '外縣市補助',
         ];
         const supportInformationData: SupportInformationData = [];
+        let supportInformationDataLength = 0;
         dataLines.forEach(line => {
           //依序為：Tag、補助名稱、官方連結、補助對象、補助內容、最後期限、申請地點、地點地址、開放時間、電話及窗口、申請資料、資料來源
           const [
@@ -111,6 +113,7 @@ export default function SupportInformationList() {
                 apply_detail: apply_detail.trim(),
                 source: source.trim(),
               });
+              supportInformationDataLength = supportInformationDataLength + 1;
             } else {
               console.log('重複的補助資訊：');
               console.log(`${type} - ${name}`);
@@ -123,6 +126,7 @@ export default function SupportInformationList() {
 
         setSupportInformationTypes(supportInformationTypes);
         setSupportInformationData(supportInformationData);
+        setSupportInformationDataLength(supportInformationDataLength);
       } catch (error) {
         setFetchDataFail(true);
         console.error('Failed to fetch support information data:', error);
@@ -178,239 +182,247 @@ export default function SupportInformationList() {
 
       <div className="space-y-4">
         {/* Info Cards */}
-        {supportInformationData
-          .filter(row => currentType === '全部' || row.type === currentType)
-          .map(row => (
-            <div
-              className="mb-4 rounded-2xl"
-              key={`${row.type}-${row.name}-${row.url}`}
-              style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
-            >
-              {/*upper part of the card*/}
-              <Stack gap="8px" p="20px" className="bg-[var(--light-gray-background)]">
-                <div
-                  className={`flex size-fit px-3 py-1 text-[var(--gray-2)] rounded`}
-                  style={
-                    tagTypeCssList[row.type as tag_type] ?? {
-                      backgroundColor: '#fff',
-                      color: '#000',
+        {supportInformationDataLength === 0 ? (
+          <div className="text-center text-gray-500 py-8">
+            <Typography fontSize={16} fontWeight={500}>
+              我們正在整理相關資料，請再等候幾天，感謝您的耐心
+            </Typography>
+          </div>
+        ) : (
+          supportInformationData
+            .filter(row => currentType === '全部' || row.type === currentType)
+            .map(row => (
+              <div
+                className="mb-4 rounded-2xl"
+                key={`${row.type}-${row.name}-${row.url}`}
+                style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
+              >
+                {/*upper part of the card*/}
+                <Stack gap="8px" p="20px" className="bg-[var(--light-gray-background)]">
+                  <div
+                    className={`flex size-fit px-3 py-1 text-[var(--gray-2)] rounded`}
+                    style={
+                      tagTypeCssList[row.type as tag_type] ?? {
+                        backgroundColor: '#fff',
+                        color: '#000',
+                      }
                     }
-                  }
-                >
-                  <Typography fontSize={14} fontWeight={500}>
-                    {row.type}
-                  </Typography>
-                </div>
+                  >
+                    <Typography fontSize={14} fontWeight={500}>
+                      {row.type}
+                    </Typography>
+                  </div>
 
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                  gap="8px"
-                >
-                  <Typography fontSize={20} fontWeight={500}>
-                    {row.name}
-                  </Typography>
-                  {row.url && (
-                    <a
-                      href={row.url}
-                      className="flex-shrink-0"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Image
-                        src={getAssetPath('/icon/open_new_page.svg')}
-                        alt="官方連結"
-                        width={28}
-                        height={28}
-                      />
-                    </a>
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                    gap="8px"
+                  >
+                    <Typography fontSize={20} fontWeight={500}>
+                      {row.name}
+                    </Typography>
+                    {row.url && (
+                      <a
+                        href={row.url}
+                        className="flex-shrink-0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Image
+                          src={getAssetPath('/icon/open_new_page.svg')}
+                          alt="官方連結"
+                          width={28}
+                          height={28}
+                        />
+                      </a>
+                    )}
+                  </Stack>
+
+                  {[
+                    { name: '補助對象', information: row.target },
+                    { name: '補助內容', information: row.support_detail },
+                    { name: '申請期限', information: row.deadline },
+                  ].map(
+                    ({ name, information }) =>
+                      information && (
+                        <div
+                          key={name}
+                          className="text-[var(--black)] leading-[20px] items-center font-normal"
+                        >
+                          <Stack
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center"
+                            className="text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
+                            style={{ height: '26px', width: '68px', borderRadius: '4px' }}
+                          >
+                            <Typography fontSize={14} fontWeight={500}>
+                              {name}
+                            </Typography>
+                          </Stack>
+                          <div className="flex-1 whitespace-pre-wrap">
+                            <Typography fontSize={16} fontWeight={500}>
+                              {information.replace(/^"|"$/g, '')}
+                            </Typography>
+                          </div>
+                        </div>
+                      )
                   )}
                 </Stack>
 
-                {[
-                  { name: '補助對象', information: row.target },
-                  { name: '補助內容', information: row.support_detail },
-                  { name: '申請期限', information: row.deadline },
-                ].map(
-                  ({ name, information }) =>
-                    information && (
-                      <div
-                        key={name}
-                        className="text-[var(--black)] leading-[20px] items-center font-normal"
-                      >
-                        <Stack
-                          direction="row"
-                          justifyContent="center"
-                          alignItems="center"
-                          className="text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
-                          style={{ height: '26px', width: '68px', borderRadius: '4px' }}
-                        >
-                          <Typography fontSize={14} fontWeight={500}>
-                            {name}
-                          </Typography>
-                        </Stack>
-                        <div className="flex-1 whitespace-pre-wrap">
-                          <Typography fontSize={16} fontWeight={500}>
-                            {information.replace(/^"|"$/g, '')}
-                          </Typography>
-                        </div>
-                      </div>
-                    )
-                )}
-              </Stack>
-
-              {/*lower part of the card*/}
-              <Stack gap="8px" p="20px">
-                <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                  <div className="text-[var(--primary)] text-nowrap mb-2">
-                    <Typography fontSize={16} fontWeight={600}>
-                      聯絡資訊
-                    </Typography>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    {row.apply_place && (
-                      <div className="flex gap-1 items-center whitespace-pre-wrap">
-                        <Image
-                          src={getAssetPath('/icon/house_icon.svg')}
-                          alt=""
-                          width={20}
-                          height={20}
-                        />
-                        <Typography fontSize={16} fontWeight={400}>
-                          {row.apply_place.replace(/^"|"$/g, '')}
-                        </Typography>
-                      </div>
-                    )}
-                    {row.office_Hours && (
-                      <div className="flex gap-1 items-center whitespace-pre-wrap">
-                        <Image
-                          src={getAssetPath('/icon/calendar_icon.svg')}
-                          alt=""
-                          width={20}
-                          height={20}
-                        />
-                        <Typography fontSize={16} fontWeight={400}>
-                          {row.office_Hours.replace(/^"|"$/g, '')}
-                        </Typography>
-                      </div>
-                    )}
-                    {row.apply_address && (
-                      <div className="flex gap-1 items-center whitespace-pre-wrap">
-                        <Image
-                          src={getAssetPath('/icon/map_point_icon.svg')}
-                          alt=""
-                          width={20}
-                          height={20}
-                        />
-                        <a
-                          href={
-                            'https://www.google.com/maps/search/?api=1&query=' + row.apply_address
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[var(--secondary)]"
-                          title="點擊開啟地址地圖資訊"
-                        >
-                          <Typography fontSize={16} fontWeight={400}>
-                            {row.apply_address.replace(/^"|"$/g, '')}
-                          </Typography>
-                        </a>
-                      </div>
-                    )}
-
-                    {row.phone &&
-                      row.phone
-                        .replace(/^"|"$/g, '')
-                        .split('\n') // 支援換行填寫多個電話
-                        .filter(phone_number => phone_number.trim() !== '')
-                        .map(phone_number => (
-                          <div
-                            key={phone_number}
-                            className="flex gap-1 items-center whitespace-pre-wrap"
-                          >
-                            <Image
-                              src={getAssetPath('/icon/call_icon.svg')}
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <Typography fontSize={16} fontWeight={400}>
-                              {phone_number}
-                            </Typography>
-                          </div>
-                        ))}
-
-                    {/* dash-line */}
-                    {row.apply_detail && (
-                      <div
-                        className="border-b border-dashed border-[var(--gray-3)]"
-                        style={{ height: '10px', marginBottom: '2px' }}
-                      ></div>
-                    )}
-                  </div>
-                </div>
-
-                {row.apply_detail && (
+                {/*lower part of the card*/}
+                <Stack gap="8px" p="20px">
                   <div className="text-[var(--black)] leading-[20px] items-center font-normal">
                     <div className="text-[var(--primary)] text-nowrap mb-2">
                       <Typography fontSize={16} fontWeight={600}>
-                        申請方式
+                        聯絡資訊
                       </Typography>
                     </div>
-                    <div className="flex-1 whitespace-pre-wrap">
-                      {row.apply_detail
-                        .replace(/^"|"$/g, '')
-                        .split(/(\n)/) // 保留換行
-                        .map((part, index) => {
-                          // 偵測https開頭至換行符號結束，轉換成<a>標籤的按鈕，並將其餘文字轉為span和br
-                          const urlMatch = part.match(/https?:\/\/[^\s]+/g);
-                          if (urlMatch) {
-                            return urlMatch.map((url, i) => (
-                              <a
-                                key={`${index}-${i}`}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="
-                                size-fit h-[36px] py-2 px-3 my-2
-                                min-w-[80px]
-                                bg-[var(--secondary-light)] text-[var(--secondary)]
-                                rounded-lg
-                                cursor-pointer
-                                flex items-center justify-center gap-1
-                                whitespace-nowrap
-                                transition-colors
-                              "
-                                title="點擊開啟補助連結資訊"
-                              >
-                                <Typography fontSize={16} fontWeight={400}>
-                                  連結
-                                </Typography>
-                                <Image
-                                  src={getAssetPath('/icon/secondary_up_right_arrow.svg')}
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
-                              </a>
-                            ));
-                          } else if (part === '\n') {
-                            return '';
-                          } else {
-                            return (
-                              <Typography key={index} fontSize={16} fontWeight={400}>
-                                {part}
+                    <div className="flex flex-col gap-1">
+                      {row.apply_place && (
+                        <div className="flex gap-1 items-center whitespace-pre-wrap">
+                          <Image
+                            src={getAssetPath('/icon/house_icon.svg')}
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
+                          <Typography fontSize={16} fontWeight={400}>
+                            {row.apply_place.replace(/^"|"$/g, '')}
+                          </Typography>
+                        </div>
+                      )}
+                      {row.office_Hours && (
+                        <div className="flex gap-1 items-center whitespace-pre-wrap">
+                          <Image
+                            src={getAssetPath('/icon/calendar_icon.svg')}
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
+                          <Typography fontSize={16} fontWeight={400}>
+                            {row.office_Hours.replace(/^"|"$/g, '')}
+                          </Typography>
+                        </div>
+                      )}
+                      {row.apply_address && (
+                        <div className="flex gap-1 items-center whitespace-pre-wrap">
+                          <Image
+                            src={getAssetPath('/icon/map_point_icon.svg')}
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
+                          <a
+                            href={
+                              'https://www.google.com/maps/search/?api=1&query=' + row.apply_address
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[var(--secondary)]"
+                            title="點擊開啟地址地圖資訊"
+                          >
+                            <Typography fontSize={16} fontWeight={400}>
+                              {row.apply_address.replace(/^"|"$/g, '')}
+                            </Typography>
+                          </a>
+                        </div>
+                      )}
+
+                      {row.phone &&
+                        row.phone
+                          .replace(/^"|"$/g, '')
+                          .split('\n') // 支援換行填寫多個電話
+                          .filter(phone_number => phone_number.trim() !== '')
+                          .map(phone_number => (
+                            <div
+                              key={phone_number}
+                              className="flex gap-1 items-center whitespace-pre-wrap"
+                            >
+                              <Image
+                                src={getAssetPath('/icon/call_icon.svg')}
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              <Typography fontSize={16} fontWeight={400}>
+                                {phone_number}
                               </Typography>
-                            );
-                          }
-                        })}
+                            </div>
+                          ))}
+
+                      {/* dash-line */}
+                      {row.apply_detail && (
+                        <div
+                          className="border-b border-dashed border-[var(--gray-3)]"
+                          style={{ height: '10px', marginBottom: '2px' }}
+                        ></div>
+                      )}
                     </div>
                   </div>
-                )}
-              </Stack>
-            </div>
-          ))}
+
+                  {row.apply_detail && (
+                    <div className="text-[var(--black)] leading-[20px] items-center font-normal">
+                      <div className="text-[var(--primary)] text-nowrap mb-2">
+                        <Typography fontSize={16} fontWeight={600}>
+                          申請方式
+                        </Typography>
+                      </div>
+                      <div className="flex-1 whitespace-pre-wrap">
+                        {row.apply_detail
+                          .replace(/^"|"$/g, '')
+                          .split(/(\n)/) // 保留換行
+                          .map((part, index) => {
+                            // 偵測https開頭至換行符號結束，轉換成<a>標籤的按鈕，並將其餘文字轉為span和br
+                            const urlMatch = part.match(/https?:\/\/[^\s]+/g);
+                            if (urlMatch) {
+                              return urlMatch.map((url, i) => (
+                                <a
+                                  key={`${index}-${i}`}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="
+                                    size-fit h-[36px] py-2 px-3 my-2
+                                    min-w-[80px]
+                                    bg-[var(--secondary-light)] text-[var(--secondary)]
+                                    rounded-lg
+                                    cursor-pointer
+                                    flex items-center justify-center gap-1
+                                    whitespace-nowrap
+                                    transition-colors
+                                  "
+                                  title="點擊開啟補助連結資訊"
+                                >
+                                  <Typography fontSize={16} fontWeight={400}>
+                                    連結
+                                  </Typography>
+                                  <Image
+                                    src={getAssetPath('/icon/secondary_up_right_arrow.svg')}
+                                    alt=""
+                                    width={20}
+                                    height={20}
+                                  />
+                                </a>
+                              ));
+                            } else if (part === '\n') {
+                              return '';
+                            } else {
+                              return (
+                                <Typography key={index} fontSize={16} fontWeight={400}>
+                                  {part}
+                                </Typography>
+                              );
+                            }
+                          })}
+                      </div>
+                    </div>
+                  )}
+                </Stack>
+              </div>
+            ))
+        )}
       </div>
     </>
   );
