@@ -2,6 +2,7 @@
 
 import DropdownSelect from '@/components/DropdownSelect';
 import PlaceList from '@/features/PlaceList';
+import useMapCategoryDurationTracker from '@/hooks/useMapCategoryDurationTracker';
 import { PlaceType } from '@/lib/types/place';
 import { useTab } from '@/providers/TabProvider';
 import dynamic from 'next/dynamic';
@@ -30,9 +31,9 @@ type ShowMode = 'mapShow' | 'listShow';
 
 export default function SiteMap() {
   const searchParams = useSearchParams();
-  const { activeTab } = useTab();
+  const { activeTab, setActiveTab } = useTab();
   const [showMode, setShowMode] = useState<ShowMode>('mapShow');
-  const { setActiveTab } = useTab();
+  useMapCategoryDurationTracker(activeTab, showMode);
 
   useEffect(() => {
     const view = searchParams.get('view');
