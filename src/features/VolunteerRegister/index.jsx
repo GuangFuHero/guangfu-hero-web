@@ -7,6 +7,7 @@ import Header from './Header';
 import Pagination from './Pagination';
 import RequestCard from './RequestCard';
 import Toast from './Toast';
+import theme from './colorPalate';
 
 // dialogs
 import CreateDialog from './dialogs/CreateDialog';

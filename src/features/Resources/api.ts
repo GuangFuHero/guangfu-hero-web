@@ -1,11 +1,11 @@
-import { getApiUrl } from '@/lib/api';
+import { getEditApiUrl } from '@/lib/api';
 import { CreateFormData } from '@/lib/types/resource';
 import { transformToApiData } from './utils';
 
 export async function createSupplyRequest(payload: CreateFormData): Promise<void> {
   const firstItemData = transformToApiData({ ...payload, items: [payload.items[0]] });
 
-  const firstResponse = await fetch(`${getApiUrl()}/supplies`, {
+  const firstResponse = await fetch(`${getEditApiUrl()}/supplies`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(firstItemData),
@@ -35,7 +35,7 @@ export async function createSupplyRequest(payload: CreateFormData): Promise<void
         unit: item.unit,
         valid_pin,
       };
-      return fetch(`${getApiUrl()}/supply_items`, {
+      return fetch(`${getEditApiUrl()}/supply_items`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(supplyItemData),
@@ -57,7 +57,7 @@ export async function updateDeliveryProgress(
   id: string,
   deliveryData: Array<{ id: string; count: number }>
 ): Promise<void> {
-  const response = await fetch(`${getApiUrl()}/supplies/${id}`, {
+  const response = await fetch(`${getEditApiUrl()}/supplies/${id}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(deliveryData),
