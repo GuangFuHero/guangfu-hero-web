@@ -12,7 +12,7 @@ const DISPLAY_MODE = {
 const handleRecordGAEvent = debounce(
   (category: PlaceType | 'all', displayMode: 'mapShow' | 'listShow', startTime: number) => {
     const durationSeconds = Math.floor((Date.now() - startTime) / 1000);
-    if (durationSeconds < 60) return;
+    if (durationSeconds < 10) return;
 
     ReactGA.event('分類互動時間', {
       分類: category === 'all' ? '全部' : PLACE_TYPE_STRING_MAP[category],
