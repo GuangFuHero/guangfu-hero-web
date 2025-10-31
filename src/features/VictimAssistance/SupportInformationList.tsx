@@ -2,12 +2,14 @@ import { env } from '@/config/env';
 import Button from '@/components/Button';
 import { useToast } from '@/providers/ToastProvider';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { Stack, Typography } from '@mui/material';
 import ReactGA from 'react-ga4';
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
 
 type SupportInformationDataRow = {
+  support_id: string;
   type: string;
   name: string;
   url: string;
@@ -28,10 +30,65 @@ export default function SupportInformationList() {
   const [supportInformationTypes, setSupportInformationTypes] = useState<string[]>([]);
   const [supportInformationData, setSupportInformationData] = useState<SupportInformationData>([]);
   const [currentType, setCurrentType] = useState<string>('全部');
+  const { showToast } = useToast();
+  const pathname = usePathname();
 
   const handleTypeClick = (type: string) => {
     ReactGA.event(`補助資訊_${type}`);
     setCurrentType(type);
+  };
+
+  const handleShare = async (id?: string) => {
+    if (typeof window === 'undefined') return;
+
+    // 建構完整 URL
+    const baseUrl = window.location.origin;
+    const shareUrl = id
+      ? `${baseUrl}${pathname}#${id}` // ✅ 加上 #id
+      : `${baseUrl}${pathname}`;
+
+    // 根據路徑決定標題
+    const getTitle = () => {
+      if (pathname.startsWith('/map')) return '光復超人 - 現場地圖';
+      if (pathname.startsWith('/volunteer')) return '光復超人 - 志工資訊';
+      if (pathname.startsWith('/victim')) return '光復超人 - 居民協助';
+      return '光復超人';
+    };
+
+    const title = getTitle();
+
+    // 檢查是否支援 Web Share API
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: title,
+          url: shareUrl,
+        });
+      } catch (error) {
+        // 如果使用者取消分享或發生錯誤=複製功能
+        if (!(error instanceof Error && error.name === 'AbortError')) {
+          await fallbackToCopy(shareUrl);
+        }
+      }
+    } else {
+      // 不支援 Web Share API,直接使用複製功能
+      await fallbackToCopy(shareUrl);
+    }
+  };
+
+  const fallbackToCopy = async (url: string) => {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      console.warn('Clipboard API 不可用 - 需要 HTTPS 或 localhost 環境');
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(url);
+      // 複製成功,顯示 Toast
+      showToast('複製連結成功', 'success');
+    } catch (error) {
+      console.error('複製失敗:', error);
+    }
   };
 
   useEffect(() => {
@@ -39,7 +96,10 @@ export default function SupportInformationList() {
       try {
         // fetch Google sheet at client side
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+        /* 測試&暫時DP用，正式提PR時會換成真正的gid，一上正式區Azusa會去改sheet
         const gid = env.NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID;
+        */
+        const gid = '286412185';
 
         if (!sheetId) {
           throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
@@ -71,8 +131,9 @@ export default function SupportInformationList() {
         );
         const supportInformationData: SupportInformationData = [];
         dataLines.forEach(line => {
-          //依序為：Tag、補助名稱、官方連結、補助對象、補助內容、最後期限、申請地點、地點地址、開放時間、電話及窗口、申請資料、資料來源
+          //依序為：ID、Tag、補助名稱、官方連結、補助對象、補助內容、最後期限、申請地點、地點地址、開放時間、電話及窗口、申請資料、資料來源
           const [
+            support_id,
             type,
             name,
             url,
@@ -101,6 +162,7 @@ export default function SupportInformationList() {
 
             if (indexFound === -1) {
               supportInformationData.push({
+                support_id: support_id.trim(),
                 type: type.trim(),
                 name: name.trim(),
                 url: url.trim(),
@@ -134,6 +196,20 @@ export default function SupportInformationList() {
 
     fetchSupportData();
   }, [currentType]);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash || supportInformationData.length === 0) return; // ← 要等資料準備好
+
+    const id = hash.substring(1);
+    const el = document.getElementById(id);
+    if (el) {
+      // 加一點點延遲，確保 DOM 已經繪製完成
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [supportInformationData, currentType, pathname]);
 
   type tag_type =
     | '一般個人'
@@ -189,6 +265,8 @@ export default function SupportInformationList() {
               key={`${row.type}-${row.name}-${row.url}`}
               style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
             >
+              {/*targer for scroll*/}
+              <div id={`${row.support_id}`} style={{ position: 'relative', top: '-80px' }}></div>
               {/*upper part of the card*/}
               <Stack gap="8px" p="20px" className="bg-[var(--light-gray-background)]">
                 <div
@@ -214,21 +292,30 @@ export default function SupportInformationList() {
                   <Typography fontSize={20} fontWeight={500}>
                     {row.name}
                   </Typography>
-                  {row.url && (
-                    <a
-                      href={row.url}
-                      className="flex-shrink-0"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                  <div className="flex item-center gap-2">
+                    {row.url && (
+                      <a
+                        href={row.url}
+                        className="flex-shrink-0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Image
+                          src={getAssetPath('/icon/open_new_page.svg')}
+                          alt="官方連結"
+                          width={28}
+                          height={28}
+                        />
+                      </a>
+                    )}
+                    <button
+                      className="flex-shrink-0 cursor-pointer"
+                      aria-label="分享"
+                      onClick={() => handleShare(row.support_id)}
                     >
-                      <Image
-                        src={getAssetPath('/icon/open_new_page.svg')}
-                        alt="官方連結"
-                        width={28}
-                        height={28}
-                      />
-                    </a>
-                  )}
+                      <Image src={getAssetPath('/share.svg')} alt="分享" width={24} height={24} />
+                    </button>
+                  </div>
                 </Stack>
 
                 {[
