@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import PlaceList from '../PlaceList';
 import HouseRepairList from './HouseRepairList';
+import SupportInformationList from './SupportInformationList';
 
-type Category = '庇護所' | '醫療站' | '心理資源' | '居家修復';
+type Category = '庇護所' | '醫療站' | '心理資源' | '居家修復' | '補助資訊';
 type ServiceFormat = '全部' | '實體' | '線上' | '電話' | '多種';
 
 const CATEGORY_TO_PLACE_TYPE: Record<Category, PlaceType | null> = {
@@ -15,6 +16,7 @@ const CATEGORY_TO_PLACE_TYPE: Record<Category, PlaceType | null> = {
   醫療站: PlaceType.MEDICAL_STATION,
   心理資源: PlaceType.MENTAL_HEALTH_RESOURCE,
   居家修復: null,
+  補助資訊: null,
 };
 
 const CATEGORY_TO_ROUTE: Record<Category, string> = {
@@ -22,6 +24,7 @@ const CATEGORY_TO_ROUTE: Record<Category, string> = {
   醫療站: '/victim/medical',
   心理資源: '/victim/mental-health',
   居家修復: '/victim/house-repair',
+  補助資訊: '/victim/support-information',
 };
 
 interface VictimAssistanceProps {
@@ -33,7 +36,7 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
   const [selectedCategory, setSelectedCategory] = useState<Category>(initialCategory);
   const [selectedServiceFormat, setSelectedServiceFormat] = useState<ServiceFormat>('全部');
 
-  const categories: Category[] = ['庇護所', '醫療站', '心理資源', '居家修復'];
+  const categories: Category[] = ['庇護所', '醫療站', '心理資源', '居家修復', '補助資訊'];
   const serviceFormats: ServiceFormat[] = ['全部', '實體', '線上', '電話', '多種'];
 
   const handleFilterPlaces = useCallback(
@@ -54,9 +57,23 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
     router.push(route);
   };
 
+  let category_content;
+  if (CATEGORY_TO_PLACE_TYPE[selectedCategory] !== null) {
+    category_content = (
+      <PlaceList
+        activeTab={CATEGORY_TO_PLACE_TYPE[selectedCategory]}
+        onFilterPlaces={handleFilterPlaces}
+      />
+    );
+  } else if (selectedCategory === '居家修復') {
+    category_content = <HouseRepairList />;
+  } else if (selectedCategory === '補助資訊') {
+    category_content = <SupportInformationList />;
+  }
+
   return (
     <div>
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-2 mb-3 overflow-y-auto">
         {categories.map(category => (
           <Button
             key={category}
@@ -69,7 +86,7 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
       </div>
 
       {selectedCategory === '心理資源' && (
-        <div className="flex gap-2 mb-3">
+        <div className="flex gap-2 mb-3 overflow-y-auto">
           {serviceFormats.map(format => (
             <Button
               key={format}
@@ -83,16 +100,7 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
         </div>
       )}
 
-      <div className="space-y-4">
-        {CATEGORY_TO_PLACE_TYPE[selectedCategory] !== null ? (
-          <PlaceList
-            activeTab={CATEGORY_TO_PLACE_TYPE[selectedCategory]}
-            onFilterPlaces={handleFilterPlaces}
-          />
-        ) : (
-          <HouseRepairList />
-        )}
-      </div>
+      <div className="space-y-4">{category_content}</div>
     </div>
   );
 }

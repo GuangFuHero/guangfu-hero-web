@@ -108,9 +108,11 @@ src/
 │   ├── map/              # Interactive disaster area map
 │   ├── full-screen-map/  # Full-screen map view
 │   ├── victim/           # Victim assistance pages
+│   │   ├── house-repair/ # House repair store information
 │   │   ├── medical/      # Medical assistance
 │   │   ├── mental-health/# Mental health resources
-│   │   └── shelter/      # Shelter information
+│   │   ├── shelter/      # Shelter information
+│   │   └── support-information/ # Support information
 │   ├── volunteer/        # Volunteer information
 │   │   ├── about-us/     # Team information
 │   │   ├── preparation/  # Equipment checklists

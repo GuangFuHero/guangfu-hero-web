@@ -45,6 +45,7 @@ export default function HouseRepairList() {
         // fetch Google sheet at client side
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
         const gid = env.NEXT_PUBLIC_HOUSE_REPAIR_SHEET_GID;
+
         if (!sheetId) {
           throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
         } else if (!gid) {
@@ -113,7 +114,7 @@ export default function HouseRepairList() {
     }
 
     fetchRepairData();
-  }, []);
+  }, [currentType]);
 
   return houseRepairTypes.length === 0 ? (
     fetchDataFail ? (
