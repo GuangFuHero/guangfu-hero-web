@@ -1,27 +1,17 @@
 import { Supply, SupplyItem } from '@/lib/types';
 import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
-import { Chip, Collapse, Divider, IconButton, Stack, Typography } from '@mui/material';
+import { Collapse, Divider, IconButton, Stack, Typography } from '@mui/material';
 import { memo } from 'react';
-import { fulfilledItems, pendingItems, remainingNeed, typeMeta } from '../utils';
+import ResourceTag from '../ResourceTag';
+import { fulfilledItems, pendingItems, remainingNeed } from '../utils';
 
 const Item = ({ item, remaining }: { item: SupplyItem; remaining: number }) => {
   return (
     <Stack py="12px" spacing={2}>
       <Stack direction="row" alignItems="center" spacing={1}>
-        <Chip
-          label={typeMeta(item.tag).label}
-          size="small"
-          sx={{
-            bgcolor: typeMeta(item.tag).color,
-            color: 'white',
-            borderRadius: '4px',
-            fontSize: '12px',
-            lineHeight: '15px',
-            fontWeight: 500,
-          }}
-        />
+        <ResourceTag tag={item.tag} />
         <Typography
-          sx={{ fontSize: '14px', fontWeight: 600, lineHeight: '18px', color: 'var(--gray)' }}
+          sx={{ fontSize: '16px', fontWeight: 600, lineHeight: '20px', color: 'var(--gray)' }}
         >
           {item.name}
         </Typography>
@@ -33,13 +23,19 @@ const Item = ({ item, remaining }: { item: SupplyItem; remaining: number }) => {
         justifyContent="space-between"
         spacing={1}
         divider={<Divider orientation="vertical" flexItem sx={{ borderColor: 'var(--gray-5)' }} />}
-        sx={{ fontSize: '14px', fontWeight: 400, lineHeight: '18px' }}
+        sx={{ fontSize: '16px', fontWeight: 400, lineHeight: '20px' }}
       >
         <Typography flex={1} sx={{ font: 'inherit', color: 'var(--gray)' }}>
           需求 {item.total_number} {item.unit}
         </Typography>
 
-        <Typography sx={{ font: 'inherit', color: remaining === 0 ? 'var(--done)' : 'var(--red)' }}>
+        <Typography
+          sx={{
+            font: 'inherit',
+            fontWeight: 600,
+            color: remaining === 0 ? 'var(--done)' : 'var(--red)',
+          }}
+        >
           {remaining === 0 ? '已完成' : `尚需 ${remaining} ${item.unit}`}
         </Typography>
       </Stack>

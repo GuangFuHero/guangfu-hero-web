@@ -32,13 +32,14 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             key={option.value}
             active={showMode === option.value}
             onClick={() => onModeChange(option.value)}
+            className="text-[20px] leading-[25px] font-weight-500"
           >
             {option.label}
           </Tab>
         ))}
       </Stack>
 
-      <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+      <Stack direction="row" spacing="4px" flexWrap="wrap">
         {categoryOptions.map(option => (
           <StatefulTag
             key={option.value}

@@ -5,7 +5,6 @@ import { SupplyItem } from '@/lib/types';
 import { CreateFormData, DeliveryData } from '@/lib/types/resource';
 import { LocationOn as LocationIcon, Phone as PhoneIcon } from '@mui/icons-material';
 import {
-  Chip,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -17,7 +16,8 @@ import {
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { mapLink, phoneHref, typeMeta } from '../utils';
+import ResourceTag from '../ResourceTag';
+import { mapLink, phoneHref } from '../utils';
 
 export type DialogType = 'create' | 'delivery' | null;
 
@@ -66,20 +66,20 @@ function ConfirmDialog({
         }}
       >
         <Typography
-          sx={{ fontWeight: 500, fontSize: '20px', lineHeight: '25px', color: 'var(--black)' }}
+          sx={{ fontWeight: 600, fontSize: '20px', lineHeight: '25px', color: 'var(--black)' }}
         >
-          {dialogType ? <>{dialogType === 'create' ? '確認新增需求' : '確認配送清單'}</> : null}
+          {dialogType ? <>{dialogType === 'create' ? '確認配送需求' : '確認配送清單'}</> : null}
         </Typography>
       </DialogTitle>
 
       {payload && (
         <DialogContent sx={{ overflow: 'auto', m: 0, p: 0 }}>
-          <Stack p="12px" spacing={'12px'}>
-            <Typography
-              sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500, color: '#000' }}
-            >
-              {payload.org}
-            </Typography>
+          <Stack
+            p="12px"
+            spacing={'12px'}
+            sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
+          >
+            <Typography sx={{ color: '#000', font: 'inherit' }}>{payload.org}</Typography>
 
             {payload.address ? (
               <MuiLink
@@ -91,9 +91,8 @@ function ConfirmDialog({
                 <LocationIcon sx={{ fontSize: 16 }} htmlColor="var(--gray-2)" />
                 <Typography
                   sx={{
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    lineHeight: '18px',
+                    font: 'inherit',
+                    fontWeight: 400,
                     color: 'var(--secondary)',
                   }}
                 >
@@ -111,9 +110,8 @@ function ConfirmDialog({
                 <PhoneIcon sx={{ fontSize: 16 }} htmlColor="var(--gray-2)" />
                 <Typography
                   sx={{
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    lineHeight: '18px',
+                    font: 'inherit',
+                    fontWeight: 400,
                     color: 'var(--secondary)',
                   }}
                 >
@@ -127,30 +125,16 @@ function ConfirmDialog({
                 <Stack
                   key={index}
                   sx={{
-                    p: '8px 0',
+                    py: '8px',
                     borderBottom: '1px dashed var(--gray-3)',
-                    fontSize: '14px',
-                    fontWeight: 400,
-                    lineHeight: '18px',
+                    font: 'inherit',
                     color: 'var(--gray)',
                   }}
                   spacing="8px"
                 >
-                  <Chip
-                    label={typeMeta(item.tag).label}
-                    size="small"
-                    sx={{
-                      bgcolor: typeMeta(item.tag).color,
-                      color: 'white',
-                      borderRadius: '4px',
-                      fontSize: '12px',
-                      lineHeight: '15px',
-                      fontWeight: 500,
-                      width: 'fit-content',
-                    }}
-                  />
+                  <ResourceTag tag={item.tag} />
                   <Typography sx={{ font: 'inherit', fontWeight: 600 }}>{item.name}</Typography>
-                  <Typography sx={{ font: 'inherit' }}>
+                  <Typography sx={{ font: 'inherit', fontWeight: 400 }}>
                     {dialogType ? <>{dialogType === 'create' ? '需求' : '配送'}</> : null}{' '}
                     {dialogType ? (
                       <>{dialogType === 'create' ? item.total_number : item.count}</>
@@ -172,7 +156,22 @@ function ConfirmDialog({
           borderTop: '1px solid var(--gray-3)',
         }}
       >
-        <Stack direction="row" alignItems="center" flex={1} width="100%" spacing={1}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          flex={1}
+          width="100%"
+          spacing={1}
+          sx={{
+            button: {
+              minWidth: '120px',
+              height: '49px',
+              fontSize: '20px',
+              lineHeight: '25px',
+              fontWeight: 500,
+            },
+          }}
+        >
           <ActionButton variant="secondary-outline" className="flex-1 rounded-sm" onClick={onClose}>
             返回修改
           </ActionButton>

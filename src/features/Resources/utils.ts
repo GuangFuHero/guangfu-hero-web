@@ -130,6 +130,9 @@ export const makeEmptyItem = (): SupplyItem => ({
   total_number: 1,
   unit: '',
   received_count: 0,
+  // old API fields for compatibility
+  recieved_count: 0,
+  total_count: 0,
 });
 
 export const sanitizeItem = (item: SupplyItem): SupplyItem => ({
@@ -140,4 +143,7 @@ export const sanitizeItem = (item: SupplyItem): SupplyItem => ({
   total_number: Number.isNaN(Number(item.total_number)) ? 0 : Number(item.total_number),
   unit: item.unit?.trim() ?? '',
   received_count: Number.isNaN(Number(item.received_count)) ? 0 : Number(item.received_count),
+  // old API fields for compatibility
+  recieved_count: Number.isNaN(Number(item?.recieved_count)) ? 0 : Number(item?.recieved_count),
+  total_count: Number.isNaN(Number(item?.total_count)) ? 0 : Number(item?.total_count),
 });

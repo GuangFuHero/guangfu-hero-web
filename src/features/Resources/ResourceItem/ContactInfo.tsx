@@ -15,12 +15,19 @@ const ContactInfo = ({
   isPhoneDisplayed: boolean;
 }) => {
   return (
-    <Stack spacing={2} py="16px" sx={{ borderBottom: '1px dashed var(--gray-3)' }}>
+    <Stack
+      spacing={2}
+      py="16px"
+      sx={{
+        borderBottom: '1px dashed var(--gray-3)',
+        fontSize: '16px',
+        fontWeight: 600,
+        lineHeight: '20px',
+      }}
+    >
       <Typography
         sx={{
-          fontSize: '14px',
-          fontWeight: 600,
-          lineHeight: '16px',
+          font: 'inherit',
           color: 'var(--black)',
         }}
       >
@@ -37,9 +44,8 @@ const ContactInfo = ({
           <LocationIcon sx={{ fontSize: 16 }} htmlColor="var(--gray-2)" />
           <Typography
             sx={{
-              fontSize: '14px',
-              fontWeight: 500,
-              lineHeight: '18px',
+              font: 'inherit',
+              fontWeight: 400,
               color: 'var(--secondary)',
             }}
           >
@@ -57,9 +63,8 @@ const ContactInfo = ({
           <PhoneIcon sx={{ fontSize: 16 }} htmlColor="var(--gray-2)" />
           <Typography
             sx={{
-              fontSize: '14px',
-              fontWeight: 500,
-              lineHeight: '18px',
+              font: 'inherit',
+              fontWeight: 400,
               color: 'var(--secondary)',
             }}
           >

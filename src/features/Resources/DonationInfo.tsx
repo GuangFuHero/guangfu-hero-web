@@ -31,11 +31,11 @@ const DonationInfo: React.FC = () => {
       flex={1}
       sx={{
         bgcolor: '#D347460D',
-        p: '8px 20px',
+        p: '8px 12px',
         borderRadius: '16px',
-        fontSize: '12px',
+        fontSize: '16px',
         fontWeight: 600,
-        lineHeight: '15px',
+        lineHeight: '20px',
       }}
     >
       <Typography
@@ -49,34 +49,47 @@ const DonationInfo: React.FC = () => {
       </Typography>
       <Stack divider={<Divider sx={{ borderColor: 'var(--gray-3)' }} />}>
         {donationLocations.map((location, index) => (
-          <Stack key={index} direction="row" alignItems="center" flexWrap="wrap" flex={1}>
+          <Stack
+            key={index}
+            direction="row"
+            alignItems="center"
+            flexWrap="wrap"
+            flex={1}
+            sx={{ py: '8px' }}
+          >
             <Typography
               color="var(--black)"
               sx={{
                 font: 'inherit',
                 flex: '1 1 150px',
                 maxWidth: '228px',
-                py: '8px',
+                fontWeight: 500,
+                whiteSpace: 'nowrap',
               }}
             >
               {location.name}
             </Typography>
             <Stack
+              flex={1}
               direction="row"
-              spacing={1}
+              flexWrap="wrap"
+              justifyContent="flex-start"
+              gap="8px"
               sx={{
+                whiteSpace: 'nowrap',
                 font: 'inherit',
                 color: 'var(--gray-2)',
                 py: '8px',
                 flex: '0 0 auto',
-                minWidth: '290px',
+                width: '290px',
+                minWidth: 'fit-content',
               }}
               divider={
                 <Divider orientation="vertical" flexItem sx={{ borderColor: 'var(--gray-3)' }} />
               }
             >
-              <Typography sx={{ font: 'inherit' }}>{location.phone}</Typography>
-              <Typography sx={{ font: 'inherit' }}>{location.address}</Typography>
+              <Typography sx={{ font: 'inherit', fontWeight: 400 }}>{location.phone}</Typography>
+              <Typography sx={{ font: 'inherit', fontWeight: 400 }}>{location.address}</Typography>
             </Stack>
           </Stack>
         ))}

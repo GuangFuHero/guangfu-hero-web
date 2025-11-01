@@ -2,7 +2,6 @@
 
 import {
   Button,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -12,13 +11,14 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Controller, useFieldArray, UseFormReturn } from 'react-hook-form';
-import { remainingNeed, typeMeta } from '../utils';
+import { remainingNeed } from '../utils';
 
 import ActionButton from '@/components/ActionButton';
 import NumberInput from '@/components/NumberInput';
 import { SupplyItem } from '@/lib/types';
 import CloseIcon from '@mui/icons-material/Close';
 import { Stack } from '@mui/system';
+import ResourceTag from '../ResourceTag';
 export interface DeliveryFormData {
   id: string;
   org: string;
@@ -43,17 +43,7 @@ const DeliveryDialog: React.FC<DeliveryDialogProps> = ({ open, onClose, form, on
   });
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      maxWidth="md"
-      fullWidth
-      sx={{
-        '.MuiDialogContent-root': {
-          p: '12px 16px',
-        },
-      }}
-    >
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle
         sx={{
           p: '16px',
@@ -76,8 +66,8 @@ const DeliveryDialog: React.FC<DeliveryDialogProps> = ({ open, onClose, form, on
 
       <DialogContent
         sx={{
-          p: '12px 16px',
-          m: 0,
+          m: '12px 16px',
+          p: 0,
           overflow: 'auto',
           gap: '12px',
           display: 'flex',
@@ -92,29 +82,12 @@ const DeliveryDialog: React.FC<DeliveryDialogProps> = ({ open, onClose, form, on
             spacing="12px"
             border="1px solid var(--gray-3)"
             borderRadius="8px"
+            sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 600 }}
           >
-            <Chip
-              label={typeMeta(item.tag).label}
-              size="small"
-              sx={{
-                bgcolor: typeMeta(item.tag).color,
-                color: 'white',
-                borderRadius: '4px',
-                fontSize: '12px',
-                lineHeight: '15px',
-                fontWeight: 500,
-                width: 'fit-content',
-              }}
-            />
-            <Typography
-              sx={{ fontSize: '14px', lineHeight: '18px', fontWeight: 600, color: 'var(--gray)' }}
-            >
-              {item.name}
-            </Typography>
+            <ResourceTag tag={item.tag} />
+            <Typography sx={{ font: 'inherit', color: 'var(--gray)' }}>{item.name}</Typography>
 
-            <Typography
-              sx={{ fontSize: '14px', lineHeight: '18px', fontWeight: 600, color: 'var(--red)' }}
-            >
+            <Typography sx={{ font: 'inherit', color: 'var(--red)' }}>
               尚缺 {remainingNeed(item)} {item.unit}
             </Typography>
 
@@ -130,7 +103,13 @@ const DeliveryDialog: React.FC<DeliveryDialogProps> = ({ open, onClose, form, on
                       max={max}
                       value={field.value}
                       onChange={field.onChange}
-                      sx={{ flex: 7, '* > input': { height: '36px' } }}
+                      sx={{
+                        flex: 7,
+                        '* > input': {
+                          height: '36px',
+                          minHeight: '36px',
+                        },
+                      }}
                     />
                     <Button
                       sx={{
@@ -178,7 +157,22 @@ const DeliveryDialog: React.FC<DeliveryDialogProps> = ({ open, onClose, form, on
           gap: '16px',
         }}
       >
-        <Stack direction="row" alignItems="center" flex={{ xs: 1, sm: 0 }} width="100%" spacing={1}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          flex={{ xs: 1, sm: 0 }}
+          width="100%"
+          spacing={1}
+          sx={{
+            button: {
+              minWidth: '120px',
+              height: '49px',
+              fontSize: '20px',
+              lineHeight: '25px',
+              fontWeight: 500,
+            },
+          }}
+        >
           <ActionButton variant="secondary-outline" className="flex-1 rounded-sm" onClick={onClose}>
             取消
           </ActionButton>

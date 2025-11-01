@@ -10,12 +10,12 @@ const StationsInfo = ({ stations }: { stations: Station[] }) => {
   const displayedStations = stations.filter(station => !!station?.name && !!station.id);
 
   return (
-    <Stack spacing={2} py="16px">
+    <Stack spacing={2} py="16px" sx={{ borderBottom: '1px dashed var(--gray-3)' }}>
       <Typography
         sx={{
-          fontSize: '14px',
+          fontSize: '16px',
           fontWeight: 600,
-          lineHeight: '16px',
+          lineHeight: '20px',
           color: 'var(--black)',
         }}
       >
@@ -32,13 +32,14 @@ const StationsInfo = ({ stations }: { stations: Station[] }) => {
                 borderRadius: '12px',
                 bgcolor: 'var(--light-gray-background)',
                 border: '1px solid var(--gray-3)',
+                fontSize: '16px',
+                fontWeight: 600,
+                lineHeight: '20px',
               }}
             >
               <Typography
                 sx={{
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  lineHeight: '18px',
+                  font: 'inherit',
                   color: 'var(--black)',
                 }}
               >
@@ -55,9 +56,8 @@ const StationsInfo = ({ stations }: { stations: Station[] }) => {
                   <LocationIcon sx={{ fontSize: 16 }} htmlColor="var(--gray-2)" />
                   <Typography
                     sx={{
-                      fontSize: '14px',
-                      fontWeight: 500,
-                      lineHeight: '18px',
+                      font: 'inherit',
+                      fontWeight: 400,
                       color: 'var(--secondary)',
                     }}
                   >
@@ -74,9 +74,8 @@ const StationsInfo = ({ stations }: { stations: Station[] }) => {
                   <PhoneIcon sx={{ fontSize: 16 }} htmlColor="var(--gray-2)" />
                   <Typography
                     sx={{
-                      fontSize: '14px',
-                      fontWeight: 500,
-                      lineHeight: '18px',
+                      font: 'inherit',
+                      fontWeight: 400,
                       color: 'var(--secondary)',
                     }}
                   >
@@ -95,9 +94,9 @@ const StationsInfo = ({ stations }: { stations: Station[] }) => {
                       key={`${supply.id}-${supply.supply_id}-${supply.total_number}-${supply.received_count}`}
                       spacing={2}
                       sx={{
-                        fontSize: '14px',
-                        fontWeight: 600,
-                        lineHeight: '18px',
+                        fontSize: '16px',
+                        fontWeight: 400,
+                        lineHeight: '20px',
                         color: 'var(--gray)',
                       }}
                     >
@@ -117,9 +116,9 @@ const StationsInfo = ({ stations }: { stations: Station[] }) => {
       ) : (
         <Typography
           sx={{
-            fontSize: '14px',
+            fontSize: '16px',
             fontWeight: 400,
-            lineHeight: '18px',
+            lineHeight: '20px',
             color: 'var(--gray-2)',
           }}
         >

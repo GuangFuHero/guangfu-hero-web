@@ -61,7 +61,12 @@ const SupplyItemsList = ({ control }: { control: Control<CreateResourceFormData>
               '* > input, .MuiSelect-select': { bgcolor: 'white', borderRadius: '8px' },
             }}
           >
-            <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              sx={{ button: { p: 0 } }}
+            >
               <Typography
                 sx={{
                   fontSize: '16px',
@@ -75,7 +80,7 @@ const SupplyItemsList = ({ control }: { control: Control<CreateResourceFormData>
 
               {fields.length > 1 && (
                 <ActionButton
-                  className="w-fit p-0 min-w-fit text-[var(--red)]"
+                  className="w-fit min-w-fit min-h-fit text-[var(--red)] text-[16px] reading-[20px] font-[500]"
                   onClick={() => remove(index)}
                 >
                   移除
@@ -262,27 +267,31 @@ const SupplyItemsList = ({ control }: { control: Control<CreateResourceFormData>
         ))}
       </Stack>
 
-      {fields?.length <= 50 && (
-        <ActionButton
-          variant="secondary-light"
-          icon={<AddIcon />}
-          iconPosition="left"
-          onClick={() => {
-            append({
-              id: '',
-              tag: '食物/水',
-              name: '',
-              total_number: 1,
-              unit: '',
-              received_count: 0,
-              supply_id: '',
-            });
-          }}
-          className="flex-1 w-full mt-3"
-        >
-          新增更多項目
-        </ActionButton>
-      )}
+      <Stack sx={{ button: { p: 0 } }}>
+        {fields?.length <= 50 && (
+          <ActionButton
+            variant="secondary-light"
+            icon={<AddIcon />}
+            iconPosition="left"
+            onClick={() => {
+              append({
+                id: '',
+                tag: '食物/水',
+                name: '',
+                total_number: 1,
+                unit: '',
+                received_count: 0,
+                supply_id: '',
+                recieved_count: 0, // deprecated field
+                total_count: 0, // deprecated field
+              });
+            }}
+            className="flex-1 w-full mt-3 min-h-[36px] text-[16px] reading-[20px] font-[500] py-0 px-0"
+          >
+            新增更多項目
+          </ActionButton>
+        )}
+      </Stack>
     </Stack>
   );
 };
@@ -336,6 +345,14 @@ const CreateResourceDialog: React.FC<CreateResourceDialogProps> = ({
           gap: '12px',
           display: 'flex',
           flexDirection: 'column',
+          '* > .MuiInputBase-root': {
+            borderRadius: '8px',
+          },
+          '* > input': {
+            fontSize: '16px',
+            lineHeight: '20px',
+            fontWeight: 400,
+          },
         }}
       >
         <Stack spacing={1.5}>
@@ -483,7 +500,22 @@ const CreateResourceDialog: React.FC<CreateResourceDialogProps> = ({
             </Stack>
           )}
         />
-        <Stack direction="row" alignItems="center" flex={{ xs: 1, sm: 0 }} width="100%" spacing={1}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          flex={{ xs: 1, sm: 0 }}
+          width="100%"
+          spacing={1}
+          sx={{
+            button: {
+              minWidth: '120px',
+              height: '49px',
+              fontSize: '20px',
+              lineHeight: '25px',
+              fontWeight: 500,
+            },
+          }}
+        >
           <ActionButton variant="secondary-outline" className="flex-1 rounded-sm" onClick={onClose}>
             取消
           </ActionButton>

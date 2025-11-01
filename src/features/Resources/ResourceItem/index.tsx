@@ -74,7 +74,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({
         ) : (
           <ActionButton
             variant="secondary"
-            className="min-w-[200px]"
+            className="min-w-[240px] py-3 px-5 rounded-sm min-h-fit"
             icon={<></>}
             onClick={() => onDeliveryOpen(req)}
           >

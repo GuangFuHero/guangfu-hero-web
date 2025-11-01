@@ -29,19 +29,22 @@ const CardHeader = ({
             label="已完成"
             size="small"
             sx={{
+              p: '4px 6px',
+              span: { p: 0 },
               bgcolor: 'var(--done)',
               color: 'white',
               borderRadius: '4px',
-              fontSize: '12px',
-              lineHeight: '15px',
+              fontSize: '14px',
+              lineHeight: '18px',
               fontWeight: 500,
+              width: 'fit-content',
             }}
           />
         )}
         <Typography
           variant="h6"
           component="h2"
-          sx={{ fontSize: '16px', fontWeight: 600, lineHeight: '20px' }}
+          sx={{ fontSize: '20px', fontWeight: 600, lineHeight: '25px' }}
         >
           {name}
         </Typography>
@@ -51,7 +54,7 @@ const CardHeader = ({
         <Typography
           variant="body2"
           color="text.secondary"
-          sx={{ fontSize: '12px', fontWeight: 400, lineHeight: '15px', color: 'var(--gray-2)' }}
+          sx={{ fontSize: '14px', fontWeight: 400, lineHeight: '18px', color: 'var(--gray-2)' }}
         >
           {formatTimeAgo(createdAt)}
         </Typography>

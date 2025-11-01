@@ -13,6 +13,8 @@ interface HeaderProps {
 }
 
 const LabelAndActionButton = ({ onCreateOpen }: HeaderProps) => {
+  const buttonClassNames =
+    'flex-1 py-3 px-5 min-h-fit text-[16px] leading-[20px] font-weight-500 items-center justify-center';
   return (
     <Stack
       display="flex"
@@ -44,7 +46,7 @@ const LabelAndActionButton = ({ onCreateOpen }: HeaderProps) => {
         divider={<Divider orientation="vertical" flexItem sx={{ borderColor: 'var(--gray-5)' }} />}
         sx={{
           width: { xs: '100%', sm: 'auto' },
-          '* > button': { xs: { flex: 1 }, sm: { flex: undefined } },
+          button: { xs: { flex: 1 }, sm: { flex: undefined } },
         }}
       >
         <ActionButton
@@ -52,7 +54,7 @@ const LabelAndActionButton = ({ onCreateOpen }: HeaderProps) => {
           icon={<AddIcon fontSize="small" />}
           iconPosition="left"
           onClick={onCreateOpen}
-          className="flex-1"
+          className={buttonClassNames}
         >
           新增物資需求
         </ActionButton>
@@ -62,7 +64,7 @@ const LabelAndActionButton = ({ onCreateOpen }: HeaderProps) => {
           icon={<ArrowOutwardIcon fontSize="small" />}
           iconPosition="right"
           href="/volunteer-register"
-          className="flex-1"
+          className={buttonClassNames}
         >
           我想找志工
         </ActionButton>
@@ -80,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ onCreateOpen }) => {
           maxWidth: 'calc(1200px - 24px)',
           width: '100%',
           color: 'white',
-          p: 3,
+          p: { xs: 2, md: 3 },
         }}
         gap={2}
       >
