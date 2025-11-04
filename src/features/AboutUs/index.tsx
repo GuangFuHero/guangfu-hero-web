@@ -1,7 +1,7 @@
 'use client';
 
 import TeamGroup from '@/components/TeamGroup';
-import { teamMembers } from './constants';
+import { teamMembers, onSiteVolunteers } from './constants';
 import { Typography, Stack } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,7 +27,7 @@ const IconLink = ({ path, alt, href }: { path: string; alt: string; href: string
 
 export default function AboutUs() {
   return (
-    <Stack gap={4}>
+    <Stack gap={4} sx={{ marginBottom: 4 }}>
       <Stack sx={{ py: 2 }}>
         <SectionHeader>關於我們</SectionHeader>
         <Stack gap={2} sx={{ fontSize: 16 }} className="text-[var(--text-black)]">
@@ -100,8 +100,8 @@ export default function AboutUs() {
       <Stack>
         <SectionHeader>團隊成員</SectionHeader>
         <Stack gap={2} sx={{ fontSize: 16 }} className="text-[var(--text-black)]">
-          <Typography>
-            感謝所有為了讓系統能全天運作、資訊不中斷而付出的每一位「接力超人」！
+          <Typography align="center">
+            感謝一路走來，讓網站全天候運行、支援前線救災而加入的夥伴們，讓網站一直陪伴光復，直到走出陰霾。除了具名者，也有許多不願具名的志工，因為有你們才得以接力下去，完成任務！
           </Typography>
           <Stack gap={2}>
             {teamMembers.map(member => (
@@ -109,10 +109,21 @@ export default function AboutUs() {
                 key={member.id}
                 groupName={member.groupName}
                 personNames={member.personNames}
+                additionGroups={member.additionGroups}
               />
             ))}
           </Stack>
-          <Typography>以及其他所有不願具名卻也默默地和我們一起完成任務的志工朋友！</Typography>
+        </Stack>
+      </Stack>
+
+      <Stack>
+        <SectionHeader>前線志工</SectionHeader>
+        <Stack gap={2} sx={{ fontSize: 16 }} className="text-[var(--text-black)]">
+          <TeamGroup
+            groupName={'個人及團隊單位'}
+            personNames={onSiteVolunteers}
+            additionGroups={[]}
+          />
         </Stack>
       </Stack>
     </Stack>
