@@ -311,3 +311,54 @@ export interface ReportSupplyProviderResponse {
   pii_date: number;
   id: string;
 }
+
+export interface HumanResourceResponse {
+  '@context': string;
+  '@type': string;
+  limit: number;
+  member: HumanResource[];
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  totalItems: number;
+}
+
+export interface HumanResource {
+  id: string;
+  created_at: number;
+  updated_at: number;
+  org: string;
+  address: string;
+  phone: string;
+  status: string; //TODO:
+  is_completed: boolean;
+  role_name: string;
+  role_type: string;
+  headcount_need: number;
+  headcount_got: number;
+  role_status: string;
+  has_medical: boolean;
+  skills: string[];
+  certifications: string[];
+  experience_level: string;
+  language_requirements: string[];
+  headcount_unit: string;
+  shift_start_ts: string;
+  shift_end_ts: string;
+  shift_notes: string;
+  assignment_timestamp: string;
+  assignment_count: number;
+  assignment_notes: string;
+  total_roles_in_request: number;
+  completed_roles_in_request: number;
+  pending_roles_in_request: number;
+  total_requests: number;
+  active_requests: number;
+  completed_requests: number;
+  cancelled_requests: number;
+  total_roles: number;
+  completed_roles: number;
+  pending_roles: number;
+  urgent_requests: number;
+  medical_requests: number;
+}

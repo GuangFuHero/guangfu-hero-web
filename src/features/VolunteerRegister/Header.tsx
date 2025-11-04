@@ -24,6 +24,8 @@ const Header: React.FC<HeaderProps> = ({ onCreateOpen }) => {
     sendClickGAEvent();
   };
 
+  const buttonClassNames =
+    'flex-1 py-3 px-5 min-h-fit text-[16px] leading-[20px] font-weight-500 items-center justify-center';
   return (
     <div className="mb-[12px] w-[100svw] bg-[var(--light-gray-background)] flex items-center justify-center border-b border-[var(--gray-3)]">
       <Stack
@@ -32,9 +34,8 @@ const Header: React.FC<HeaderProps> = ({ onCreateOpen }) => {
           maxWidth: 'calc(1200px - 24px)',
           width: '100%',
           color: 'white',
-          p: 3,
+          p: { xs: 2, md: 3 },
         }}
-        gap={2}
       >
         <Stack
           display="flex"
@@ -68,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ onCreateOpen }) => {
             }
             sx={{
               width: { xs: '100%', sm: 'auto' },
-              '* > button': { xs: { flex: 1 }, sm: { flex: undefined } },
+              button: { xs: { flex: 1 }, sm: { flex: undefined } },
             }}
           >
             <ActionButton
@@ -76,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ onCreateOpen }) => {
               icon={<AddIcon fontSize="small" />}
               iconPosition="left"
               onClick={handleCreateClick}
-              className="flex-1"
+              className={buttonClassNames}
             >
               新增人力需求
             </ActionButton>
@@ -86,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ onCreateOpen }) => {
               icon={<ArrowOutwardIcon fontSize="small" />}
               iconPosition="right"
               href="/resources"
-              className="flex-1"
+              className={buttonClassNames}
             >
               我需要物資
             </ActionButton>

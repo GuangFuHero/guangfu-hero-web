@@ -390,6 +390,7 @@ const CreateResourceDialog: React.FC<CreateResourceDialogProps> = ({
                 sx={{ '.MuiFormHelperText-root': { ml: 0 } }}
                 helperText={
                   <Stack
+                    component="span"
                     direction="row"
                     alignItems="flex-start"
                     sx={{
@@ -400,7 +401,7 @@ const CreateResourceDialog: React.FC<CreateResourceDialogProps> = ({
                     }}
                   >
                     <InfoOutlineIcon sx={{ color: 'inherit' }} fontSize="small" />
-                    <Typography sx={{ font: 'inherit' }}>
+                    <Typography component="span" sx={{ font: 'inherit' }}>
                       填寫將公開顯示電話，取得物資後自動隱藏
                     </Typography>
                   </Stack>

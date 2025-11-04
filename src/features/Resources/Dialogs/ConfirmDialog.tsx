@@ -3,6 +3,7 @@
 import ActionButton from '@/components/ActionButton';
 import { SupplyItem } from '@/lib/types';
 import { CreateFormData, DeliveryData } from '@/lib/types/resource';
+import { mapLink, phoneHref } from '@/lib/utils';
 import { LocationOn as LocationIcon, Phone as PhoneIcon } from '@mui/icons-material';
 import {
   CircularProgress,
@@ -17,7 +18,6 @@ import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import ResourceTag from '../ResourceTag';
-import { mapLink, phoneHref } from '../utils';
 
 export type DialogType = 'create' | 'delivery' | null;
 

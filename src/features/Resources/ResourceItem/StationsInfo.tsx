@@ -1,10 +1,10 @@
 import { Station } from '@/lib/types/resource';
+import { mapLink, phoneHref } from '@/lib/utils';
 import { LocationOn as LocationIcon, Phone as PhoneIcon } from '@mui/icons-material';
 import { Link as MuiLink, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { memo } from 'react';
-import { mapLink, phoneHref } from '../utils';
 
 const StationsInfo = ({ stations }: { stations: Station[] }) => {
   const displayedStations = stations.filter(station => !!station?.name && !!station.id);

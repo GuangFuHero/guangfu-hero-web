@@ -50,11 +50,13 @@ export default function NumberInput(props: NumberInputProps) {
               sx={{
                 m: 0,
                 width: '48px',
-                height: '40px',
+                height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
                 bgcolor: 'var(--gray-4)',
                 cursor: 'pointer',
+                borderTopLeftRadius: '8px',
+                borderBottomLeftRadius: '8px',
               }}
               disabled={Math.max(min, nextDecrementValue) < min}
               onClick={() => {
@@ -76,11 +78,13 @@ export default function NumberInput(props: NumberInputProps) {
               sx={{
                 m: 0,
                 width: '48px',
-                height: '40px',
+                height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
                 bgcolor: 'var(--gray-4)',
                 cursor: 'pointer',
+                borderTopRightRadius: '8px',
+                borderBottomRightRadius: '8px',
               }}
               disabled={Math.min(max, nextIncrementValue) > max}
               onClick={() => {

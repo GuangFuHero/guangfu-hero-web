@@ -17,9 +17,8 @@ const ContactInfo = ({
   return (
     <Stack
       spacing={2}
-      py="16px"
+      pt="16px"
       sx={{
-        borderBottom: '1px dashed var(--gray-3)',
         fontSize: '16px',
         fontWeight: 600,
         lineHeight: '20px',

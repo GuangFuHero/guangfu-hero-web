@@ -29,51 +29,6 @@ export const fulfilledItems = (req: Supply) => {
   return decorateRequestItems(req).filter(({ remaining }) => remaining === 0);
 };
 
-export const formatTimeAgo = (timestamp: number): string => {
-  if (!timestamp) return '時間未知';
-  const now = Math.floor(Date.now() / 1000);
-  const diff = now - timestamp;
-
-  if (diff < 0) return '剛剛';
-  if (diff < 60) return '剛剛';
-  if (diff < 3600) return `${Math.floor(diff / 60)}分鐘前`;
-
-  const hours = Math.floor(diff / 3600);
-  if (hours < 24) return `${hours}小時前`;
-
-  const days = Math.floor(hours / 24);
-  const remainingHours = hours % 24;
-  if (days < 7) {
-    return remainingHours === 0 ? `${days}天前` : `${days}天${remainingHours}小時前`;
-  }
-
-  const weeks = Math.floor(days / 7);
-  const remainingDays = days % 7;
-  if (weeks < 4) {
-    return remainingDays === 0 ? `${weeks}週前` : `${weeks}週${remainingDays}天前`;
-  }
-
-  const months = Math.floor(days / 30);
-  const remainingWeeks = Math.floor((days % 30) / 7);
-  if (months < 12) {
-    return remainingWeeks === 0 ? `${months}個月前` : `${months}個月${remainingWeeks}週前`;
-  }
-
-  const years = Math.floor(days / 365);
-  const remainingMonths = Math.floor((days % 365) / 30);
-  return remainingMonths === 0 ? `${years}年前` : `${years}年${remainingMonths}個月前`;
-};
-
-export const mapLink = (address: string): string => {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-};
-
-export const phoneHref = (phone: string): string => {
-  if (!phone) return '';
-  const sanitized = `${phone}`.replace(/[^0-9+#*]/g, '');
-  return `tel:${sanitized || phone}`;
-};
-
 export const displayPhone = (req: Supply) => {
   if (isCompleted(req)) return false;
   return !!req.phone;

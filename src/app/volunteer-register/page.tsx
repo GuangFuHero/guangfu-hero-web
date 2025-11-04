@@ -1,5 +1,8 @@
+import ToastContainer from '@/features/MapContainer/ToastContainer';
 import MainContent from '@/features/VolunteerRegister';
 import Wrapper from '@/features/Wrapper';
+import { QueryProvider } from '@/providers/QueryProvider';
+import { ToastProvider } from '@/providers/ToastProvider';
 import { Metadata } from 'next';
 
 const SITE_URL = 'https://gf250923.org';
@@ -149,7 +152,12 @@ export default function VolunteerRegisterPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Wrapper hideFooter>
-        <MainContent />
+        <QueryProvider>
+          <ToastProvider>
+            <MainContent />
+            <ToastContainer />
+          </ToastProvider>
+        </QueryProvider>
       </Wrapper>
     </>
   );

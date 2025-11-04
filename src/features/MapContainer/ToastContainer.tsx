@@ -15,11 +15,11 @@ const getTypeStyles = (type: ToastItemProps['type']) => {
     case 'success':
       return 'bg-[var(--success)] border-[var(--green)] border text-[var(--black)]';
     case 'error':
-      return 'bg-[var(--red)] border-[var(--red)] border text-[var(--black)]';
+      return 'bg-[var(--red)] border-[var(--red)] border text-[white]';
     case 'warning':
-      return 'bg-yellow-600 border-yellow-500 border text-[var(--black)]';
+      return 'bg-yellow-600 border-yellow-500 border text-[white]';
     default:
-      return 'bg-gray-800 border-gray-700 border text-[var(--black)]';
+      return 'bg-gray-800 border-gray-700 border text-[white]';
   }
 };
 

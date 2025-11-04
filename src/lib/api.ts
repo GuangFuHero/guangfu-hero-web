@@ -1,5 +1,6 @@
 import { env } from '@/config/env';
 import {
+  HumanResourceResponse,
   ReportRequest,
   ReportResponse,
   ReportSupplyProvider,
@@ -12,7 +13,7 @@ export const getEditApiUrl = () => env.NEXT_PUBLIC_API_URL;
 
 export async function fetchAPI<T>(
   endpoint: string,
-  params?: Record<string, string | number>
+  params?: Record<string, string | number | boolean>
 ): Promise<T> {
   const base = env.NEXT_PUBLIC_API_URL;
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
@@ -54,6 +55,22 @@ export async function getSupplies(limit: number = 50, offset: number = 0): Promi
     limit,
     offset,
     // filterOutComplete: "true",
+  });
+  return response;
+}
+
+export async function getHumanResources(
+  status: string,
+  q_role: string,
+  limit: number = 50,
+  offset: number = 0
+): Promise<HumanResourceResponse> {
+  const response = await fetchAPI<HumanResourceResponse>('/human_resources', {
+    status,
+    q_role,
+    limit,
+    offset,
+    order_by_time: 'desc',
   });
   return response;
 }
