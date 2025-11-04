@@ -96,10 +96,7 @@ export default function SupportInformationList() {
       try {
         // fetch Google sheet at client side
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
-        /* 測試&暫時DP用，正式提PR時會換成真正的gid，一上正式區Azusa會去改sheet
         const gid = env.NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID;
-        */
-        const gid = '286412185';
 
         if (!sheetId) {
           throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
@@ -255,68 +252,73 @@ export default function SupportInformationList() {
         ))}
       </div>
 
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        p="10px"
+        className="text-[var(--gray)] border-t border-b border-dashed border-[var(--gray-3)]"
+      >
+        <div>
+          <span>若您想提出修正建議，請</span>
+          <span className="cursor-pointer text-[var(--secondary)] underline">
+            <a
+              target="_blank"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSd5HQsSMoStkgiaC-q3bHRaLVVGNKdETWIgZVoYEsyzE486ew/viewform?usp=dialog"
+            >
+              點此
+            </a>
+          </span>
+          <span>填寫表單</span>
+        </div>
+      </Stack>
+
       <div className="space-y-4">
         {/* Info Cards */}
         {supportInformationData
           .filter(row => currentType === '全部' || row.type === currentType)
           .map(row => (
             <div
-              className="mb-4 rounded-2xl"
+              className="mb-4 rounded-2xl border border-[var(--gray-3)]"
               key={`${row.type}-${row.name}-${row.url}`}
               style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
             >
               {/*targer for scroll*/}
               <div id={`${row.support_id}`} style={{ position: 'relative', top: '-80px' }}></div>
               {/*upper part of the card*/}
-              <Stack gap="8px" p="20px" className="bg-[var(--light-gray-background)]">
-                <div
-                  className={`flex size-fit px-3 py-1 text-[var(--gray-2)] rounded`}
-                  style={
-                    tagTypeCssList[row.type as tag_type] ?? {
-                      backgroundColor: '#fff',
-                      color: '#000',
+              <Stack gap="8px" p="20px" className="bg-[var(--light-gray-background)] rounded-t-2xl">
+                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                  <div
+                    className={`flex size-fit px-3 py-1 text-[var(--gray-2)] rounded`}
+                    style={
+                      tagTypeCssList[row.type as tag_type] ?? {
+                        backgroundColor: '#fff',
+                        color: '#000',
+                      }
                     }
-                  }
-                >
-                  <Typography fontSize={14} fontWeight={500}>
-                    {row.type}
-                  </Typography>
-                </div>
+                  >
+                    <Typography fontSize={14} fontWeight={500}>
+                      {row.type}
+                    </Typography>
+                  </div>
+                  <button
+                    className="flex-shrink-0 cursor-pointer"
+                    aria-label="分享"
+                    onClick={() => handleShare(row.support_id)}
+                  >
+                    <Image
+                      src={getAssetPath('/icon/card_gray_share_icon.svg')}
+                      alt="分享"
+                      width={28}
+                      height={28}
+                    />
+                  </button>
+                </Stack>
 
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                  gap="8px"
-                >
+                <div>
                   <Typography fontSize={20} fontWeight={500}>
                     {row.name}
                   </Typography>
-                  <div className="flex item-center gap-2">
-                    {row.url && (
-                      <a
-                        href={row.url}
-                        className="flex-shrink-0"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Image
-                          src={getAssetPath('/icon/open_new_page.svg')}
-                          alt="官方連結"
-                          width={28}
-                          height={28}
-                        />
-                      </a>
-                    )}
-                    <button
-                      className="flex-shrink-0 cursor-pointer"
-                      aria-label="分享"
-                      onClick={() => handleShare(row.support_id)}
-                    >
-                      <Image src={getAssetPath('/share.svg')} alt="分享" width={24} height={24} />
-                    </button>
-                  </div>
-                </Stack>
+                </div>
 
                 {[
                   { name: '補助對象', information: row.target },
@@ -329,24 +331,47 @@ export default function SupportInformationList() {
                         key={name}
                         className="text-[var(--black)] leading-[20px] items-center font-normal"
                       >
-                        <Stack
-                          direction="row"
-                          justifyContent="center"
-                          alignItems="center"
-                          className="text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
-                          style={{ height: '26px', width: '68px', borderRadius: '4px' }}
-                        >
-                          <Typography fontSize={14} fontWeight={500}>
+                        <div className="text-[var(--primary)] text-nowrap mb-2">
+                          <Typography fontSize={16} fontWeight={600}>
                             {name}
                           </Typography>
-                        </Stack>
+                        </div>
                         <div className="flex-1 whitespace-pre-wrap">
-                          <Typography fontSize={16} fontWeight={500}>
+                          <Typography fontSize={16} fontWeight={400}>
                             {information.replace(/^"|"$/g, '')}
                           </Typography>
                         </div>
                       </div>
                     )
+                )}
+                {row.url && (
+                  <a
+                    href={row.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="
+                          size-fit h-[36px] py-2 px-3 my-2
+                          min-w-[80px]
+                          text-[var(--secondary)]
+                          rounded-lg
+                          cursor-pointer
+                          flex items-center justify-center gap-1
+                          whitespace-nowrap
+                          transition-colors
+                        "
+                    title="點擊開啟官方連結"
+                    style={{ backgroundColor: '#179BC61A' }}
+                  >
+                    <Typography fontSize={16} fontWeight={400}>
+                      官方網站
+                    </Typography>
+                    <Image
+                      src={getAssetPath('/icon/secondary_up_right_arrow.svg')}
+                      alt=""
+                      width={20}
+                      height={20}
+                    />
+                  </a>
                 )}
               </Stack>
 
@@ -465,7 +490,7 @@ export default function SupportInformationList() {
                                 className="
                                 size-fit h-[36px] py-2 px-3 my-2
                                 min-w-[80px]
-                                bg-[var(--secondary-light)] text-[var(--secondary)]
+                                text-[var(--secondary)]
                                 rounded-lg
                                 cursor-pointer
                                 flex items-center justify-center gap-1
@@ -473,6 +498,7 @@ export default function SupportInformationList() {
                                 transition-colors
                               "
                                 title="點擊開啟補助連結資訊"
+                                style={{ backgroundColor: '#179BC61A' }}
                               >
                                 <Typography fontSize={16} fontWeight={400}>
                                   連結
