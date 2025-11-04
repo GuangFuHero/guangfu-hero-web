@@ -96,7 +96,10 @@ export default function SupportInformationList() {
       try {
         // fetch Google sheet at client side
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+        /* 測試&暫時DP用，正式提PR時會換成真正的gid，一上正式區Azusa會去改sheet
         const gid = env.NEXT_PUBLIC_SUPPORT_INFORMATION_SHEET_GID;
+        */
+        const gid = '286412185';
 
         if (!sheetId) {
           throw new Error('NEXT_PUBLIC_GOOGLE_SHEET_ID not configured');
