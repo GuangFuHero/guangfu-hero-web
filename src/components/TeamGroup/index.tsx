@@ -45,7 +45,7 @@ const TeamGroup: React.FC<TeamGroupProps> = ({ groupName, personNames, additionG
                 {group.groupTitle}
               </div>
 
-              <div className="grid grid-cols-2 gap-y-3 text-center ml-2">
+              <div className="grid grid-cols-2 gap-y-3 text-center">
                 {group.groupMembers.map((name, MemIndex) => (
                   <div key={`Title${index}_${MemIndex}`} className="text-black break-inside-avoid">
                     {name}
