@@ -121,8 +121,9 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
   if (alerts.length === 0) {
     return (
       <>
-        <div className="bg-[#FFEEBA] h-[64px]"></div>
-        <div className="py-3 bg-white"></div>
+        {/* <div className="bg-[#FFEEBA] h-[64px]"></div>
+        <div className="py-3 bg-white"></div> */}
+        <div className="h-[64px] flex items-center justify-center">提供居民需要的協助與資訊</div>
       </>
     );
   }
