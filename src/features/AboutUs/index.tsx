@@ -18,8 +18,9 @@ const IconLink = ({ path, alt, href }: { path: string; alt: string; href: string
     <Image
       src={getAssetPath(path)}
       alt={alt}
-      width={40}
-      height={40}
+      width={33}
+      height={32}
+      style={{ width: '40px', height: 'auto' }}
       className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
     />
   </Link>
