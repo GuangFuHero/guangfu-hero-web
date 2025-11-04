@@ -39,7 +39,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         ))}
       </Stack>
 
-      <Stack direction="row" spacing="4px" flexWrap="wrap">
+      <Stack direction="row" flexWrap="wrap" sx={{ gap: '4px' }}>
         {categoryOptions.map(option => (
           <StatefulTag
             key={option.value}
