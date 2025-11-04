@@ -18,7 +18,7 @@ export default function PageLayout({ children }: PageLayoutProps) {
   ];
 
   // 不顯示 tab 的頁面路徑
-  const noTabPages = ['/volunteer/about-us', '/privacy', '/terms'];
+  const noTabPages = ['/', '/volunteer/about-us', '/privacy', '/terms'];
   const shouldShowTabs = !noTabPages.some(path => pathname.startsWith(path));
 
   const isMapPage = pathname === '/map';
