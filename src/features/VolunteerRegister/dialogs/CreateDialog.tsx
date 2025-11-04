@@ -222,58 +222,60 @@ const CreateDialog: React.FC<CreateDialogProps> = ({
           <VolunteerAlert />
 
           <Stack spacing={1.5}>
-            <Controller
-              control={control}
-              name="org"
-              rules={{ required: true }}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  required
-                  size="small"
-                  placeholder="單位名稱*"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            />
+            <Stack direction={{ xs: 'column', sm: 'row' }} sx={{ gap: '12px' }}>
+              <Controller
+                control={control}
+                name="org"
+                rules={{ required: true }}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    required
+                    size="small"
+                    placeholder="單位名稱*"
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
 
-            <Controller
-              control={control}
-              name="phone"
-              rules={{ required: true }}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  type="tel"
-                  required
-                  size="small"
-                  placeholder="聯絡資訊*"
-                  error={!!fieldState.error}
-                  helperText={
-                    <Stack
-                      component="span"
-                      direction="row"
-                      alignItems="flex-start"
-                      sx={{
-                        fontSize: '14px',
-                        lineHeight: '18px',
-                        fontWeight: 400,
-                        color: 'var(--gray-2)',
-                      }}
-                    >
-                      <InfoOutlineIcon sx={{ color: 'inherit', mr: 0.5 }} fontSize="small" />
-                      <Typography component="span" sx={{ font: 'inherit' }}>
-                        填寫將公開顯示電話，志工招滿後自動隱藏
-                      </Typography>
-                    </Stack>
-                  }
-                  sx={{ '.MuiFormHelperText-root': { ml: 0 } }}
-                />
-              )}
-            />
+              <Controller
+                control={control}
+                name="phone"
+                rules={{ required: true }}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    type="tel"
+                    required
+                    size="small"
+                    placeholder="聯絡資訊*"
+                    error={!!fieldState.error}
+                    helperText={
+                      <Stack
+                        component="span"
+                        direction="row"
+                        alignItems="flex-start"
+                        sx={{
+                          fontSize: '14px',
+                          lineHeight: '18px',
+                          fontWeight: 400,
+                          color: 'var(--gray-2)',
+                        }}
+                      >
+                        <InfoOutlineIcon sx={{ color: 'inherit', mr: 0.5 }} fontSize="small" />
+                        <Typography component="span" sx={{ font: 'inherit' }}>
+                          填寫將公開顯示電話，志工招滿後自動隱藏
+                        </Typography>
+                      </Stack>
+                    }
+                    sx={{ '.MuiFormHelperText-root': { ml: 0 } }}
+                  />
+                )}
+              />
+            </Stack>
 
             <Controller
               control={control}
@@ -292,37 +294,39 @@ const CreateDialog: React.FC<CreateDialogProps> = ({
               )}
             />
 
-            <Controller
-              control={control}
-              name="role_type"
-              rules={{ required: true }}
-              render={({ field }) => (
-                <FormControl required disabled fullWidth>
-                  <InputLabel>需求類別</InputLabel>
-                  <Select label="需求類別" {...field}>
-                    <MenuItem value="一般志工">一般志工</MenuItem>
-                  </Select>
-                </FormControl>
-              )}
-            />
+            <Stack direction={{ xs: 'column', sm: 'row' }} sx={{ gap: '12px' }}>
+              <Controller
+                control={control}
+                name="role_type"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <FormControl required disabled fullWidth>
+                    <InputLabel>需求類別</InputLabel>
+                    <Select label="需求類別" {...field}>
+                      <MenuItem value="一般志工">一般志工</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+              />
 
-            <Controller
-              control={control}
-              name="role_name"
-              rules={{ required: true }}
-              render={({ field, fieldState }) => (
-                <FormControl required fullWidth error={!!fieldState.error}>
-                  <InputLabel>需求名稱</InputLabel>
-                  <Select label="需求名稱" {...field}>
-                    <MenuItem value="鏟子超人,鏟">鏟子超人</MenuItem>
-                    <MenuItem value="清溝超人,溝">清溝超人</MenuItem>
-                    <MenuItem value="搬物超人,搬,拖,運">搬物超人</MenuItem>
-                    <MenuItem value="廚師超人,廚師,煮">廚師超人</MenuItem>
-                    <MenuItem value="整理超人,整理">整理超人</MenuItem>
-                  </Select>
-                </FormControl>
-              )}
-            />
+              <Controller
+                control={control}
+                name="role_name"
+                rules={{ required: true }}
+                render={({ field, fieldState }) => (
+                  <FormControl required fullWidth error={!!fieldState.error}>
+                    <InputLabel>需求名稱</InputLabel>
+                    <Select label="需求名稱" {...field}>
+                      <MenuItem value="鏟子超人,鏟">鏟子超人</MenuItem>
+                      <MenuItem value="清溝超人,溝">清溝超人</MenuItem>
+                      <MenuItem value="搬物超人,搬,拖,運">搬物超人</MenuItem>
+                      <MenuItem value="廚師超人,廚師,煮">廚師超人</MenuItem>
+                      <MenuItem value="整理超人,整理">整理超人</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+              />
+            </Stack>
 
             <Controller
               control={control}
