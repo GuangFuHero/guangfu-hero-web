@@ -66,7 +66,7 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
 
   return (
     <>
-      <header className="w-full shadow-sm sticky top-0 bg-white z-1000">
+      <header className="w-full sticky top-0 bg-white z-1000">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 relative">
             {/* Left: Hamburger menu */}
@@ -89,7 +89,7 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
 
             {/* Center: Logo */}
             <div className="absolute left-1/2 -translate-x-1/2">
-              <Link href="/map" aria-label="前往地圖">
+              <Link href="/" aria-label="前往地圖">
                 <Image
                   src={getAssetPath('/logo_new.svg')}
                   alt="Logo"
