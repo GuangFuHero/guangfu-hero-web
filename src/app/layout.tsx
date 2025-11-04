@@ -1,6 +1,7 @@
 import { GoogleAnalytics } from '@/features/google-analytics';
 import { generateSiteMetadata } from '@/lib/metadata/main';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import './globals.css';
 
 const geistSans = Geist({
@@ -27,7 +28,9 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Permissions-Policy" content="geolocation=*" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+      </body>
       <GoogleAnalytics />
     </html>
   );

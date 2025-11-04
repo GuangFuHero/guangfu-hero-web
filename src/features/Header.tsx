@@ -93,8 +93,9 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
                 <Image
                   src={getAssetPath('/logo_new.svg')}
                   alt="Logo"
-                  width={120}
-                  height={40}
+                  width={1028}
+                  height={301}
+                  style={{ width: 'auto', height: '40px' }}
                   className="h-10 w-auto cursor-pointer"
                 />
               </Link>
