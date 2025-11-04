@@ -11,12 +11,12 @@ interface TeamGroupProps {
   additionGroups: TeamGroupAddGroup[] | undefined;
 }
 
-const beforeDecoLineClass =
-  "before:mr-5 before:content-[''] before:h-[2px] before:bg-[var(--gray-3)] before:flex-1";
-const afterDecoLineClass =
-  "after:ml-5 after:content-[''] after:h-[2px] after:bg-[var(--gray-3)] after:flex-1";
-
 const TeamGroup: React.FC<TeamGroupProps> = ({ groupName, personNames, additionGroups }) => {
+  const beforeDecoLineClass =
+    "before:mr-5 before:content-[''] before:h-[2px] before:bg-[var(--gray-3)] before:flex-1";
+  const afterDecoLineClass =
+    "after:ml-5 after:content-[''] after:h-[2px] after:bg-[var(--gray-3)] after:flex-1";
+
   return (
     <div className="bg-[var(--gray-4)] rounded-lg border-2 border-[var(--gray-4)] overflow-hidden">
       {/* 標題 */}
