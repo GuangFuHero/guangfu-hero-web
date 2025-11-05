@@ -11,6 +11,7 @@ interface SidebarProps {
 }
 
 const SIDEBAR_ITEM = [
+  /*
   { name: '地圖列表', href: '/map' },
   {
     name: '志工資訊',
@@ -30,22 +31,31 @@ const SIDEBAR_ITEM = [
       { name: '補助資訊', href: '/victim/support-information' },
     ],
   },
-  /*
+  
   ** Turn these pages offline as the requirements are getting less **
   { name: '配送媒合', href: '/resources' },
   { name: '志工媒合', href: '/volunteer-register' },
    */
+  { name: '輔助貸款', href: '/victim/support-information' },
+  { name: '居家修繕', href: '/victim/house-repair' },
+  { name: '心理資源', href: '/victim/mental-health' },
+  { name: '光復站點', href: '/map' },
+  { name: '常見問題', href: '/faq' },
   { name: '關於我們', href: '/volunteer/about-us' },
-  { name: '隱私權政策', href: '/privacy' },
-  { name: '服務條款', href: '/terms' },
+  // { name: '隱私權政策', href: '/privacy' },
+  // { name: '服務條款', href: '/terms' },
+  {
+    name: '聯絡我們',
+    href: 'https://docs.google.com/forms/d/e/1FAIpQLSd5HQsSMoStkgiaC-q3bHRaLVVGNKdETWIgZVoYEsyzE486ew/viewform?usp=dialog',
+  },
   {
     name: '網站問題回報',
     href: 'https://docs.google.com/forms/d/e/1FAIpQLSewjwY0hhJMEIPIDhM_KLSgtZ_Q4nMPq4fHmolk0DyjRcGiqw/viewform',
   },
-  {
-    name: '媒合內容修改',
-    href: 'https://docs.google.com/forms/d/17VyOi9B43ouZ3_s5MdS1fs80fVR-lNvsV7Q4eG-2o68/viewform',
-  },
+  // {
+  //   name: '媒合內容修改',
+  //   href: 'https://docs.google.com/forms/d/17VyOi9B43ouZ3_s5MdS1fs80fVR-lNvsV7Q4eG-2o68/viewform',
+  // },
 ];
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {

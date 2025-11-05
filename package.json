@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.4",
     "@mui/material": "^7.3.4",
-    "@mui/material-nextjs": "^7.3.3",
+    "@mui/material-nextjs": "^7.3.5",
     "@tanstack/react-query": "^5.90.2",
     "@types/leaflet": "^1.9.20",
     "dayjs": "^1.11.18",
