@@ -3,14 +3,16 @@
 import { useState } from 'react';
 import CloseButton from './CloseButton';
 import MenuItem from './MenuItem';
-import SubMenuItemProps from './SubMenuItem';
+import SubMenuItem from './SubMenuItem';
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const SIDEBAR_ITEM = [
+type LinkItem = { name: string; href: string };
+type GroupItem = { name: string; subItems: { name: string; href: string }[] };
+const SIDEBAR_ITEM: (LinkItem | GroupItem)[] = [
   /*
   { name: '地圖列表', href: '/map' },
   {
@@ -81,7 +83,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           {SIDEBAR_ITEM.map((item, index) => {
             if ('subItems' in item && item.subItems) {
               return (
-                <SubMenuItemProps
+                <SubMenuItem
                   key={index}
                   item={item}
                   toggleSection={toggleSection}
