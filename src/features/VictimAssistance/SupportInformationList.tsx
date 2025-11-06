@@ -2,12 +2,14 @@ import { env } from '@/config/env';
 import Button from '@/components/Button';
 import { useToast } from '@/providers/ToastProvider';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { Stack, Typography } from '@mui/material';
 import ReactGA from 'react-ga4';
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
 
 type SupportInformationDataRow = {
+  support_id: string;
   type: string;
   name: string;
   url: string;
@@ -28,10 +30,65 @@ export default function SupportInformationList() {
   const [supportInformationTypes, setSupportInformationTypes] = useState<string[]>([]);
   const [supportInformationData, setSupportInformationData] = useState<SupportInformationData>([]);
   const [currentType, setCurrentType] = useState<string>('全部');
+  const { showToast } = useToast();
+  const pathname = usePathname();
 
   const handleTypeClick = (type: string) => {
     ReactGA.event(`補助資訊_${type}`);
     setCurrentType(type);
+  };
+
+  const handleShare = async (id?: string) => {
+    if (typeof window === 'undefined') return;
+
+    // 建構完整 URL
+    const baseUrl = window.location.origin;
+    const shareUrl = id
+      ? `${baseUrl}${pathname}#${id}` // ✅ 加上 #id
+      : `${baseUrl}${pathname}`;
+
+    // 根據路徑決定標題
+    const getTitle = () => {
+      if (pathname.startsWith('/map')) return '光復超人 - 現場地圖';
+      if (pathname.startsWith('/volunteer')) return '光復超人 - 志工資訊';
+      if (pathname.startsWith('/victim')) return '光復超人 - 居民協助';
+      return '光復超人';
+    };
+
+    const title = getTitle();
+
+    // 檢查是否支援 Web Share API
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: title,
+          url: shareUrl,
+        });
+      } catch (error) {
+        // 如果使用者取消分享或發生錯誤=複製功能
+        if (!(error instanceof Error && error.name === 'AbortError')) {
+          await fallbackToCopy(shareUrl);
+        }
+      }
+    } else {
+      // 不支援 Web Share API,直接使用複製功能
+      await fallbackToCopy(shareUrl);
+    }
+  };
+
+  const fallbackToCopy = async (url: string) => {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      console.warn('Clipboard API 不可用 - 需要 HTTPS 或 localhost 環境');
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(url);
+      // 複製成功,顯示 Toast
+      showToast('複製連結成功', 'success');
+    } catch (error) {
+      console.error('複製失敗:', error);
+    }
   };
 
   useEffect(() => {
@@ -71,8 +128,9 @@ export default function SupportInformationList() {
         );
         const supportInformationData: SupportInformationData = [];
         dataLines.forEach(line => {
-          //依序為：Tag、補助名稱、官方連結、補助對象、補助內容、最後期限、申請地點、地點地址、開放時間、電話及窗口、申請資料、資料來源
+          //依序為：ID、Tag、補助名稱、官方連結、補助對象、補助內容、最後期限、申請地點、地點地址、開放時間、電話及窗口、申請資料、資料來源
           const [
+            support_id,
             type,
             name,
             url,
@@ -101,6 +159,7 @@ export default function SupportInformationList() {
 
             if (indexFound === -1) {
               supportInformationData.push({
+                support_id: support_id.trim(),
                 type: type.trim(),
                 name: name.trim(),
                 url: url.trim(),
@@ -134,6 +193,20 @@ export default function SupportInformationList() {
 
     fetchSupportData();
   }, [currentType]);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash || supportInformationData.length === 0) return; // ← 要等資料準備好
+
+    const id = hash.substring(1);
+    const el = document.getElementById(id);
+    if (el) {
+      // 加一點點延遲，確保 DOM 已經繪製完成
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [supportInformationData, currentType, pathname]);
 
   type tag_type =
     | '一般個人'
@@ -179,57 +252,73 @@ export default function SupportInformationList() {
         ))}
       </div>
 
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        p="10px"
+        className="text-[var(--gray)] border-t border-b border-dashed border-[var(--gray-3)]"
+      >
+        <div>
+          <span>若您想提出修正建議，請</span>
+          <span className="cursor-pointer text-[var(--secondary)] underline">
+            <a
+              target="_blank"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSd5HQsSMoStkgiaC-q3bHRaLVVGNKdETWIgZVoYEsyzE486ew/viewform?usp=dialog"
+            >
+              點此
+            </a>
+          </span>
+          <span>填寫表單</span>
+        </div>
+      </Stack>
+
       <div className="space-y-4">
         {/* Info Cards */}
         {supportInformationData
           .filter(row => currentType === '全部' || row.type === currentType)
           .map(row => (
             <div
-              className="mb-4 rounded-2xl"
+              className="mb-4 rounded-2xl border border-[var(--gray-3)]"
               key={`${row.type}-${row.name}-${row.url}`}
               style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
             >
+              {/*targer for scroll*/}
+              <div id={`${row.support_id}`} style={{ position: 'relative', top: '-80px' }}></div>
               {/*upper part of the card*/}
-              <Stack gap="8px" p="20px" className="bg-[var(--light-gray-background)]">
-                <div
-                  className={`flex size-fit px-3 py-1 text-[var(--gray-2)] rounded`}
-                  style={
-                    tagTypeCssList[row.type as tag_type] ?? {
-                      backgroundColor: '#fff',
-                      color: '#000',
+              <Stack gap="8px" p="20px" className="bg-[var(--light-gray-background)] rounded-t-2xl">
+                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                  <div
+                    className={`flex size-fit px-3 py-1 text-[var(--gray-2)] rounded`}
+                    style={
+                      tagTypeCssList[row.type as tag_type] ?? {
+                        backgroundColor: '#fff',
+                        color: '#000',
+                      }
                     }
-                  }
-                >
-                  <Typography fontSize={14} fontWeight={500}>
-                    {row.type}
-                  </Typography>
-                </div>
+                  >
+                    <Typography fontSize={14} fontWeight={500}>
+                      {row.type}
+                    </Typography>
+                  </div>
+                  <button
+                    className="flex-shrink-0 cursor-pointer"
+                    aria-label="分享"
+                    onClick={() => handleShare(row.support_id)}
+                  >
+                    <Image
+                      src={getAssetPath('/icon/card_gray_share_icon.svg')}
+                      alt="分享"
+                      width={28}
+                      height={28}
+                    />
+                  </button>
+                </Stack>
 
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                  gap="8px"
-                >
+                <div>
                   <Typography fontSize={20} fontWeight={500}>
                     {row.name}
                   </Typography>
-                  {row.url && (
-                    <a
-                      href={row.url}
-                      className="flex-shrink-0"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Image
-                        src={getAssetPath('/icon/open_new_page.svg')}
-                        alt="官方連結"
-                        width={28}
-                        height={28}
-                      />
-                    </a>
-                  )}
-                </Stack>
+                </div>
 
                 {[
                   { name: '補助對象', information: row.target },
@@ -242,24 +331,47 @@ export default function SupportInformationList() {
                         key={name}
                         className="text-[var(--black)] leading-[20px] items-center font-normal"
                       >
-                        <Stack
-                          direction="row"
-                          justifyContent="center"
-                          alignItems="center"
-                          className="text-[var(--background)] bg-[var(--primary)] text-nowrap mb-2"
-                          style={{ height: '26px', width: '68px', borderRadius: '4px' }}
-                        >
-                          <Typography fontSize={14} fontWeight={500}>
+                        <div className="text-[var(--primary)] text-nowrap mb-2">
+                          <Typography fontSize={16} fontWeight={600}>
                             {name}
                           </Typography>
-                        </Stack>
+                        </div>
                         <div className="flex-1 whitespace-pre-wrap">
-                          <Typography fontSize={16} fontWeight={500}>
+                          <Typography fontSize={16} fontWeight={400}>
                             {information.replace(/^"|"$/g, '')}
                           </Typography>
                         </div>
                       </div>
                     )
+                )}
+                {row.url && (
+                  <a
+                    href={row.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="
+                          size-fit h-[36px] py-2 px-3 my-2
+                          min-w-[80px]
+                          text-[var(--secondary)]
+                          rounded-lg
+                          cursor-pointer
+                          flex items-center justify-center gap-1
+                          whitespace-nowrap
+                          transition-colors
+                        "
+                    title="點擊開啟官方連結"
+                    style={{ backgroundColor: '#179BC61A' }}
+                  >
+                    <Typography fontSize={16} fontWeight={400}>
+                      官方網站
+                    </Typography>
+                    <Image
+                      src={getAssetPath('/icon/secondary_up_right_arrow.svg')}
+                      alt=""
+                      width={20}
+                      height={20}
+                    />
+                  </a>
                 )}
               </Stack>
 
@@ -378,7 +490,7 @@ export default function SupportInformationList() {
                                 className="
                                 size-fit h-[36px] py-2 px-3 my-2
                                 min-w-[80px]
-                                bg-[var(--secondary-light)] text-[var(--secondary)]
+                                text-[var(--secondary)]
                                 rounded-lg
                                 cursor-pointer
                                 flex items-center justify-center gap-1
@@ -386,6 +498,7 @@ export default function SupportInformationList() {
                                 transition-colors
                               "
                                 title="點擊開啟補助連結資訊"
+                                style={{ backgroundColor: '#179BC61A' }}
                               >
                                 <Typography fontSize={16} fontWeight={400}>
                                   連結
