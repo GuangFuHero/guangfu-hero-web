@@ -4,10 +4,11 @@ import PageLayout from '@/components/PageLayout';
 import { Stack } from '@mui/material';
 import Link from 'next/link';
 import './home.css';
-import Accordion from './components/Accordion';
-import Announcements from './components/Announcements';
+// import Accordion from './components/Accordion';
+// import Announcements from './components/Announcements';
 import Image from 'next/image';
 import { getAssetPath } from '@/lib/utils';
+import ShareAction from '@/components/ShareAction';
 
 // 注意：此檔案僅作為首頁的組版與 SEO 設定來源，實際路由仍為 `src/app/page.tsx`
 // 你可以在 `app/page.tsx` 中導入並重導出此檔案的 `generateMetadata` 與預設元件。
@@ -442,17 +443,31 @@ export default function HomePage() {
           </div>
 
           <Stack direction="row" justifyContent="center" className="socialBtns">
-            {socialLinks.map(({ path, alt, href }) => (
-              <Link key={alt} href={href} target="_blank" rel="noopener noreferrer">
-                <Image
-                  src={getAssetPath(path)}
-                  alt={alt}
-                  width={33}
-                  height={32}
-                  className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
-                />
-              </Link>
-            ))}
+            {socialLinks.map(({ path, alt, href }) =>
+              alt === 'share' ? (
+                <ShareAction key={alt}>
+                  <button className="cursor-pointer" aria-label="分享">
+                    <Image
+                      src={getAssetPath(path)}
+                      alt={alt}
+                      width={33}
+                      height={32}
+                      className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
+                    />
+                  </button>
+                </ShareAction>
+              ) : (
+                <Link key={alt} href={href} target="_blank" rel="noopener noreferrer">
+                  <Image
+                    src={getAssetPath(path)}
+                    alt={alt}
+                    width={33}
+                    height={32}
+                    className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
+                  />
+                </Link>
+              )
+            )}
           </Stack>
 
           <div className="footerLinks">
