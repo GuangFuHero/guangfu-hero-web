@@ -9,6 +9,7 @@ export type ShareActionProps = {
   getTitle?: (pathname: string) => string;
   children?: ReactElement<{ onClick?: (e: MouseEvent<HTMLElement>) => void }>;
   duration?: number;
+  shareId?: string;
 };
 
 /**
@@ -24,7 +25,12 @@ export type ShareActionProps = {
  * @param {number} [props.duration=3000] - Toast 顯示時間（毫秒）。
  * @returns {JSX.Element} 可互動的分享按鈕與 Toast。
  */
-export default function ShareAction({ getTitle, children, duration = 3000 }: ShareActionProps) {
+export default function ShareAction({
+  getTitle,
+  children,
+  duration = 3000,
+  shareId,
+}: ShareActionProps) {
   const pathname = usePathname();
   const [showToast, setShowToast] = useState(false);
 
@@ -51,23 +57,28 @@ export default function ShareAction({ getTitle, children, duration = 3000 }: Sha
     }
   }, []);
 
-  const handleShare = useCallback(async () => {
-    if (typeof window === 'undefined') return;
-    const baseUrl = window.location.origin;
-    const shareUrl = `${baseUrl}${pathname || '/'}`;
+  const handleShare = useCallback(
+    async (shareId?: string) => {
+      if (typeof window === 'undefined') return;
+      const baseUrl = window.location.origin;
+      const shareUrl = shareId
+        ? `${baseUrl}${pathname}#${shareId}` // ✅ 加上 #id
+        : `${baseUrl}${pathname || '/'}`;
 
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: resolvedTitle, url: shareUrl });
-      } catch (error: unknown) {
-        if (!(error instanceof Error && error.name === 'AbortError')) {
-          await fallbackToCopy(shareUrl);
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: resolvedTitle, url: shareUrl });
+        } catch (error: unknown) {
+          if (!(error instanceof Error && error.name === 'AbortError')) {
+            await fallbackToCopy(shareUrl);
+          }
         }
+      } else {
+        await fallbackToCopy(shareUrl);
       }
-    } else {
-      await fallbackToCopy(shareUrl);
-    }
-  }, [fallbackToCopy, pathname, resolvedTitle]);
+    },
+    [fallbackToCopy, pathname, resolvedTitle]
+  );
 
   const trigger = isValidElement(children) ? (
     cloneElement(children as ReactElement<{ onClick?: (e: MouseEvent<HTMLElement>) => void }>, {
@@ -78,11 +89,11 @@ export default function ShareAction({ getTitle, children, duration = 3000 }: Sha
         if (typeof original === 'function') {
           await original(e);
         }
-        await handleShare();
+        await handleShare(shareId);
       },
     })
   ) : (
-    <button onClick={handleShare} aria-label="分享">
+    <button onClick={() => handleShare()} aria-label="分享">
       分享
     </button>
   );

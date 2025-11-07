@@ -53,7 +53,7 @@ function Paragraph() {
             href="/victim/house-repair"
             className="[text-underline-position:from-font] decoration-solid font-['Noto_Sans_TC:Medium',sans-serif] font-medium text-[var(--secondary)] underline mx-1"
           >
-            居家修復
+            居家修繕
           </Link>
           <span className="font-['Noto_Sans_TC:Regular',sans-serif] font-normal">聯繫廠商</span>
         </p>

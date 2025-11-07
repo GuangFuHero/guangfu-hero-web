@@ -450,8 +450,8 @@ export default function HomePage() {
                     <Image
                       src={getAssetPath(path)}
                       alt={alt}
-                      width={33}
-                      height={32}
+                      width={28}
+                      height={28}
                       className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
                     />
                   </button>

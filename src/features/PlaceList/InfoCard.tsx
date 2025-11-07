@@ -6,6 +6,8 @@ import { formatDateRange, formatTimeRange } from '@/lib/utils';
 import { useModal } from '@/providers/ModalProvider';
 import { useToast } from '@/providers/ToastProvider';
 import React from 'react';
+import { getAssetPath } from '@/lib/utils';
+import Image from 'next/image';
 
 interface InfoCardProps {
   place: Place;
@@ -22,6 +24,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ place, mapUrl, className = '' }) =>
   const displayDate = formatDateRange(place.open_date, place.end_date);
   const displayTime = formatTimeRange(place.open_time, place.end_time);
   const displayContact = place.contact_phone || '';
+  const isContactUrl = /^https?:\/\/\S+$/.test(displayContact);
   const displayNotes = place.notes || '';
   const displayTags = place.tags?.map(tag => tag.name) || [];
 
@@ -89,7 +92,12 @@ const InfoCard: React.FC<InfoCardProps> = ({ place, mapUrl, className = '' }) =>
           </div>
         )}
 
-        {place.contact_phone !== '-' ? (
+        {place.contact_phone === '-' ? (
+          <div className="flex items-start gap-2 text-[#3A3937] mb-1 leading-[20px] font-normal">
+            <div className="text-[var(--gray-2)] text-nowrap">聯絡</div>
+            <div className="flex-1">{displayContact}</div>
+          </div>
+        ) : isContactUrl === false ? (
           <div className="flex gap-2 text-[#3A3937] mb-1 leading-[20px] items-center font-normal">
             <div className="text-[var(--gray-2)] text-nowrap">聯絡</div>
             <div
@@ -114,16 +122,40 @@ const InfoCard: React.FC<InfoCardProps> = ({ place, mapUrl, className = '' }) =>
             </div>
           </div>
         ) : (
-          <div className="flex items-start gap-2 text-[#3A3937] mb-1 leading-[20px] font-normal">
+          <div className="flex gap-2 text-[#3A3937] mb-1 leading-[20px] items-center font-normal">
             <div className="text-[var(--gray-2)] text-nowrap">聯絡</div>
-            <div className="flex-1">{displayContact}</div>
+            <a
+              href={displayContact}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                h-[36px] py-2 px-3
+                min-w-[80px]
+                text-sm
+                bg-[var(--secondary-light)] text-[var(--secondary)]
+                rounded-lg
+                cursor-pointer
+                flex items-center justify-center gap-1
+                whitespace-nowrap
+                transition-colors
+              "
+              title="點擊開啟連結"
+            >
+              <div style={{ marginBottom: '1px' }}>網站連結</div>
+              <Image
+                src={getAssetPath('/icon/secondary_up_right_arrow.svg')}
+                alt=""
+                width={20}
+                height={20}
+              />
+            </a>
           </div>
         )}
 
         {displayNotes && (
           <div className="flex items-start gap-2 text-[#3A3937] mb-2 leading-[20px] font-normal">
-            <div className="text-[var(--gray-2)] text-nowrap">備註</div>
-            <div className="flex-1">{displayNotes}</div>
+            <div className="text-[var(--gray-2)]">備註</div>
+            <div className="flex-1 whitespace-pre-wrap">{displayNotes}</div>
           </div>
         )}
       </div>

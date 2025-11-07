@@ -109,9 +109,10 @@ src/
 │   ├── full-screen-map/  # Full-screen map view
 │   ├── victim/           # Victim assistance pages
 │   │   ├── house-repair/ # House repair store information
-│   │   ├── medical/      # Medical assistance
+│   │   ├── medical/      # Medical assistance (no use)
 │   │   ├── mental-health/# Mental health resources
-│   │   ├── shelter/      # Shelter information
+│   │   ├── shelter/      # Shelter information (no use)
+│   │   ├── site/         # map site information list
 │   │   └── support-information/ # Support information
 │   ├── volunteer/        # Volunteer information
 │   │   ├── about-us/     # Team information

@@ -7,36 +7,35 @@ import { useCallback, useState } from 'react';
 import PlaceList from '../PlaceList';
 import HouseRepairList from './HouseRepairList';
 import SupportInformationList from './SupportInformationList';
+import SiteList from './SiteList';
 
-type Category = '庇護所' | '醫療站' | '心理資源' | '居家修復' | '補助資訊';
+type Category = '心理資源' | '居家修繕' | '補助貸款' | '光復站點';
 type ServiceFormat = '全部' | '實體' | '線上' | '電話' | '多種';
 
 const CATEGORY_TO_PLACE_TYPE: Record<Category, PlaceType | null> = {
-  庇護所: PlaceType.SHELTER,
-  醫療站: PlaceType.MEDICAL_STATION,
   心理資源: PlaceType.MENTAL_HEALTH_RESOURCE,
-  居家修復: null,
-  補助資訊: null,
+  居家修繕: null,
+  補助貸款: null,
+  光復站點: null,
 };
 
 const CATEGORY_TO_ROUTE: Record<Category, string> = {
-  庇護所: '/victim/shelter',
-  醫療站: '/victim/medical',
   心理資源: '/victim/mental-health',
-  居家修復: '/victim/house-repair',
-  補助資訊: '/victim/support-information',
+  居家修繕: '/victim/house-repair',
+  補助貸款: '/victim/support-information',
+  光復站點: '/victim/site',
 };
 
 interface VictimAssistanceProps {
   initialCategory?: Category;
 }
 
-export default function VictimAssistance({ initialCategory = '庇護所' }: VictimAssistanceProps) {
+export default function VictimAssistance({ initialCategory = '補助貸款' }: VictimAssistanceProps) {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<Category>(initialCategory);
   const [selectedServiceFormat, setSelectedServiceFormat] = useState<ServiceFormat>('全部');
 
-  const categories: Category[] = ['庇護所', '醫療站', '心理資源', '居家修復', '補助資訊'];
+  const categories: Category[] = ['補助貸款', '居家修繕', '心理資源', '光復站點'];
   const serviceFormats: ServiceFormat[] = ['全部', '實體', '線上', '電話', '多種'];
 
   const handleFilterPlaces = useCallback(
@@ -65,10 +64,12 @@ export default function VictimAssistance({ initialCategory = '庇護所' }: Vict
         onFilterPlaces={handleFilterPlaces}
       />
     );
-  } else if (selectedCategory === '居家修復') {
+  } else if (selectedCategory === '居家修繕') {
     category_content = <HouseRepairList />;
-  } else if (selectedCategory === '補助資訊') {
+  } else if (selectedCategory === '補助貸款') {
     category_content = <SupportInformationList />;
+  } else if (selectedCategory === '光復站點') {
+    category_content = <SiteList />;
   }
 
   return (
