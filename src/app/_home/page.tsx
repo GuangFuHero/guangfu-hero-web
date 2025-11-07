@@ -226,7 +226,7 @@ export default function HomePage() {
       },
     },
     {
-      href: '/map',
+      href: '/victim/site',
       title: '光復站點',
       subtitle: '維修站、廁所、醫療、洗澡..',
       Icon: () => {
