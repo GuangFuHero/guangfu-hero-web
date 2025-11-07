@@ -1,7 +1,6 @@
 'use client';
 
 import Sidebar from '@/components/Sidebar';
-import ShareAction from '@/components/ShareAction';
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -46,15 +45,6 @@ export default function Header({ hideShare = false }: { hideShare?: boolean }) {
                 />
               </Link>
             </div>
-
-            {/* Right: Share icon */}
-            {!hideShare && (
-              <ShareAction>
-                <button className="p-2" aria-label="分享">
-                  <Image src={getAssetPath('/share.svg')} alt="分享" width={24} height={24} />
-                </button>
-              </ShareAction>
-            )}
           </div>
         </div>
       </header>

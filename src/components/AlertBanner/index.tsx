@@ -78,7 +78,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
   }, []);
 
   useEffect(() => {
-    if (isPaused || alerts.length === 0) return; // 暫停時或沒有資料時不啟動計時器
+    if (isPaused || alerts.length === 0 || alerts.length === 1) return; // 暫停時或沒有資料時不啟動計時器
     const timer = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % alerts.length);
     }, 5000);
@@ -121,8 +121,10 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
   if (alerts.length === 0) {
     return (
       <>
-        <div className="bg-[#FFEEBA] h-[64px]"></div>
+        {/*
+        <div className="bg-[#FF464A] h-[64px]"></div>
         <div className="py-3 bg-white"></div>
+        */}
       </>
     );
   }
@@ -132,8 +134,8 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
   return (
     <div>
       <div
-        className={`bg-[#FFEEBA] h-[64px] flex items-center justify-center transition-colors ${
-          currentInfo.actionable ? 'cursor-pointer hover:bg-[#FFE5A0]' : 'cursor-default'
+        className={`bg-[#FF464A] h-[64px] flex items-center justify-center transition-colors ${
+          currentInfo.actionable ? 'cursor-pointer' : 'cursor-default'
         } ${isDragging ? 'select-none' : ''}`}
         onClick={handleClick}
         role={currentInfo.actionable ? 'button' : undefined}
@@ -147,24 +149,21 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
         {...dragHandlers}
       >
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full select-none">
-          <PrevButton setIsPaused={setIsPaused} prev={prev} />
+          {/*<PrevButton setIsPaused={setIsPaused} prev={prev} />*/}
           <div
-            className={`flex-1 text-center font-medium whitespace-pre-wrap [&_a]:text-blue-600 [&_a]:underline [&_a]:hover:text-blue-800 ${
-              typeof currentInfo.actionable === 'string'
-                ? 'text-[var(--secondary)] underline'
-                : 'text-[var(--text-black)]'
-            }`}
+            className={`flex-1 text-center font-medium whitespace-pre-wrap text-[var(--background)]`}
             dangerouslySetInnerHTML={{ __html: currentInfo.text }}
           />
-          <NextButton setIsPaused={setIsPaused} next={next} />
+          {/*<NextButton setIsPaused={setIsPaused} next={next} />*/}
         </div>
       </div>
+      {/*
       <CarouselIndicators
         alerts={alerts}
         setCurrentSlide={setCurrentSlide}
         setIsPaused={setIsPaused}
         currentSlide={currentSlide}
-      />
+      />*/}
     </div>
   );
 }
