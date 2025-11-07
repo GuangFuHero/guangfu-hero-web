@@ -9,10 +9,12 @@ import HouseRepairList from './HouseRepairList';
 import SupportInformationList from './SupportInformationList';
 import SiteList from './SiteList';
 
-type Category = '心理資源' | '居家修繕' | '補助貸款' | '光復站點';
+type Category = '心理資源' | '居家修繕' | '補助貸款' | '光復站點' | '庇護所' | '醫療站';
 type ServiceFormat = '全部' | '實體' | '線上' | '電話' | '多種';
 
 const CATEGORY_TO_PLACE_TYPE: Record<Category, PlaceType | null> = {
+  庇護所: PlaceType.SHELTER,
+  醫療站: PlaceType.MEDICAL_STATION,
   心理資源: PlaceType.MENTAL_HEALTH_RESOURCE,
   居家修繕: null,
   補助貸款: null,
@@ -20,6 +22,8 @@ const CATEGORY_TO_PLACE_TYPE: Record<Category, PlaceType | null> = {
 };
 
 const CATEGORY_TO_ROUTE: Record<Category, string> = {
+  庇護所: '/victim/shelter',
+  醫療站: '/victim/medical',
   心理資源: '/victim/mental-health',
   居家修繕: '/victim/house-repair',
   補助貸款: '/victim/support-information',
