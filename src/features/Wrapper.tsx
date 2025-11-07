@@ -22,6 +22,7 @@ const Wrapper = ({
   return (
     // 若關閉 main 滾動，外層一併隱藏滾動避免多層滾；使用 dvh 更準確
     <div className={clsx('min-h-dvh flex flex-col', noMainScroll && 'overflow-hidden')}>
+      {!hideBanner && <Banner />}
       <Header hideShare={hideShare} />
 
       <main
@@ -30,7 +31,6 @@ const Wrapper = ({
           noMainScroll ? 'overflow-hidden' : 'overflow-y-auto scrollbar-none'
         )}
       >
-        {!hideBanner && <Banner />}
         {children}
       </main>
 
