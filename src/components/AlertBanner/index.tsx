@@ -135,7 +135,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
     <div>
       <div
         className={`bg-[#FF464A] h-[64px] flex items-center justify-center transition-colors ${
-          currentInfo.actionable ? 'cursor-pointer hover:bg-[#FFE5A0]' : 'cursor-default'
+          currentInfo.actionable ? 'cursor-pointer' : 'cursor-default'
         } ${isDragging ? 'select-none' : ''}`}
         onClick={handleClick}
         role={currentInfo.actionable ? 'button' : undefined}
@@ -151,7 +151,7 @@ export default function AlertBanner({ onAlertClick }: AlertBannerProps) {
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full select-none">
           {/*<PrevButton setIsPaused={setIsPaused} prev={prev} />*/}
           <div
-            className={`flex-1 text-center font-medium whitespace-pre-wrap [&_a]:underline [&_a]:hover:text-blue-800 text-[var(--background)]`}
+            className={`flex-1 text-center font-medium whitespace-pre-wrap text-[var(--background)]`}
             dangerouslySetInnerHTML={{ __html: currentInfo.text }}
           />
           {/*<NextButton setIsPaused={setIsPaused} next={next} />*/}

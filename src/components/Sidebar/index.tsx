@@ -38,7 +38,7 @@ const SIDEBAR_ITEM: (LinkItem | GroupItem)[] = [
   { name: '配送媒合', href: '/resources' },
   { name: '志工媒合', href: '/volunteer-register' },
    */
-  { name: '輔助貸款', href: '/victim/support-information' },
+  { name: '補助貸款', href: '/victim/support-information' },
   { name: '居家修繕', href: '/victim/house-repair' },
   { name: '心理資源', href: '/victim/mental-health' },
   { name: '光復站點', href: '/map' },
