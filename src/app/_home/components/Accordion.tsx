@@ -85,6 +85,7 @@ export default function Accordion({ items }: { items: { question: string; answer
                 transform: isOpen ? 'translateY(0)' : 'translateY(-4px)',
                 transition: 'max-height 200ms ease, opacity 180ms ease, transform 180ms ease',
                 overflow: 'hidden',
+                whiteSpace: 'pre-wrap',
               }}
               aria-hidden={!isOpen}
             >

@@ -72,7 +72,9 @@ export default function Announcements({
             >
               <div className="ann-card">
                 <h4 className="ann-title">{it.title}</h4>
-                <div className="ann-content">{it.content}</div>
+                <div className="ann-content" style={{ whiteSpace: 'pre-wrap' }}>
+                  {it.content}
+                </div>
                 <span className="ann-date">{it.date}</span>
               </div>
             </div>

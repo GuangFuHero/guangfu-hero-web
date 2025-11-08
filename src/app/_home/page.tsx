@@ -4,8 +4,8 @@ import PageLayout from '@/components/PageLayout';
 import { Stack } from '@mui/material';
 import Link from 'next/link';
 import './home.css';
-// import Accordion from './components/Accordion';
-// import Announcements from './components/Announcements';
+import HomeFaqSection from './components/HomeFaqSection';
+import HomeAnnouncementsSection from './components/HomeAnnouncementsSection';
 import Image from 'next/image';
 import { getAssetPath } from '@/lib/utils';
 import ShareAction from '@/components/ShareAction';
@@ -257,34 +257,6 @@ export default function HomePage() {
   ];
 
   // FAQ 百葉窗資料（一次僅展開一個）
-  const faqItems = [
-    {
-      question: '「光復超人平台」現在轉型為居民服務平台，具體提供哪些服務？',
-      answer:
-        '如果您是願意協助災區現場的公司，可以請您寫出您願意協助的項目，可以討論未來平台如何協助曝光與資料整理，志工團隊若是希望招募更多志工或是尋找需要協助的居民，也可以填寫表單與我們聯繫，進一步討論可以合作的方案',
-    },
-    { question: '問題2', answer: '答2' },
-    { question: '問題3', answer: '答3' },
-  ];
-
-  // 網站公告資料（可多筆）
-  const annItems = [
-    {
-      title: '公告標題',
-      content: '公告詳細內容公告詳細內容',
-      date: '2024/11/02',
-    },
-    {
-      title: '公告標題',
-      content: '公告詳細內容公告詳細內容',
-      date: '2024/11/02',
-    },
-    {
-      title: '公告標題',
-      content: '公告詳細內容公告詳細內容',
-      date: '2024/11/02',
-    },
-  ];
 
   const socialLinks = [
     { path: '/thread_logo.svg', alt: 'thread', href: 'https://www.threads.com/@gunangfu250927' },
@@ -348,42 +320,11 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* <h3 className="homeTitle pb-3 pt-8">
-          <div className="flex items-center gap-2">
-            <p>常見問題</p>
-          </div>
-          <Link href="/faq" className="flex items-center gap-1">
-            <p>看更多</p>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M16.6024 11.5557L8.92021 4L7 5.88859L13.7221 12.5L7 19.1114L8.92021 21L16.6024 13.4443C16.857 13.1938 17 12.8542 17 12.5C17 12.1458 16.857 11.8062 16.6024 11.5557Z"
-                fill="#838383"
-              />
-            </svg>
-          </Link>
-        </h3>
+        {/* 常見問題 */}
+        <HomeFaqSection />
 
-        <div>
-          <Accordion items={faqItems} />
-        </div>
-
-        <h3 className="homeTitle pb-3 pt-8">
-          <div className="flex items-center gap-2">
-            <p>網站公告</p>
-          </div>
-        </h3>
-
-        <div>
-          <Announcements items={annItems} showArrows={false} />
-        </div> */}
+        {/* 網站公告 */}
+        <HomeAnnouncementsSection />
 
         <h3 className="homeTitle pb-3 pt-8">
           <div className="flex items-center gap-2">

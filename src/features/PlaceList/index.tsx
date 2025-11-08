@@ -43,7 +43,7 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilt
   }, [handleScroll]);
 
   return (
-    <div className={`space-y-4 mb-[80px] px-[16px] md:px-[32px] ${className}`}>
+    <div className={`space-y-4 mb-[80px] ${className}`}>
       {listQuery.isLoading && (
         <div className="text-center py-8 text-[var(--gray)] mb-[80vh]">載入中...</div>
       )}
