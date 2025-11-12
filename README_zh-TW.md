@@ -108,11 +108,12 @@ src/
 │   ├── map/              # 災區互動地圖
 │   ├── full-screen-map/  # 全螢幕地圖檢視
 │   ├── victim/           # 居民協助頁面
-│   │   ├── house-repair/ # 居家修復廠商
-│   │   ├── medical/      # 醫療協助
+│   │   ├── house-repair/ # 居家修繕廠商
+│   │   ├── medical/      # 醫療協助(不使用)
 │   │   ├── mental-health/# 心理健康資源
-│   │   ├── shelter/      # 收容所資訊
-│   │   └── support-information/ # 補助資訊
+│   │   ├── shelter/      # 收容所資訊(不使用)
+│   │   ├── site/         # 光復站點
+│   │   └── support-information/ # 補助貸款
 │   ├── volunteer/        # 志工資訊
 │   │   ├── about-us/     # 團隊資訊
 │   │   ├── preparation/  # 裝備清單

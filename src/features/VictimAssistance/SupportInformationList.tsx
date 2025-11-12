@@ -1,12 +1,12 @@
 import { env } from '@/config/env';
 import Button from '@/components/Button';
 import { useToast } from '@/providers/ToastProvider';
-import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { Stack, Typography } from '@mui/material';
 import ReactGA from 'react-ga4';
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
+import ShareAction from '@/components/ShareAction';
 
 type SupportInformationDataRow = {
   support_id: string;
@@ -30,65 +30,10 @@ export default function SupportInformationList() {
   const [supportInformationTypes, setSupportInformationTypes] = useState<string[]>([]);
   const [supportInformationData, setSupportInformationData] = useState<SupportInformationData>([]);
   const [currentType, setCurrentType] = useState<string>('全部');
-  const { showToast } = useToast();
-  const pathname = usePathname();
 
   const handleTypeClick = (type: string) => {
-    ReactGA.event(`補助資訊_${type}`);
+    ReactGA.event(`補助貸款_${type}`);
     setCurrentType(type);
-  };
-
-  const handleShare = async (id?: string) => {
-    if (typeof window === 'undefined') return;
-
-    // 建構完整 URL
-    const baseUrl = window.location.origin;
-    const shareUrl = id
-      ? `${baseUrl}${pathname}#${id}` // ✅ 加上 #id
-      : `${baseUrl}${pathname}`;
-
-    // 根據路徑決定標題
-    const getTitle = () => {
-      if (pathname.startsWith('/map')) return '光復超人 - 現場地圖';
-      if (pathname.startsWith('/volunteer')) return '光復超人 - 志工資訊';
-      if (pathname.startsWith('/victim')) return '光復超人 - 居民協助';
-      return '光復超人';
-    };
-
-    const title = getTitle();
-
-    // 檢查是否支援 Web Share API
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: title,
-          url: shareUrl,
-        });
-      } catch (error) {
-        // 如果使用者取消分享或發生錯誤=複製功能
-        if (!(error instanceof Error && error.name === 'AbortError')) {
-          await fallbackToCopy(shareUrl);
-        }
-      }
-    } else {
-      // 不支援 Web Share API,直接使用複製功能
-      await fallbackToCopy(shareUrl);
-    }
-  };
-
-  const fallbackToCopy = async (url: string) => {
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      console.warn('Clipboard API 不可用 - 需要 HTTPS 或 localhost 環境');
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(url);
-      // 複製成功,顯示 Toast
-      showToast('複製連結成功', 'success');
-    } catch (error) {
-      console.error('複製失敗:', error);
-    }
   };
 
   useEffect(() => {
@@ -174,7 +119,7 @@ export default function SupportInformationList() {
                 source: source.trim(),
               });
             } else {
-              console.log('重複的補助資訊：');
+              console.log('重複的補助貸款：');
               console.log(`${type} - ${name}`);
               console.log(
                 `前一筆的電話: ${supportInformationData[indexFound].phone} || 新一筆的電話: ${phone}`
@@ -194,19 +139,16 @@ export default function SupportInformationList() {
     fetchSupportData();
   }, [currentType]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const hash = window.location.hash;
     if (!hash || supportInformationData.length === 0) return; // ← 要等資料準備好
 
     const id = hash.substring(1);
     const el = document.getElementById(id);
     if (el) {
-      // 加一點點延遲，確保 DOM 已經繪製完成
-      setTimeout(() => {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, [supportInformationData, currentType, pathname]);
+  }, [supportInformationData, currentType]);
 
   type tag_type =
     | '一般個人'
@@ -300,18 +242,18 @@ export default function SupportInformationList() {
                       {row.type}
                     </Typography>
                   </div>
-                  <button
-                    className="flex-shrink-0 cursor-pointer"
-                    aria-label="分享"
-                    onClick={() => handleShare(row.support_id)}
-                  >
-                    <Image
-                      src={getAssetPath('/icon/card_gray_share_icon.svg')}
-                      alt="分享"
-                      width={28}
-                      height={28}
-                    />
-                  </button>
+
+                  <ShareAction key="share" shareId={row.support_id}>
+                    <button className="cursor-pointer" aria-label="分享">
+                      <Image
+                        src={getAssetPath('/icon/card_gray_share_icon.svg')}
+                        alt="share"
+                        width={28}
+                        height={28}
+                        className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
+                      />
+                    </button>
+                  </ShareAction>
                 </Stack>
 
                 <div>

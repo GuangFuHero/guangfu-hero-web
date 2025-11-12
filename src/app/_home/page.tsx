@@ -226,7 +226,7 @@ export default function HomePage() {
       },
     },
     {
-      href: '/map',
+      href: '/victim/site',
       title: '光復站點',
       subtitle: '維修站、廁所、醫療、洗澡..',
       Icon: () => {
@@ -450,8 +450,8 @@ export default function HomePage() {
                     <Image
                       src={getAssetPath(path)}
                       alt={alt}
-                      width={33}
-                      height={32}
+                      width={28}
+                      height={28}
                       className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
                     />
                   </button>

@@ -1,12 +1,13 @@
 import { env } from '@/config/env';
 import Button from '@/components/Button';
 import { useToast } from '@/providers/ToastProvider';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { Typography } from '@mui/material';
 import ReactGA from 'react-ga4';
 import { usePathname } from 'next/navigation';
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
+import ShareAction from '@/components/ShareAction';
 
 type HouseRepairDataRow = {
   repair_id: string;
@@ -27,7 +28,7 @@ export default function HouseRepairList() {
   const pathname = usePathname();
 
   const handleTypeClick = (type: string) => {
-    ReactGA.event(`居家修復_${type}`);
+    ReactGA.event(`居家修繕_${type}`);
     setCurrentType(type);
   };
 
@@ -42,59 +43,6 @@ export default function HouseRepairList() {
         console.error('複製失敗:', err);
         showToast('複製聯絡資訊失敗', 'error');
       });
-  };
-
-  const handleShare = async (id?: string) => {
-    if (typeof window === 'undefined') return;
-
-    // 建構完整 URL
-    const baseUrl = window.location.origin;
-    const shareUrl = id
-      ? `${baseUrl}${pathname}#${id}` // ✅ 加上 #id
-      : `${baseUrl}${pathname}`;
-
-    // 根據路徑決定標題
-    const getTitle = () => {
-      if (pathname.startsWith('/map')) return '光復超人 - 現場地圖';
-      if (pathname.startsWith('/volunteer')) return '光復超人 - 志工資訊';
-      if (pathname.startsWith('/victim')) return '光復超人 - 居民協助';
-      return '光復超人';
-    };
-
-    const title = getTitle();
-
-    // 檢查是否支援 Web Share API
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: title,
-          url: shareUrl,
-        });
-      } catch (error) {
-        // 如果使用者取消分享或發生錯誤=複製功能
-        if (!(error instanceof Error && error.name === 'AbortError')) {
-          await fallbackToCopy(shareUrl);
-        }
-      }
-    } else {
-      // 不支援 Web Share API,直接使用複製功能
-      await fallbackToCopy(shareUrl);
-    }
-  };
-
-  const fallbackToCopy = async (url: string) => {
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      console.warn('Clipboard API 不可用 - 需要 HTTPS 或 localhost 環境');
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(url);
-      // 複製成功,顯示 Toast
-      showToast('複製連結成功', 'success');
-    } catch (error) {
-      console.error('複製失敗:', error);
-    }
   };
 
   useEffect(() => {
@@ -175,17 +123,14 @@ export default function HouseRepairList() {
     fetchRepairData();
   }, [currentType]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const hash = window.location.hash;
     if (!hash || houseRepairData.length === 0) return; // ← 要等資料準備好
 
     const id = hash.substring(1);
     const el = document.getElementById(id);
     if (el) {
-      // 加一點點延遲，確保 DOM 已經繪製完成
-      setTimeout(() => {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [houseRepairData, currentType, pathname]);
 
@@ -240,13 +185,11 @@ export default function HouseRepairList() {
                 )}
                 <div className="flex justify-between item-start text-lg font-bold text-[var(--gray-2)] mb-2">
                   {row.name}
-                  <button
-                    className="flex-shrink-0 cursor-pointer"
-                    aria-label="分享"
-                    onClick={() => handleShare(row.repair_id)}
-                  >
-                    <Image src={getAssetPath('/share.svg')} alt="分享" width={24} height={24} />
-                  </button>
+                  <ShareAction key="share" shareId={row.repair_id}>
+                    <button className="flex-shrink-0 cursor-pointer" aria-label="分享">
+                      <Image src={getAssetPath('/share.svg')} alt="share" width={24} height={24} />
+                    </button>
+                  </ShareAction>
                 </div>
 
                 <div className="flex items-start gap-2 text-[var(--black)] mb-1 leading-[20px] font-normal">

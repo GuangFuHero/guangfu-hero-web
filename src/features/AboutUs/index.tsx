@@ -6,6 +6,7 @@ import { Typography, Stack } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getAssetPath } from '@/lib/utils';
+import ShareAction from '@/components/ShareAction';
 
 const SectionHeader = ({ children }: { children: React.ReactNode }) => (
   <Typography variant="h4" fontWeight={600} textAlign="center" sx={{ my: 2 }}>
@@ -41,21 +42,30 @@ export default function AboutUs() {
             這個平台的誕生，源自於一個簡單的信念：
             即使不在現場，我們仍能彼此連結，一起伸出手，讓力量匯聚成擁抱。
           </Typography>
-          <Typography>目前，我們已推出多項功能：</Typography>
+
+          <div style={{ height: '10px' }}></div>
+
+          <Typography>🏡 新功能（居民導向）</Typography>
+          <Typography>補助資訊：整理各項災後補助與申請流程</Typography>
+          <Typography>居家修繕指南：提供維修與重建的資源與聯絡資訊</Typography>
           <Typography>
-            🧭
-            志工指引：為新手志工整理了行前資訊，包括報到方式、交通概況、裝備建議，以及可加入的團隊與在地社群。
+            心理資源：無論是文字、電話或視訊，都有人可以傾聽與支持，適合居民和志工使用
           </Typography>
+          <Typography>光復站點：整合醫療、物資、庇護所等必要資源</Typography>
+
+          <Typography>----</Typography>
+
+          <Typography>🧭 已關閉功能</Typography>
+          <Typography>隨著災區從緊急階段變成重建階段，已經將部分功能關閉</Typography>
           <Typography>
-            🗺️ 志工地圖：整合災區的醫療站、物資站、廁所等地點，讓志工能更快熟悉現場環境。
+            志工指引：行前資訊、報到方式、交通概況、裝備建議，以及可加入的團隊與在地社群
           </Typography>
-          <Typography>
-            💬 需求媒合頁面：居民可直接登錄需求，志工能即時查看並前往支援，讓協助更有效率。
-          </Typography>
-          <Typography>
-            🐝
-            小蜜蜂配給系統：由騎車志工組成的「小蜜蜂」團隊負責物資配送。居民填寫需求後，小蜜蜂即可前往物資站領取並親自送達。
-          </Typography>
+          <Typography>志工地圖：整合醫療站、物資站、廁所等地點</Typography>
+          <Typography>志工媒合頁面：居民可登錄需求，志工即時查看並支援</Typography>
+          <Typography>小蜜蜂配給系統：志工領取物資並送達居民手中</Typography>
+
+          <div style={{ height: '10px' }}></div>
+
           <Typography>
             我們的團隊來自各地，日夜接力開發，只為讓資訊更即時、協作更順暢。
             救災不只是短暫的行動，而是一場持續的接力。
@@ -83,11 +93,6 @@ export default function AboutUs() {
             alt="thread"
             href="https://www.threads.com/@gunangfu250927"
           />
-          <IconLink
-            path="/youtube_logo.svg"
-            alt="youtube"
-            href="https://www.youtube.com/@%E5%85%89%E5%BE%A9%E8%B6%85%E4%BA%BAGuangFuHero"
-          />
           <IconLink path="/line_logo.svg" alt="line" href="line://ti/p/@hreco" />
           <IconLink
             path="/instagram_logo.svg"
@@ -95,6 +100,17 @@ export default function AboutUs() {
             href="https://www.instagram.com/gunangfu250927/"
           />
           <IconLink path="/fb_logo.svg" alt="fb" href="https://www.facebook.com/gunangfu250927" />
+          <ShareAction>
+            <button className="cursor-pointer" aria-label="分享">
+              <Image
+                src={getAssetPath('/share.svg')}
+                alt="share"
+                width={30}
+                height={30}
+                className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
+              />
+            </button>
+          </ShareAction>
         </Stack>
       </Stack>
 
