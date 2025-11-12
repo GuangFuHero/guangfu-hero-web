@@ -12,7 +12,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   active = false,
   onClick,
-  className = 'flex items-center border rounded-lg cursor-pointer whitespace-nowrap transition-all duration-150',
+  className = 'flex items-center cursor-pointer whitespace-nowrap transition-all duration-150',
   variant = 'default',
 }) => {
   let variantBaseClassName = '';
@@ -20,14 +20,14 @@ const Button: React.FC<ButtonProps> = ({
   let noActiveClassName = '';
   switch (variant) {
     case 'sub':
-      variantBaseClassName = 'font-bold h-[36px] px-3';
+      variantBaseClassName = 'rounded-lg border font-bold h-[36px] px-3';
       activeClassName = 'text-[var(--background)] bg-[var(--gray)] border-[var(--gray)]';
       noActiveClassName = 'text-[var(--gray)] bg-[var(--gray-4)] border-[var(--gray-3)]';
       break;
     case 'default':
     default:
-      variantBaseClassName = 'h-[44px] px-4';
-      activeClassName = 'border-2 font-medium text-[var(--primary)] border-[var(--primary)] ]';
+      variantBaseClassName = 'h-[44px] px-3';
+      activeClassName = 'border-b-2 font-medium text-[var(--primary)] border-[var(--primary)] ]';
       noActiveClassName = 'text-[var(--gray-2)] bg-white border-[var(--gray-2)]';
       break;
   }

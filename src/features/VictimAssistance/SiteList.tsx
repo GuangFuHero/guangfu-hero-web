@@ -19,31 +19,56 @@ type PlaceListData = {
 };
 
 export default function SiteList() {
-  //typeName: ACCOMMODATION,WATER_STATION...
-  //type: 全部,注水站,...
+  //typeName: ACCOMMODATION,WATER_STATION... PlaceType.key
+  //type: 全部,注水站,... PLACE_TYPE_STRING_MAP.value
+  //value: PlaceType.value
   const [currentType, setCurrentType] = useState<PlaceListData>({
-    name: '',
-    label: '',
-    value: '' as PlaceTab,
+    name: 'all',
+    label: '全部',
+    value: 'all' as PlaceTab,
   });
 
   const allPlaceType = [
-    /*
     {
       name: 'all',
       label: '全部',
       value: 'all' as PlaceTab,
     },
-    */
-    ...Object.entries(PlaceType).map(([PlaceTypeName, type]) => {
+    {
+      name: 'REPAIR_STATION',
+      label: '維修站',
+      value: '維修' as PlaceTab,
+    },
+    {
+      name: 'MEDICAL_STATION',
+      label: '醫療站',
+      value: '醫療' as PlaceTab,
+    },
+    {
+      name: 'ACCOMMODATION',
+      label: '住宿點',
+      value: '住宿' as PlaceTab,
+    },
+    {
+      name: 'RESTROOM',
+      label: '廁所',
+      value: '廁所' as PlaceTab,
+    },
+    {
+      name: 'SHOWER_STATION',
+      label: '洗澡點',
+      value: '洗澡' as PlaceTab,
+    },
+    /*
+        ...Object.entries(PlaceType).map(([PlaceTypeName, type]) => {
       return {
         name: PlaceTypeName,
         label: PLACE_TYPE_STRING_MAP[type],
         value: type as PlaceTab,
       };
     }),
+    */
   ];
-  console.log(allPlaceType);
 
   const handleTypeClick = (type: PlaceListData) => {
     ReactGA.event(`'光復站點'_${type.label}`);
@@ -83,9 +108,7 @@ export default function SiteList() {
             </div>
           </div>
         ) : currentType.label === '全部' ? (
-          allPlaceType.map(type => (
-            <PlaceList key={type.name} activeTab={type.value} onFilterPlaces={handleFilterPlaces} />
-          ))
+          <PlaceList key={currentType.name} activeTab={currentType.value} />
         ) : (
           <PlaceList
             key={currentType.name}
