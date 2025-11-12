@@ -16,6 +16,41 @@ export default function Accordion({ items }: { items: { question: string; answer
     setOpenIndex(prev => (prev === idx ? null : idx));
   };
 
+  // 確認內容是否含有未設定的超連結
+  const renderAnswer = (text: string) => {
+    if (!text) return null;
+    if (text.includes('<a')) {
+      return <span dangerouslySetInnerHTML={{ __html: text }} />;
+    }
+    const pattern = /(https?:\/\/[^\s<>"']+|www\.[^\s<>"']+)/gi;
+    const nodes: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = pattern.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        nodes.push(text.slice(lastIndex, match.index));
+      }
+      const url = match[0];
+      const href = url.startsWith('http') ? url : `https://${url}`;
+      nodes.push(
+        <a
+          key={`${url}-${match.index}`}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-blue-600"
+        >
+          {url}
+        </a>
+      );
+      lastIndex = match.index + url.length;
+    }
+    if (lastIndex < text.length) {
+      nodes.push(text.slice(lastIndex));
+    }
+    return nodes;
+  };
+
   return (
     <div className="accordion">
       {items.map((item, idx) => {
@@ -89,7 +124,7 @@ export default function Accordion({ items }: { items: { question: string; answer
               }}
               aria-hidden={!isOpen}
             >
-              {item.answer}
+              {renderAnswer(item.answer)}
             </div>
           </div>
         );

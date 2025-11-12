@@ -61,7 +61,7 @@ export default function HomeFaqSection() {
       try {
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
         const gid = process.env.NEXT_PUBLIC_FAQ_SHEET_GID || '';
-        if (!sheetId || !gid) return; // 未設定 sheetId → 不渲染
+        if (!sheetId || !gid) return console.error('未設定 sheetId 或 gid'); // 未設定 sheetId → 不渲染
 
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
         const res = await fetch(csvUrl);
@@ -94,7 +94,7 @@ export default function HomeFaqSection() {
         <div className="flex items-center gap-2">
           <p>常見問題</p>
         </div>
-        <Link href="/faq" className="flex items-center gap-1">
+        {/* <Link href="/faq" className="flex items-center gap-1">
           <p>看更多</p>
           <svg
             width="24"
@@ -110,7 +110,7 @@ export default function HomeFaqSection() {
               fill="#838383"
             />
           </svg>
-        </Link>
+        </Link> */}
       </h3>
 
       <div>

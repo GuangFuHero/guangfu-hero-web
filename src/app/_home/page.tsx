@@ -9,6 +9,7 @@ import HomeAnnouncementsSection from './components/HomeAnnouncementsSection';
 import Image from 'next/image';
 import { getAssetPath } from '@/lib/utils';
 import ShareAction from '@/components/ShareAction';
+import SearchCardLink from './components/SearchCardLink';
 
 // 注意：此檔案僅作為首頁的組版與 SEO 設定來源，實際路由仍為 `src/app/page.tsx`
 // 你可以在 `app/page.tsx` 中導入並重導出此檔案的 `generateMetadata` 與預設元件。
@@ -312,11 +313,11 @@ export default function HomePage() {
         </h3>
         <div className="searchBoxs grid grid-cols-2 gap-3">
           {searchCards.map(({ href, title, subtitle, Icon }) => (
-            <Link className="boxLink" key={title} href={href}>
+            <SearchCardLink className="boxLink" key={title} href={href} gaLabel={title}>
               <h3>{title}</h3>
               <small>{subtitle}</small>
               <Icon />
-            </Link>
+            </SearchCardLink>
           ))}
         </div>
 
@@ -333,8 +334,9 @@ export default function HomePage() {
         </h3>
 
         <div className="grid grid-cols-2 gap-3">
-          <Link
+          <SearchCardLink
             href="/volunteer/about-us"
+            gaLabel="關於我們"
             className="boxLink col-span-1 text-center text-[16px]"
             style={{
               backgroundColor: 'rgba(23, 155, 198, 1)',
@@ -344,9 +346,10 @@ export default function HomePage() {
             }}
           >
             關於我們
-          </Link>
-          <Link
+          </SearchCardLink>
+          <SearchCardLink
             href="https://docs.google.com/forms/d/e/1FAIpQLSeZ1v6jp7TtVXc2YVExpHKhVpqu4KubOLNj8147C8nUXm1PRQ/viewform?usp=dialog"
+            gaLabel="聯絡我們"
             className="boxLink col-span-1 text-center text-[16px]"
             target="_blank"
             style={{
@@ -357,9 +360,10 @@ export default function HomePage() {
             }}
           >
             聯絡我們
-          </Link>
-          <Link
+          </SearchCardLink>
+          <SearchCardLink
             href="https://docs.google.com/forms/d/e/1FAIpQLSd5HQsSMoStkgiaC-q3bHRaLVVGNKdETWIgZVoYEsyzE486ew/viewform?usp=dialog"
+            gaLabel="網站問題回報"
             className="boxLink col-span-2 text-center text-[16px]"
             target="_blank"
             style={{
@@ -369,7 +373,7 @@ export default function HomePage() {
             }}
           >
             網站問題回報
-          </Link>
+          </SearchCardLink>
         </div>
 
         <footer className="footerBox mt-12">

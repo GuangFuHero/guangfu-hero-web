@@ -55,7 +55,7 @@ export default function HomeAnnouncementsSection() {
       try {
         const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
         const gid = process.env.NEXT_PUBLIC_ANNOUNCEMENTS_SHEET_GID || '';
-        if (!sheetId || !gid) return;
+        if (!sheetId || !gid) return console.error('未設定 sheetId 或 gid');
 
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
         const res = await fetch(csvUrl);
