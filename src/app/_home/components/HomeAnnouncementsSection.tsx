@@ -64,13 +64,12 @@ export default function HomeAnnouncementsSection() {
 
         const rows = parseCsv(csvText);
         const list: AnnItem[] = [];
-        for (const r of rows) {
+        for (let i = 1; i < rows.length; i++) {
+          const r = rows[i];
           const date = (r[0] || '').trim();
           const title = (r[1] || '').trim();
           const content = (r[2] || '').trim();
           if (!date || !title || !content) continue;
-          if (['公告日期', 'date'].includes(date) && ['公告標題', 'title'].includes(title))
-            continue;
           list.push({ title, content, date });
         }
         setItems(list);

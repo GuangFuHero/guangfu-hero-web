@@ -140,18 +140,20 @@ export default function Announcements({
         </div>
       )}
 
-      <div className="ann-dots" role="tablist" aria-label="輪播分頁">
-        {items.map((_, i) => (
-          <div
-            key={i}
-            className={`dot ${i === index ? 'active' : ''}`}
-            role="tab"
-            aria-selected={i === index}
-            aria-controls={`ann-slide-${i}`}
-            onClick={() => goTo(i)}
-          />
-        ))}
-      </div>
+      {items.length > 1 && (
+        <div className="ann-dots" role="tablist" aria-label="輪播分頁">
+          {items.map((_, i) => (
+            <div
+              key={i}
+              className={`dot ${i === index ? 'active' : ''}`}
+              role="tab"
+              aria-selected={i === index}
+              aria-controls={`ann-slide-${i}`}
+              onClick={() => goTo(i)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

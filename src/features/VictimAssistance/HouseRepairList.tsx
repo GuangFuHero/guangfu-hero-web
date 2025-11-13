@@ -162,7 +162,7 @@ export default function HouseRepairList() {
         ))}
       </div>
 
-      <div className="space-y-4 mb-[80px] px-[16px] md:px-[32px]">
+      <div className="space-y-4 mb-[80px]">
         {/* Notation */}
         <Typography sx={{ marginBottom: 2 }}>資料來源：花蓮縣政府，由我們協助彙整整理。</Typography>
 
