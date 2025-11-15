@@ -201,6 +201,7 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  background-color: #f9f8f5;
 }
 
 .footerBox .socialBtns {

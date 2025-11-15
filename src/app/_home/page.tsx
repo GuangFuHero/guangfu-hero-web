@@ -277,7 +277,54 @@ export default function HomePage() {
   ];
 
   return (
-    <PageLayout>
+    <PageLayout
+      footerSlot={
+        <footer className="footerBox mt-12">
+          <div>
+            <Image
+              src={getAssetPath('/logo_new.svg')}
+              alt="Logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto cursor-pointer"
+            />
+          </div>
+
+          <Stack direction="row" justifyContent="center" className="socialBtns">
+            {socialLinks.map(({ path, alt, href }) =>
+              alt === 'share' ? (
+                <ShareAction key={alt}>
+                  <button className="cursor-pointer" aria-label="分享">
+                    <Image
+                      src={getAssetPath(path)}
+                      alt={alt}
+                      width={28}
+                      height={28}
+                      className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
+                    />
+                  </button>
+                </ShareAction>
+              ) : (
+                <Link key={alt} href={href} target="_blank" rel="noopener noreferrer">
+                  <Image
+                    src={getAssetPath(path)}
+                    alt={alt}
+                    width={33}
+                    height={32}
+                    className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
+                  />
+                </Link>
+              )
+            )}
+          </Stack>
+
+          <div className="footerLinks">
+            <Link href="/privacy">隱私權政策</Link>
+            <Link href="/terms">服務條款</Link>
+          </div>
+        </footer>
+      }
+    >
       {/* JSON-LD：提供搜尋引擎更豐富的結構化資訊 */}
       <script
         type="application/ld+json"
@@ -286,7 +333,7 @@ export default function HomePage() {
 
       {/* 主要內容區：可逐步拆分為 sections/components */}
       <Suspense fallback={<div className="text-center py-8 text-[var(--gray)]">載入中...</div>}>
-        <h3 className="py-3 text-center text-[24px] font-normal text-[var(--gray)]">
+        <h3 className="text-center text-[16px] font-normal text-[var(--gray)]">
           提供居民需要的協助與資訊
         </h3>
         <h3 className="homeTitle pb-3">
@@ -378,51 +425,6 @@ export default function HomePage() {
             網站問題回報
           </SearchCardLink>
         </div>
-
-        <footer className="footerBox mt-12">
-          <div>
-            <Image
-              src={getAssetPath('/logo_new.svg')}
-              alt="Logo"
-              width={120}
-              height={40}
-              className="h-10 w-auto cursor-pointer"
-            />
-          </div>
-
-          <Stack direction="row" justifyContent="center" className="socialBtns">
-            {socialLinks.map(({ path, alt, href }) =>
-              alt === 'share' ? (
-                <ShareAction key={alt}>
-                  <button className="cursor-pointer" aria-label="分享">
-                    <Image
-                      src={getAssetPath(path)}
-                      alt={alt}
-                      width={28}
-                      height={28}
-                      className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
-                    />
-                  </button>
-                </ShareAction>
-              ) : (
-                <Link key={alt} href={href} target="_blank" rel="noopener noreferrer">
-                  <Image
-                    src={getAssetPath(path)}
-                    alt={alt}
-                    width={33}
-                    height={32}
-                    className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
-                  />
-                </Link>
-              )
-            )}
-          </Stack>
-
-          <div className="footerLinks">
-            <Link href="/privacy">隱私權政策</Link>
-            <Link href="/terms">服務條款</Link>
-          </div>
-        </footer>
       </Suspense>
     </PageLayout>
   );
