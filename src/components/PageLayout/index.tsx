@@ -6,9 +6,10 @@ import { usePathname } from 'next/navigation';
 
 interface PageLayoutProps {
   children: React.ReactNode;
+  footerSlot?: React.ReactNode;
 }
 
-export default function PageLayout({ children }: PageLayoutProps) {
+export default function PageLayout({ children, footerSlot }: PageLayoutProps) {
   const pathname = usePathname();
 
   const tabs = [
@@ -63,6 +64,8 @@ export default function PageLayout({ children }: PageLayoutProps) {
         {/* Page Content */}
         <div className={shouldShowTabs ? 'mt-3' : ''}>{children}</div>
       </div>
+
+      {footerSlot}
     </Wrapper>
   );
 }

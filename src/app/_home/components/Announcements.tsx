@@ -48,6 +48,35 @@ export default function Announcements({
     else prev();
   };
 
+  // 確認內容是否含有未設定的超連結
+  const renderAnswer = (text: string) => {
+    if (!text) return null;
+    if (text.includes('<a')) {
+      return <span dangerouslySetInnerHTML={{ __html: text }} />;
+    }
+    const pattern = /(https?:\/\/[^\s<>"']+|www\.[^\s<>"']+)/gi;
+    const nodes: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = pattern.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        nodes.push(text.slice(lastIndex, match.index));
+      }
+      const url = match[0];
+      const href = url.startsWith('http') ? url : `https://${url}`;
+      nodes.push(
+        <a key={`${url}-${match.index}`} href={href} target="_blank" rel="noopener noreferrer">
+          {url}
+        </a>
+      );
+      lastIndex = match.index + url.length;
+    }
+    if (lastIndex < text.length) {
+      nodes.push(text.slice(lastIndex));
+    }
+    return nodes;
+  };
+
   if (!items || items.length === 0) return null;
 
   return (
@@ -72,7 +101,9 @@ export default function Announcements({
             >
               <div className="ann-card">
                 <h4 className="ann-title">{it.title}</h4>
-                <div className="ann-content">{it.content}</div>
+                <div className="ann-content" style={{ whiteSpace: 'pre-wrap' }}>
+                  {renderAnswer(it.content)}
+                </div>
                 <span className="ann-date">{it.date}</span>
               </div>
             </div>
@@ -103,18 +134,20 @@ export default function Announcements({
         </div>
       )}
 
-      <div className="ann-dots" role="tablist" aria-label="輪播分頁">
-        {items.map((_, i) => (
-          <div
-            key={i}
-            className={`dot ${i === index ? 'active' : ''}`}
-            role="tab"
-            aria-selected={i === index}
-            aria-controls={`ann-slide-${i}`}
-            onClick={() => goTo(i)}
-          />
-        ))}
-      </div>
+      {items.length > 1 && (
+        <div className="ann-dots" role="tablist" aria-label="輪播分頁">
+          {items.map((_, i) => (
+            <div
+              key={i}
+              className={`dot ${i === index ? 'active' : ''}`}
+              role="tab"
+              aria-selected={i === index}
+              aria-controls={`ann-slide-${i}`}
+              onClick={() => goTo(i)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
