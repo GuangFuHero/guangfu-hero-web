@@ -286,6 +286,9 @@ export default function HomePage() {
 
       {/* 主要內容區：可逐步拆分為 sections/components */}
       <Suspense fallback={<div className="text-center py-8 text-[var(--gray)]">載入中...</div>}>
+        <h3 className="py-3 text-center text-[24px] font-normal text-[var(--gray)]">
+          提供居民需要的協助與資訊
+        </h3>
         <h3 className="homeTitle pb-3">
           <div className="flex items-center gap-2">
             <svg

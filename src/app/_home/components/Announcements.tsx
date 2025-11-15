@@ -65,13 +65,7 @@ export default function Announcements({
       const url = match[0];
       const href = url.startsWith('http') ? url : `https://${url}`;
       nodes.push(
-        <a
-          key={`${url}-${match.index}`}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-blue-600"
-        >
+        <a key={`${url}-${match.index}`} href={href} target="_blank" rel="noopener noreferrer">
           {url}
         </a>
       );

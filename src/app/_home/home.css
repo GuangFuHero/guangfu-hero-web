@@ -67,7 +67,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 0;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: rgba(58, 57, 55, 1);
 }
@@ -83,8 +83,12 @@
 .accordion .accordion-content {
   /* padding: 0 0 16px 0; */
   color: rgba(131, 131, 131, 1);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
+}
+.accordion .accordion-content a,
+.accordion .accordion-content a:hover {
+  color: #179bc6;
 }
 
 .accordion .accordion-content.isOpen {
@@ -132,20 +136,24 @@
 }
 
 .ann-date {
-  font-size: 12px;
+  font-size: 14px;
   color: #838383;
 }
 
 .ann-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   color: #3a3937;
 }
 
 .ann-content {
-  font-size: 14px;
+  font-size: 16px;
   color: rgba(67, 67, 67, 1);
   line-height: 22px;
+}
+.ann-content a,
+.ann-content a:hover {
+  color: #179bc6;
 }
 
 .ann-controls {
@@ -218,4 +226,64 @@
 .footerBox .footerLinks a:last-child {
   border-left: solid 1px rgba(131, 131, 131, 1);
   padding-left: 10px;
+}
+
+/* 首頁 FAQ / 公告 loading skeleton */
+.home-loading-shell {
+  position: relative;
+}
+
+.home-loading-shell-faq {
+  min-height: 220px;
+}
+
+.home-loading-shell-ann {
+  min-height: 140px;
+}
+
+.home-loading-skeleton {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f4f4f5 0%, #e4e4e7 50%, #f4f4f5 100%);
+  background-size: 200% 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.home-loading-before {
+  opacity: 0.7;
+}
+
+.home-loading-during {
+  animation: home-loading-shimmer 1.4s ease-in-out infinite;
+}
+
+.home-loading-fadeOut {
+  animation: home-loading-fade-out 0.3s ease forwards;
+}
+
+.home-loading-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.home-loading-content-show {
+  opacity: 1;
+}
+
+@keyframes home-loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes home-loading-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

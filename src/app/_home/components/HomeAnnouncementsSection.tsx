@@ -5,9 +5,15 @@ import Announcements from './Announcements';
 import { env } from '@/config/env';
 
 export type AnnItem = { title: string; content: string; date: string };
+type LoadingPhase = 'before' | 'during' | 'fadeOut' | 'done';
 
 export default function HomeAnnouncementsSection() {
   const [items, setItems] = useState<AnnItem[]>([]);
+  const [hasData, setHasData] = useState(false);
+  const [loadingPhase, setLoadingPhase] = useState<LoadingPhase>('before');
+  const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+  const gid = process.env.NEXT_PUBLIC_ANNOUNCEMENTS_SHEET_GID || '';
+  const isConfigMissing = !sheetId || !gid;
 
   const parseCsv = (text: string): string[][] => {
     const rows: string[][] = [];
@@ -51,16 +57,28 @@ export default function HomeAnnouncementsSection() {
   };
 
   useEffect(() => {
+    if (isConfigMissing) return;
+
+    let isMounted = true;
+    let fadeTimeout: ReturnType<typeof setTimeout> | undefined;
+
     async function fetchAnnouncements() {
       try {
-        const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
-        const gid = process.env.NEXT_PUBLIC_ANNOUNCEMENTS_SHEET_GID || '';
-        if (!sheetId || !gid) return console.error('未設定 sheetId 或 gid');
+        if (isMounted) {
+          setLoadingPhase('during');
+        }
 
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
         const res = await fetch(csvUrl);
         const csvText = await res.text();
-        if (csvText.includes('<!DOCTYPE') || csvText.includes('<html')) return;
+        if (csvText.includes('<!DOCTYPE') || csvText.includes('<html')) {
+          if (isMounted) {
+            setHasData(false);
+            setItems([]);
+            setLoadingPhase('done');
+          }
+          return;
+        }
 
         const rows = parseCsv(csvText);
         const list: AnnItem[] = [];
@@ -72,15 +90,42 @@ export default function HomeAnnouncementsSection() {
           if (!date || !title || !content) continue;
           list.push({ title, content, date });
         }
-        setItems(list);
+
+        if (isMounted) {
+          setItems(list);
+          if (list.length > 0) {
+            setHasData(true);
+            setLoadingPhase('fadeOut');
+            fadeTimeout = setTimeout(() => {
+              if (isMounted) {
+                setLoadingPhase('done');
+              }
+            }, 300);
+          } else {
+            setHasData(false);
+            setLoadingPhase('done');
+          }
+        }
       } catch (e) {
-        setItems([]);
+        if (isMounted) {
+          setItems([]);
+          setHasData(false);
+          setLoadingPhase('done');
+        }
       }
     }
     fetchAnnouncements();
-  }, []);
 
-  if (!items || items.length === 0) return null;
+    return () => {
+      isMounted = false;
+      if (fadeTimeout) {
+        clearTimeout(fadeTimeout);
+      }
+    };
+  }, [gid, isConfigMissing, sheetId]);
+
+  if (isConfigMissing) return null;
+  if (!hasData && loadingPhase === 'done') return null;
 
   return (
     <>
@@ -89,8 +134,23 @@ export default function HomeAnnouncementsSection() {
           <p>網站公告</p>
         </div>
       </h3>
-      <div>
-        <Announcements items={items} showArrows={false} />
+      <div className="home-loading-shell home-loading-shell-ann">
+        {loadingPhase !== 'done' && (
+          <div
+            className={`home-loading-skeleton home-loading-skeleton-ann home-loading-${loadingPhase}`}
+          />
+        )}
+        {hasData && (
+          <div
+            className={`home-loading-content${
+              loadingPhase === 'fadeOut' || loadingPhase === 'done'
+                ? ' home-loading-content-show'
+                : ''
+            }`}
+          >
+            <Announcements items={items} showArrows={false} />
+          </div>
+        )}
       </div>
     </>
   );

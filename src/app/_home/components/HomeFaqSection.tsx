@@ -6,6 +6,7 @@ import Accordion from './Accordion';
 import { env } from '@/config/env';
 
 export type FaqItem = { question: string; answer: string };
+type LoadingPhase = 'before' | 'during' | 'fadeOut' | 'done';
 
 /**
  * 首頁「常見問題」區塊。
@@ -14,6 +15,11 @@ export type FaqItem = { question: string; answer: string };
  */
 export default function HomeFaqSection() {
   const [items, setItems] = useState<FaqItem[]>([]);
+  const [hasData, setHasData] = useState(false);
+  const [loadingPhase, setLoadingPhase] = useState<LoadingPhase>('before');
+  const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
+  const gid = process.env.NEXT_PUBLIC_FAQ_SHEET_GID || '';
+  const isConfigMissing = !sheetId || !gid;
 
   const parseCsv = (text: string): string[][] => {
     const rows: string[][] = [];
@@ -57,36 +63,83 @@ export default function HomeFaqSection() {
   };
 
   useEffect(() => {
+    if (isConfigMissing) return;
+
+    let isMounted = true;
+    let fadeTimeout: ReturnType<typeof setTimeout> | undefined;
+
     async function fetchFaq() {
       try {
-        const sheetId = env.NEXT_PUBLIC_GOOGLE_SHEET_ID;
-        const gid = process.env.NEXT_PUBLIC_FAQ_SHEET_GID || '';
-        if (!sheetId || !gid) return console.error('未設定 sheetId 或 gid'); // 未設定 sheetId → 不渲染
+        if (isMounted) {
+          setLoadingPhase('during');
+        }
 
         const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
         const res = await fetch(csvUrl);
         const csvText = await res.text();
-        if (csvText.includes('<!DOCTYPE') || csvText.includes('<html')) return;
+        if (csvText.includes('<!DOCTYPE') || csvText.includes('<html')) {
+          if (isMounted) {
+            setHasData(false);
+            setItems([]);
+            setLoadingPhase('done');
+          }
+          return;
+        }
 
         const rows = parseCsv(csvText);
         const list: FaqItem[] = [];
-        for (const r of rows) {
+        console.log(rows);
+        for (let i = 1; i < rows.length; i++) {
+          const r = rows[i];
           const q = (r[0] || '').trim();
-          const a = (r[1] || '').trim();
+          let a = (r[1] || '').trim();
           if (!q || !a) continue;
           if (['問題', 'question', 'Question'].includes(q)) continue;
+
+          const linkText = (r[2] || '').trim();
+          const linkUrl = (r[3] || '').trim();
+          if (linkText && linkUrl) {
+            a += `<a href="${linkUrl}" target="_blank" class="pt-3" style="display: block;" rel="noopener noreferrer">👉 ${linkText}</a>`;
+          }
+
           list.push({ question: q, answer: a });
         }
-        setItems(list);
+
+        if (isMounted) {
+          setItems(list);
+          if (list.length > 0) {
+            setHasData(true);
+            setLoadingPhase('fadeOut');
+            fadeTimeout = setTimeout(() => {
+              if (isMounted) {
+                setLoadingPhase('done');
+              }
+            }, 300);
+          } else {
+            setHasData(false);
+            setLoadingPhase('done');
+          }
+        }
       } catch (e) {
-        // 發生錯誤 → 保持 items 為空，讓區塊不顯示
-        setItems([]);
+        if (isMounted) {
+          setItems([]);
+          setHasData(false);
+          setLoadingPhase('done');
+        }
       }
     }
     fetchFaq();
-  }, []);
 
-  if (!items || items.length === 0) return null;
+    return () => {
+      isMounted = false;
+      if (fadeTimeout) {
+        clearTimeout(fadeTimeout);
+      }
+    };
+  }, [gid, isConfigMissing, sheetId]);
+
+  if (isConfigMissing) return null;
+  if (!hasData && loadingPhase === 'done') return null;
 
   return (
     <>
@@ -112,9 +165,23 @@ export default function HomeFaqSection() {
           </svg>
         </Link> */}
       </h3>
-
-      <div>
-        <Accordion items={items} />
+      <div className="home-loading-shell home-loading-shell-faq">
+        {loadingPhase !== 'done' && (
+          <div
+            className={`home-loading-skeleton home-loading-skeleton-faq home-loading-${loadingPhase}`}
+          />
+        )}
+        {hasData && (
+          <div
+            className={`home-loading-content${
+              loadingPhase === 'fadeOut' || loadingPhase === 'done'
+                ? ' home-loading-content-show'
+                : ''
+            }`}
+          >
+            <Accordion items={items} />
+          </div>
+        )}
       </div>
     </>
   );
