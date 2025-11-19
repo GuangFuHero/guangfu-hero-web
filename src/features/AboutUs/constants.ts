@@ -188,12 +188,13 @@ const onSiteVolunteers = [
   'Uu-資訊傳遞',
   'Roco',
   'Ben',
-  '志偉',
+  '仲夏',
   '徐喇喇',
   'LCD - Lala',
   '富昌廣告',
   '呂浩丞',
   '劉凱文',
+  'fish',
 ];
 
-export { teamMembers, onSiteVolunteers };
+export { onSiteVolunteers, teamMembers };
