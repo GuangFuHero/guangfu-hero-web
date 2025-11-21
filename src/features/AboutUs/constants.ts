@@ -52,6 +52,9 @@ const teamMembers = [
       '布魯明',
       'Peli',
       '蔡宇婕',
+      'Teresa Siao',
+      'Azusaoto',
+      'Nicole',
     ],
   },
   {
@@ -175,7 +178,7 @@ const teamMembers = [
 
 const onSiteVolunteers = [
   '瀞瀞',
-  '站前蜂窩創始-彥',
+  '彥',
   'Fannie',
   '郡翔室內裝修有限公司',
   'Ting',
