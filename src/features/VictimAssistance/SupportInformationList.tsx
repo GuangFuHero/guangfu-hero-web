@@ -266,7 +266,7 @@ export default function SupportInformationList() {
               <div id={`${row.support_id}`} style={{ position: 'relative', top: '-80px' }}></div>
               <Stack gap="10px" p="20px" className="rounded-2xl">
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <div className="flex size-fit px-3 py-1 text-[var(--primary)] bg-[var(--warning-background)]">
+                  <div className="flex size-fit px-2 py-1 text-[var(--primary)] bg-[var(--warning-background)] rounded">
                     <Typography fontSize={14} fontWeight={500}>
                       {row.type}
                     </Typography>
@@ -365,7 +365,7 @@ export default function SupportInformationList() {
                 {/* Header: Tags and Close Button */}
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex gap-2 flex-wrap">
-                    <div className="flex size-fit px-3 py-1 text-[var(--primary)] bg-[var(--warning-background)]">
+                    <div className="flex size-fit px-2 py-1 text-[var(--primary)] bg-[var(--warning-background)] rounded">
                       {selectedData.type}
                     </div>
                   </div>
@@ -503,33 +503,33 @@ export default function SupportInformationList() {
                         </div>
                       )}
                     </div>
+
+                    {selectedData.apply_form_text && selectedData.apply_form_url && (
+                      <div className="mt-4 mb-4 cursor-pointer">
+                        <a
+                          className="whitespace-pre-wrap text-[var(--secondary)]"
+                          href={selectedData.apply_form_url.replace(/^"|"$/g, '')}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {selectedData.apply_form_text.replace(/^"|"$/g, '')}
+                        </a>
+                      </div>
+                    )}
+
+                    {selectedData.online_apply_text && selectedData.online_apply_url && (
+                      <div className="mt-4 mb-4 cursor-pointer">
+                        <a
+                          className="whitespace-pre-wrap text-[var(--secondary)]"
+                          href={selectedData.online_apply_url.replace(/^"|"$/g, '')}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {selectedData.online_apply_text.replace(/^"|"$/g, '')}
+                        </a>
+                      </div>
+                    )}
                   </div>
-
-                  {selectedData.apply_form_text && selectedData.apply_form_url && (
-                    <div className="mt-4 mb-4 cursor-pointer">
-                      <a
-                        className="whitespace-pre-wrap text-[var(--secondary)]"
-                        href={selectedData.apply_form_url.replace(/^"|"$/g, '')}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {selectedData.apply_form_text.replace(/^"|"$/g, '')}
-                      </a>
-                    </div>
-                  )}
-
-                  {selectedData.online_apply_text && selectedData.online_apply_url && (
-                    <div className="mt-4 mb-4 cursor-pointer">
-                      <a
-                        className="whitespace-pre-wrap text-[var(--secondary)]"
-                        href={selectedData.online_apply_url.replace(/^"|"$/g, '')}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {selectedData.online_apply_text.replace(/^"|"$/g, '')}
-                      </a>
-                    </div>
-                  )}
 
                   {/* Contact Info */}
                   <div className="border-b border-gray-200 pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">

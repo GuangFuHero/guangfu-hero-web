@@ -193,7 +193,7 @@ export default function HouseRepairList() {
 
               <Stack gap="10px" p="20px" className="rounded-2xl">
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <div className="flex size-fit px-3 py-1 text-[var(--primary)] bg-[var(--warning-background)]">
+                  <div className="flex size-fit px-2 py-1 text-[var(--primary)] bg-[var(--warning-background)] rounded">
                     <Typography fontSize={14} fontWeight={500}>
                       {row.type}
                     </Typography>
@@ -221,7 +221,7 @@ export default function HouseRepairList() {
                   {row.contact && (
                     <div className="flex gap-2 items-center whitespace-pre-wrap">
                       <Image
-                        src={getAssetPath('/icon/house_icon.svg')}
+                        src={getAssetPath('/icon/people_icon.svg')}
                         alt=""
                         width={20}
                         height={20}
@@ -271,21 +271,12 @@ export default function HouseRepairList() {
                         </div>
                       ))}
                 </div>
-                <button
-                  className="cursor-pointer text-[var(--secondary)] bg-[#179BC61A] rounded-lg h-[36px]"
-                  onClick={() => {
-                    setSelectedRepairId(row.repair_id);
-                    setIsDetailCardOpen(true);
-                  }}
-                >
-                  查看詳情
-                </button>
               </Stack>
             </div>
           ))}
       </div>
 
-      {/* BottomSheet：顯示底部彈跳選單 */}
+      {/* BottomSheet：顯示底部彈跳選單 居家修繕頁暫不顯示*/}
       <BottomSheet open={isDetailCardOpen} onClose={() => setIsDetailCardOpen(false)}>
         {(() => {
           const selectedData = houseRepairData.find(data => data.repair_id === selectedRepairId);
