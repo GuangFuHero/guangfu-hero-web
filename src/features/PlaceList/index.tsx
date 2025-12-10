@@ -43,7 +43,7 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilt
   }, [handleScroll]);
 
   return (
-    <div className={`space-y-4 mb-[80px] ${className}`}>
+    <div className={`mb-[80px] ${className}`}>
       {listQuery.isLoading && (
         <div className="text-center py-8 text-[var(--gray)] mb-[80vh]">載入中...</div>
       )}
@@ -57,14 +57,15 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilt
             <div className="text-center py-8 text-[var(--gray)]">此分類暫無資料</div>
           ) : (
             <>
-              {displayPlaces.map((place: Place) => (
-                <InfoCard
-                  key={place.id}
-                  place={place}
-                  mapUrl={getGoogleMapsUrl(place.coordinates)}
-                  className="mb-4"
-                />
-              ))}
+              <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+                {displayPlaces.map((place: Place) => (
+                  <InfoCard
+                    key={place.id}
+                    place={place}
+                    mapUrl={getGoogleMapsUrl(place.coordinates)}
+                  />
+                ))}
+              </div>
 
               {'isFetchingNextPage' in listQuery && listQuery.isFetchingNextPage && (
                 <div className="text-center py-4 text-gray-500">

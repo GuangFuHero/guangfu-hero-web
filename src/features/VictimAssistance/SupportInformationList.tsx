@@ -219,7 +219,7 @@ export default function SupportInformationList() {
   ) : (
     <>
       {/* type buttons */}
-      <div className="flex gap-2 mb-3 sm:flex-wrap overflow-y-auto">
+      <div className="flex gap-2 mb-4 sm:flex-wrap overflow-y-auto">
         {supportInformationTypes.map(type => (
           <Button
             key={type}
@@ -252,108 +252,114 @@ export default function SupportInformationList() {
         </div>
       </Stack>
 
-      <div className="space-y-4">
+      <div>
         {/* Info Cards */}
-        {supportInformationData
-          .filter(row => currentType === '全部' || row.type === currentType)
-          .map(row => (
-            <div
-              className="mb-4 rounded-2xl border border-[var(--gray-3)] cursor-pointer"
-              key={`${row.type}-${row.name}-${row.url}`}
-              style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
-            >
-              {/*targer for scroll*/}
-              <div id={`${row.support_id}`} style={{ position: 'relative', top: '-80px' }}></div>
-              <Stack gap="10px" p="20px" className="rounded-2xl">
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <div className="flex size-fit px-2 py-1 text-[var(--primary)] bg-[var(--warning-background)] rounded">
-                    <Typography fontSize={14} fontWeight={500}>
-                      {row.type}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 mb-4">
+          {supportInformationData
+            .filter(row => currentType === '全部' || row.type === currentType)
+            .map(row => (
+              <div
+                className="rounded-2xl border border-[var(--gray-3)] cursor-pointer"
+                key={`${row.type}-${row.name}-${row.url}`}
+                style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
+              >
+                {/*targer for scroll*/}
+                <div id={`${row.support_id}`} style={{ position: 'relative', top: '-80px' }}></div>
+                <Stack gap="10px" p="20px" className="rounded-2xl">
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <div className="flex size-fit px-2 py-1 text-[var(--primary)] bg-[var(--warning-background)] rounded">
+                      <Typography fontSize={14} fontWeight={500}>
+                        {row.type}
+                      </Typography>
+                    </div>
+
+                    <ShareAction key="share" shareId={row.support_id}>
+                      <button className="cursor-pointer" aria-label="分享">
+                        <Image
+                          src={getAssetPath('/icon/card_gray_share_icon.svg')}
+                          alt="share"
+                          width={24}
+                          height={24}
+                          className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
+                        />
+                      </button>
+                    </ShareAction>
+                  </Stack>
+
+                  <div>
+                    <Typography fontSize={20} fontWeight={500}>
+                      {row.name}
                     </Typography>
                   </div>
 
-                  <ShareAction key="share" shareId={row.support_id}>
-                    <button className="cursor-pointer" aria-label="分享">
-                      <Image
-                        src={getAssetPath('/icon/card_gray_share_icon.svg')}
-                        alt="share"
-                        width={24}
-                        height={24}
-                        className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
-                      />
-                    </button>
-                  </ShareAction>
-                </Stack>
-
-                <div>
-                  <Typography fontSize={20} fontWeight={500}>
-                    {row.name}
-                  </Typography>
-                </div>
-
-                <div className="flex gap-4 mb-2">
-                  <div className="flex-1">
-                    <div className="mb-2 flex items-center">
-                      <Image
-                        src={getAssetPath('/icon/money_icon.svg')}
-                        alt=""
-                        width={24}
-                        height={24}
-                        className="opacity-50"
-                      />
-                      <Typography
-                        fontSize={16}
-                        fontWeight={500}
-                        className="mb-4 text-[var(--gray-2)]"
-                      >
-                        最高補助
-                      </Typography>
-                    </div>
-                    <div className="font-medium text-[var(--black)]">{row.max_money}</div>
-                  </div>
-                  <div className="w-[1px] bg-gray-200"></div>
-                  <div className="flex-1">
-                    <div className="mb-2 flex items-center">
-                      <Image
-                        src={getAssetPath('/icon/status_calendar_icon.svg')}
-                        alt=""
-                        width={24}
-                        height={24}
-                        className="opacity-50"
-                      />
-                      <div className="ms-1">
+                  <div className="flex gap-4 mb-2">
+                    <div className="flex-1">
+                      <div className="mb-2 flex items-center">
+                        <Image
+                          src={getAssetPath('/icon/money_icon.svg')}
+                          alt=""
+                          width={24}
+                          height={24}
+                          className="opacity-50"
+                        />
                         <Typography
                           fontSize={16}
                           fontWeight={500}
                           className="mb-4 text-[var(--gray-2)]"
                         >
-                          申請狀態
+                          最高補助
                         </Typography>
                       </div>
+                      <div className="font-medium text-[var(--black)]">{row.max_money}</div>
                     </div>
-                    <div
-                      className="font-medium"
-                      style={{ color: applyStatusMap[row.apply_status]?.color }}
-                    >
-                      {applyStatusMap[row.apply_status]?.label || row.apply_status}
+                    <div className="w-[1px] bg-gray-200"></div>
+                    <div className="flex-1">
+                      <div className="mb-2 flex items-center">
+                        <Image
+                          src={getAssetPath('/icon/status_calendar_icon.svg')}
+                          alt=""
+                          width={24}
+                          height={24}
+                          className="opacity-50"
+                        />
+                        <div className="ms-1">
+                          <Typography
+                            fontSize={16}
+                            fontWeight={500}
+                            className="mb-4 text-[var(--gray-2)]"
+                          >
+                            申請狀態
+                          </Typography>
+                        </div>
+                      </div>
+                      <div
+                        className="font-medium"
+                        style={{ color: applyStatusMap[row.apply_status]?.color }}
+                      >
+                        {applyStatusMap[row.apply_status]?.label || row.apply_status}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <button
-                  className="cursor-pointer text-[var(--secondary)] bg-[#179BC61A] rounded-lg h-[36px]"
-                  onClick={() => {
-                    setSelectedSupportId(row.support_id);
-                    setIsDetailCardOpen(true);
-                  }}
-                >
-                  查看詳情
-                </button>
-              </Stack>
-            </div>
-          ))}
+                  <button
+                    className="cursor-pointer text-[var(--secondary)] bg-[#179BC61A] rounded-lg h-[36px]"
+                    onClick={() => {
+                      setSelectedSupportId(row.support_id);
+                      setIsDetailCardOpen(true);
+                    }}
+                  >
+                    查看詳情
+                  </button>
+                </Stack>
+              </div>
+            ))}
+        </div>
         {/* BottomSheet：顯示底部彈跳選單 */}
-        <BottomSheet open={isDetailCardOpen} onClose={() => setIsDetailCardOpen(false)}>
+        <BottomSheet
+          open={isDetailCardOpen}
+          onClose={() => setIsDetailCardOpen(false)}
+          contentMaxHeight="95vh"
+        >
           {(() => {
             const selectedData = supportInformationData.find(
               data => data.support_id === selectedSupportId
@@ -390,8 +396,8 @@ export default function SupportInformationList() {
                 </div>
 
                 {/* Title */}
-                <div className="mb-4">
-                  <Typography fontSize={20} fontWeight={600} className="mb-4 text-[var(--black)]">
+                <div className="sticky top-0 z-10 bg-white pt-2 pb-3 mb-4">
+                  <Typography fontSize={20} fontWeight={600} className="text-[var(--black)]">
                     {selectedData.name}
                   </Typography>
                 </div>

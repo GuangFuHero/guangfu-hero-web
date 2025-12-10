@@ -7,13 +7,20 @@ import { env } from '@/config/env';
 
 export type FaqItem = { question: string; answer: string };
 type LoadingPhase = 'before' | 'during' | 'fadeOut' | 'done';
+type HomeFaqSectionProps = {
+  showMoreLink?: boolean;
+  moreLinkHref?: string;
+};
 
 /**
  * 首頁「常見問題」區塊。
  * - 從 Google Sheet 以 CSV 方式抓取資料
  * - 若無資料則不渲染。
  */
-export default function HomeFaqSection() {
+export default function HomeFaqSection({
+  showMoreLink = true,
+  moreLinkHref = '/faq',
+}: HomeFaqSectionProps) {
   const [items, setItems] = useState<FaqItem[]>([]);
   const [hasData, setHasData] = useState(false);
   const [loadingPhase, setLoadingPhase] = useState<LoadingPhase>('before');
@@ -147,23 +154,27 @@ export default function HomeFaqSection() {
         <div className="flex items-center gap-2">
           <p>常見問題</p>
         </div>
-        {/* <Link href="/faq" className="flex items-center gap-1">
-          <p>看更多</p>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M16.6024 11.5557L8.92021 4L7 5.88859L13.7221 12.5L7 19.1114L8.92021 21L16.6024 13.4443C16.857 13.1938 17 12.8542 17 12.5C17 12.1458 16.857 11.8062 16.6024 11.5557Z"
-              fill="#838383"
-            />
-          </svg>
-        </Link> */}
+        {showMoreLink && (
+          <Link href={moreLinkHref} className="flex items-center gap-1">
+            <p>{moreLinkHref === '/' ? '回首頁' : '看更多'}</p>
+            {moreLinkHref !== '/' && (
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M16.6024 11.5557L8.92021 4L7 5.88859L13.7221 12.5L7 19.1114L8.92021 21L16.6024 13.4443C16.857 13.1938 17 12.8542 17 12.5C17 12.1458 16.857 11.8062 16.6024 11.5557Z"
+                  fill="#838383"
+                />
+              </svg>
+            )}
+          </Link>
+        )}
       </h3>
       <div className="home-loading-shell home-loading-shell-faq">
         {loadingPhase !== 'done' && (

@@ -62,7 +62,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ place, mapUrl, className = '' }) =>
   return (
     <>
       <div
-        className="mb-4 rounded-2xl border border-[var(--gray-3)]"
+        className={`rounded-2xl border border-[var(--gray-3)] ${className}`}
         key={`${displaySubTags}-${displayName}`}
         style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
       >

@@ -17,6 +17,7 @@ interface BottomSheetProps {
   title?: string;
   /** 自訂樣式類別 */
   className?: string;
+  contentMaxHeight?: string;
 }
 
 /**
@@ -42,6 +43,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   children,
   title,
   className = '',
+  contentMaxHeight = '70vh',
 }) => {
   return (
     <Drawer
@@ -52,7 +54,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
         '& .MuiDrawer-paper': {
           borderTopLeftRadius: '16px',
           borderTopRightRadius: '16px',
-          maxHeight: '85vh',
+          maxHeight: '95vh',
         },
       }}
     >
@@ -72,7 +74,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
         )}
 
         {/* 內容區域 */}
-        <div className="px-4 overflow-y-auto max-h-[70vh]">{children}</div>
+        <div className="px-4">{children}</div>
       </div>
     </Drawer>
   );
