@@ -11,9 +11,15 @@ interface PlaceListProps {
   activeTab: PlaceTab;
   onFilterPlaces?: (place: Place) => boolean;
   className?: string;
+  category?: string;
 }
 
-const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilterPlaces }) => {
+const PlaceList: React.FC<PlaceListProps> = ({
+  activeTab,
+  className = '',
+  onFilterPlaces,
+  category,
+}) => {
   const listQuery = useInfinitePlaces(activeTab);
 
   const displayPlaces = useMemo(() => {
@@ -63,6 +69,7 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilt
                     key={place.id}
                     place={place}
                     mapUrl={getGoogleMapsUrl(place.coordinates)}
+                    category={category}
                   />
                 ))}
               </div>

@@ -189,7 +189,7 @@ export default function HouseRepairList() {
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(row => (
               <div
-                className="rounded-2xl border border-[var(--gray-3)] cursor-pointer"
+                className="rounded-2xl border border-[var(--gray-3)]"
                 key={`${row.type}-${row.name}-${row.contact}`}
                 style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
               >
@@ -245,7 +245,7 @@ export default function HouseRepairList() {
                         .map(phone_number => (
                           <div
                             key={phone_number}
-                            className="flex gap-2 items-center whitespace-pre-wrap"
+                            className="flex gap-2 items-center whitespace-pre-wrap cursor-pointer"
                             onClick={() => handleCopyText(row.phone)}
                             title="點擊複製聯絡資訊"
                           >

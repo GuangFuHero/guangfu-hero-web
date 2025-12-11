@@ -79,11 +79,10 @@ export default function SupportInformationList() {
         let supportInformationTypes: string[] = [
           '全部',
           '一般個人',
-          '一般家戶',
-          '弱勢扶助',
-          '農民/養殖戶',
-          '商家與企業',
-          '外縣市補助',
+          '農業/養殖業',
+          '商家/企業',
+          '生活扶助',
+          '返鄉補助',
         ];
         supportInformationTypes = supportInformationTypes.filter(
           type => type === '全部' || csvText.includes(type)
@@ -135,7 +134,12 @@ export default function SupportInformationList() {
                 support_id: support_id.trim(),
                 type: type.trim(),
                 name: name.trim(),
-                url: url.trim(),
+                url:
+                  url
+                    ?.replace(/^"+|"+$/g, '')
+                    .split(/\s+/)
+                    .find(u => u.startsWith('http'))
+                    ?.replace(/^"+|"+$/g, '') || url.trim(),
                 max_money: max_money.trim(),
                 apply_status: apply_status.trim(),
                 support_unit: support_unit.trim(),
