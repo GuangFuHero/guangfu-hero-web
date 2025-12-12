@@ -108,12 +108,13 @@ export default function SiteList() {
             </div>
           </div>
         ) : currentType.label === '全部' ? (
-          <PlaceList key={currentType.name} activeTab={currentType.value} />
+          <PlaceList key={currentType.name} activeTab={currentType.value} category="光復站點" />
         ) : (
           <PlaceList
             key={currentType.name}
             activeTab={currentType.value}
             onFilterPlaces={handleFilterPlaces}
+            category="光復站點"
           />
         )}
       </div>

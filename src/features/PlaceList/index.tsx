@@ -11,9 +11,15 @@ interface PlaceListProps {
   activeTab: PlaceTab;
   onFilterPlaces?: (place: Place) => boolean;
   className?: string;
+  category?: string;
 }
 
-const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilterPlaces }) => {
+const PlaceList: React.FC<PlaceListProps> = ({
+  activeTab,
+  className = '',
+  onFilterPlaces,
+  category,
+}) => {
   const listQuery = useInfinitePlaces(activeTab);
 
   const displayPlaces = useMemo(() => {
@@ -43,7 +49,7 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilt
   }, [handleScroll]);
 
   return (
-    <div className={`space-y-4 mb-[80px] ${className}`}>
+    <div className={`mb-[80px] ${className}`}>
       {listQuery.isLoading && (
         <div className="text-center py-8 text-[var(--gray)] mb-[80vh]">載入中...</div>
       )}
@@ -57,14 +63,16 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilt
             <div className="text-center py-8 text-[var(--gray)]">此分類暫無資料</div>
           ) : (
             <>
-              {displayPlaces.map((place: Place) => (
-                <InfoCard
-                  key={place.id}
-                  place={place}
-                  mapUrl={getGoogleMapsUrl(place.coordinates)}
-                  className="mb-4"
-                />
-              ))}
+              <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+                {displayPlaces.map((place: Place) => (
+                  <InfoCard
+                    key={place.id}
+                    place={place}
+                    mapUrl={getGoogleMapsUrl(place.coordinates)}
+                    category={category}
+                  />
+                ))}
+              </div>
 
               {'isFetchingNextPage' in listQuery && listQuery.isFetchingNextPage && (
                 <div className="text-center py-4 text-gray-500">
@@ -75,6 +83,19 @@ const PlaceList: React.FC<PlaceListProps> = ({ activeTab, className = '', onFilt
               <div className="text-center py-2 text-sm text-gray-500">
                 已顯示 {displayPlaces.length} 個地點
                 {'hasNextPage' in listQuery && !listQuery.hasNextPage && ' (已載入全部)'}
+              </div>
+
+              {/* Footer */}
+              <div className="text-gray-500 text-sm">
+                發現資訊不正確嗎？請回報給我們，我們會盡快修正。
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSd5HQsSMoStkgiaC-q3bHRaLVVGNKdETWIgZVoYEsyzE486ew/viewform?usp=dialog"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#179BC6] hover:underline ml-1"
+                >
+                  回報問題
+                </a>
               </div>
             </>
           )}

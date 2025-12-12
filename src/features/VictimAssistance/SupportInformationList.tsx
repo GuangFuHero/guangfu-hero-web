@@ -7,29 +7,46 @@ import ReactGA from 'react-ga4';
 import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
 import ShareAction from '@/components/ShareAction';
+import BottomSheet from '@/components/BottomSheet';
 
 type SupportInformationDataRow = {
-  support_id: string;
-  type: string;
-  name: string;
-  url: string;
-  target: string;
-  support_detail: string;
-  deadline: string;
-  apply_place: string;
-  apply_address: string;
-  office_Hours: string;
-  phone: string;
-  apply_detail: string;
-  source: string;
+  support_id: string; // ID
+  type: string; // Tag
+  name: string; // 補助名稱
+  url: string; // 官方連結
+  max_money: string; // 最高補助
+  apply_status: string; // 申請狀態
+  support_unit: string; // 輔助單位
+  deadline: string; // 最後期限(申請期限)
+  target: string; // 補助對象
+  support_detail: string; // 補助內容
+  apply_detail: string; // 申請方法
+  apply_form_text: string; // 申請書連結文字
+  apply_form_url: string; // 申請書連結
+  online_apply_text: string; // 線上申請連結文字
+  online_apply_url: string; // 線上申請連結
+  contact_data: string; // 聯絡資訊
+  apply_place: string; // 申請地點
+  apply_address: string; // 地點地址
+  office_hours: string; // 開放時間
+  phone: string; // 電話及窗口
+  source: string; // 資料來源
 };
 type SupportInformationData = SupportInformationDataRow[];
+
+const applyStatusMap: Record<string, { label: string; color: string }> = {
+  open: { label: '開放申請中', color: '#009689' },
+  stop: { label: '已截止', color: '#D34746' },
+  no_need: { label: '已造冊/無需申請', color: '#3A3937' },
+};
 
 export default function SupportInformationList() {
   const [fetchDataFail, setFetchDataFail] = useState<boolean>(false);
   const [supportInformationTypes, setSupportInformationTypes] = useState<string[]>([]);
   const [supportInformationData, setSupportInformationData] = useState<SupportInformationData>([]);
   const [currentType, setCurrentType] = useState<string>('全部');
+  const [isDetailCardOpen, setIsDetailCardOpen] = useState(false);
+  const [selectedSupportId, setSelectedSupportId] = useState<string | null>(null);
 
   const handleTypeClick = (type: string) => {
     ReactGA.event(`補助貸款_${type}`);
@@ -62,36 +79,46 @@ export default function SupportInformationList() {
         let supportInformationTypes: string[] = [
           '全部',
           '一般個人',
-          '一般家戶',
-          '弱勢扶助',
-          '農民/養殖戶',
-          '商家與企業',
-          '外縣市補助',
+          '農業/養殖業',
+          '商家/企業',
+          '生活扶助',
+          '返鄉補助',
         ];
         supportInformationTypes = supportInformationTypes.filter(
           type => type === '全部' || csvText.includes(type)
         );
         const supportInformationData: SupportInformationData = [];
         dataLines.forEach(line => {
-          //依序為：ID、Tag、補助名稱、官方連結、補助對象、補助內容、最後期限、申請地點、地點地址、開放時間、電話及窗口、申請資料、資料來源
+          //--依序為：ID、Tag、補助名稱、官方連結、補助對象、補助內容、最後期限、申請地點、地點地址、開放時間、電話及窗口、申請資料、資料來源--
+          /*依序為：
+           */
+
           const [
             support_id,
             type,
             name,
             url,
+            max_money,
+            apply_status,
+            support_unit,
+            deadline,
             target,
             support_detail,
-            deadline,
+            apply_detail,
+            apply_form_text,
+            apply_form_url,
+            online_apply_text,
+            online_apply_url,
+            contact_data,
             apply_place,
             apply_address,
-            office_Hours,
+            office_hours,
             phone,
-            apply_detail,
             source,
           ] = line.split(',');
 
           //避開標題列和空欄位
-          if (!type || type == 'Tag') {
+          if (!support_id || support_id == 'ID') {
             return;
           } else {
             if (!currentType) return;
@@ -107,15 +134,28 @@ export default function SupportInformationList() {
                 support_id: support_id.trim(),
                 type: type.trim(),
                 name: name.trim(),
-                url: url.trim(),
+                url:
+                  url
+                    ?.replace(/^"+|"+$/g, '')
+                    .split(/\s+/)
+                    .find(u => u.startsWith('http'))
+                    ?.replace(/^"+|"+$/g, '') || url.trim(),
+                max_money: max_money.trim(),
+                apply_status: apply_status.trim(),
+                support_unit: support_unit.trim(),
+                deadline: deadline.trim(),
                 target: target.trim(),
                 support_detail: support_detail.trim(),
-                deadline: deadline.trim(),
+                apply_detail: apply_detail.trim(),
+                apply_form_text: apply_form_text.trim(),
+                apply_form_url: apply_form_url.trim(),
+                online_apply_text: online_apply_text.trim(),
+                online_apply_url: online_apply_url.trim(),
+                contact_data: contact_data.trim(),
                 apply_place: apply_place.trim(),
                 apply_address: apply_address.trim(),
-                office_Hours: office_Hours.trim(),
+                office_hours: office_hours.trim(),
                 phone: phone.trim(),
-                apply_detail: apply_detail.trim(),
                 source: source.trim(),
               });
             } else {
@@ -147,6 +187,8 @@ export default function SupportInformationList() {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setSelectedSupportId(id);
+      setIsDetailCardOpen(true);
     }
   }, [supportInformationData, currentType]);
 
@@ -181,7 +223,7 @@ export default function SupportInformationList() {
   ) : (
     <>
       {/* type buttons */}
-      <div className="flex gap-2 mb-3 sm:flex-wrap overflow-y-auto">
+      <div className="flex gap-2 mb-4 sm:flex-wrap overflow-y-auto">
         {supportInformationTypes.map(type => (
           <Button
             key={type}
@@ -214,261 +256,359 @@ export default function SupportInformationList() {
         </div>
       </Stack>
 
-      <div className="space-y-4">
+      <div>
         {/* Info Cards */}
-        {supportInformationData
-          .filter(row => currentType === '全部' || row.type === currentType)
-          .map(row => (
-            <div
-              className="mb-4 rounded-2xl border border-[var(--gray-3)]"
-              key={`${row.type}-${row.name}-${row.url}`}
-              style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
-            >
-              {/*targer for scroll*/}
-              <div id={`${row.support_id}`} style={{ position: 'relative', top: '-80px' }}></div>
-              {/*upper part of the card*/}
-              <Stack gap="8px" p="20px" className="bg-[var(--light-gray-background)] rounded-t-2xl">
-                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                  <div
-                    className={`flex size-fit px-3 py-1 text-[var(--gray-2)] rounded`}
-                    style={
-                      tagTypeCssList[row.type as tag_type] ?? {
-                        backgroundColor: '#fff',
-                        color: '#000',
-                      }
-                    }
-                  >
-                    <Typography fontSize={14} fontWeight={500}>
-                      {row.type}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 mb-4">
+          {supportInformationData
+            .filter(row => currentType === '全部' || row.type === currentType)
+            .map(row => (
+              <div
+                className="rounded-2xl border border-[var(--gray-3)] cursor-pointer"
+                key={`${row.type}-${row.name}-${row.url}`}
+                style={{ boxShadow: '0px 2px 10px 0px #0000001A' }}
+              >
+                {/*targer for scroll*/}
+                <div id={`${row.support_id}`} style={{ position: 'relative', top: '-80px' }}></div>
+                <Stack gap="10px" p="20px" className="rounded-2xl">
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <div className="flex size-fit px-2 py-1 text-[var(--primary)] bg-[var(--warning-background)] rounded">
+                      <Typography fontSize={14} fontWeight={500}>
+                        {row.type}
+                      </Typography>
+                    </div>
+
+                    <ShareAction key="share" shareId={row.support_id}>
+                      <button className="cursor-pointer" aria-label="分享">
+                        <Image
+                          src={getAssetPath('/icon/card_gray_share_icon.svg')}
+                          alt="share"
+                          width={24}
+                          height={24}
+                          className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
+                        />
+                      </button>
+                    </ShareAction>
+                  </Stack>
+
+                  <div>
+                    <Typography fontSize={20} fontWeight={500}>
+                      {row.name}
                     </Typography>
                   </div>
 
-                  <ShareAction key="share" shareId={row.support_id}>
-                    <button className="cursor-pointer" aria-label="分享">
-                      <Image
-                        src={getAssetPath('/icon/card_gray_share_icon.svg')}
-                        alt="share"
-                        width={28}
-                        height={28}
-                        className="transition-all duration-200 hover:[filter:invert(60%)_sepia(80%)_saturate(6000%)_hue-rotate(10deg)_brightness(100%)_contrast(95%)]"
-                      />
-                    </button>
-                  </ShareAction>
-                </Stack>
-
-                <div>
-                  <Typography fontSize={20} fontWeight={500}>
-                    {row.name}
-                  </Typography>
-                </div>
-
-                {[
-                  { name: '補助對象', information: row.target },
-                  { name: '補助內容', information: row.support_detail },
-                  { name: '申請期限', information: row.deadline },
-                ].map(
-                  ({ name, information }) =>
-                    information && (
-                      <div
-                        key={name}
-                        className="text-[var(--black)] leading-[20px] items-center font-normal"
-                      >
-                        <div className="text-[var(--primary)] text-nowrap mb-2">
-                          <Typography fontSize={16} fontWeight={600}>
-                            {name}
-                          </Typography>
-                        </div>
-                        <div className="flex-1 whitespace-pre-wrap">
-                          <Typography fontSize={16} fontWeight={400}>
-                            {information.replace(/^"|"$/g, '')}
+                  <div className="flex gap-4 mb-2">
+                    <div className="flex-1">
+                      <div className="mb-2 flex items-center">
+                        <Image
+                          src={getAssetPath('/icon/money_icon.svg')}
+                          alt=""
+                          width={24}
+                          height={24}
+                          className="opacity-50"
+                        />
+                        <Typography
+                          fontSize={16}
+                          fontWeight={500}
+                          className="mb-4 text-[var(--gray-2)]"
+                        >
+                          最高補助
+                        </Typography>
+                      </div>
+                      <div className="font-medium text-[var(--black)]">{row.max_money}</div>
+                    </div>
+                    <div className="w-[1px] bg-gray-200"></div>
+                    <div className="flex-1">
+                      <div className="mb-2 flex items-center">
+                        <Image
+                          src={getAssetPath('/icon/status_calendar_icon.svg')}
+                          alt=""
+                          width={24}
+                          height={24}
+                          className="opacity-50"
+                        />
+                        <div className="ms-1">
+                          <Typography
+                            fontSize={16}
+                            fontWeight={500}
+                            className="mb-4 text-[var(--gray-2)]"
+                          >
+                            申請狀態
                           </Typography>
                         </div>
                       </div>
-                    )
-                )}
-                {row.url && (
+                      <div
+                        className="font-medium"
+                        style={{ color: applyStatusMap[row.apply_status]?.color }}
+                      >
+                        {applyStatusMap[row.apply_status]?.label || row.apply_status}
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    className="cursor-pointer text-[var(--secondary)] bg-[#179BC61A] rounded-lg h-[36px]"
+                    onClick={() => {
+                      setSelectedSupportId(row.support_id);
+                      setIsDetailCardOpen(true);
+                    }}
+                  >
+                    查看詳情
+                  </button>
+                </Stack>
+              </div>
+            ))}
+        </div>
+
+        {/* Footer */}
+        <div className="text-gray-500 text-sm">
+          發現資訊不正確嗎？請回報給我們，我們會盡快修正。
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSd5HQsSMoStkgiaC-q3bHRaLVVGNKdETWIgZVoYEsyzE486ew/viewform?usp=dialog"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#179BC6] hover:underline ml-1"
+          >
+            回報問題
+          </a>
+        </div>
+
+        {/* BottomSheet：顯示底部彈跳選單 */}
+        <BottomSheet
+          open={isDetailCardOpen}
+          onClose={() => setIsDetailCardOpen(false)}
+          contentMaxHeight="95vh"
+        >
+          {(() => {
+            const selectedData = supportInformationData.find(
+              data => data.support_id === selectedSupportId
+            );
+            if (!selectedData) return null;
+
+            return (
+              <div className="pb-6">
+                {/* Header: Tags and Close Button */}
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex gap-2 flex-wrap">
+                    <div className="flex size-fit px-2 py-1 text-[var(--primary)] bg-[var(--warning-background)] rounded">
+                      {selectedData.type}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsDetailCardOpen(false)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <Image
+                      src={getAssetPath('/icon/close_icon.svg')}
+                      alt="Close"
+                      width={24}
+                      height={24}
+                      onError={e => {
+                        e.currentTarget.style.display = 'none';
+                        const span = document.createElement('span');
+                        span.innerText = '✕';
+                        span.className = 'text-2xl leading-none';
+                        e.currentTarget.parentElement?.appendChild(span);
+                      }}
+                    />
+                  </button>
+                </div>
+
+                {/* Title */}
+                <div className="sticky top-0 z-10 bg-white pt-2 pb-3 mb-4">
+                  <Typography fontSize={20} fontWeight={600} className="text-[var(--black)]">
+                    {selectedData.name}
+                  </Typography>
+                </div>
+
+                {/* Max Money and Status */}
+                <div className="flex gap-4 mb-4">
+                  <div className="flex-1">
+                    <div className="mb-2 flex items-center">
+                      <Image
+                        src={getAssetPath('/icon/money_icon.svg')}
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="opacity-50"
+                      />
+                      <Typography
+                        fontSize={16}
+                        fontWeight={500}
+                        className="mb-4 text-[var(--gray-2)]"
+                      >
+                        最高補助
+                      </Typography>
+                    </div>
+                    <div className="font-medium text-[var(--black)]">{selectedData.max_money}</div>
+                  </div>
+                  <div className="w-[1px] bg-gray-200"></div>
+                  <div className="flex-1">
+                    <div className="mb-2 flex items-center">
+                      <Image
+                        src={getAssetPath('/icon/status_calendar_icon.svg')}
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="opacity-50"
+                      />
+                      <div className="ms-1">
+                        <Typography
+                          fontSize={16}
+                          fontWeight={500}
+                          className="mb-4 text-[var(--gray-2)]"
+                        >
+                          申請狀態
+                        </Typography>
+                      </div>
+                    </div>
+                    <div
+                      className="font-medium"
+                      style={{ color: applyStatusMap[selectedData.apply_status]?.color }}
+                    >
+                      {applyStatusMap[selectedData.apply_status]?.label ||
+                        selectedData.apply_status}
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-gray-200 mb-6" />
+
+                {/* Details List */}
+                <div className="mb-6">
+                  {/* Support Unit */}
+                  {selectedData.support_unit && (
+                    <div className="border-b border-gray-200 pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">
+                      <div className="font-bold text-[#3A3937] mb-2">補助單位</div>
+                      <div className="text-[#3A3937] whitespace-pre-wrap">
+                        {selectedData.support_unit.replace(/^"|"$/g, '')}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Deadline */}
+                  {selectedData.deadline && (
+                    <div className="border-b border-gray-200 pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">
+                      <div className="font-bold text-[#3A3937] mb-2">申請期限</div>
+                      <div className="text-[#3A3937] whitespace-pre-wrap">
+                        {selectedData.deadline.replace(/^"|"$/g, '')}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Target */}
+                  {selectedData.target && (
+                    <div className="border-b border-gray-200 pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">
+                      <div className="font-bold text-[#3A3937] mb-2">補助對象</div>
+                      <div className="text-[#3A3937] whitespace-pre-wrap">
+                        {selectedData.target.replace(/^"|"$/g, '')}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Support Detail */}
+                  {selectedData.support_detail && (
+                    <div className="border-b border-gray-200 pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">
+                      <div className="font-bold text-[#3A3937] mb-2">補助內容</div>
+                      <div className="text-[#3A3937] whitespace-pre-wrap">
+                        {selectedData.support_detail.replace(/^"|"$/g, '')}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Contact Info */}
+                  <div className="border-b border-gray-200 pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">
+                    <div className="font-bold text-[#3A3937] mb-2">申請方式</div>
+                    <div className="text-[#3A3937] space-y-1">
+                      {selectedData.apply_detail && (
+                        <div className="mt-4">
+                          <div className="whitespace-pre-wrap">
+                            {selectedData.apply_detail.replace(/^"|"$/g, '')}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {selectedData.apply_form_text && selectedData.apply_form_url && (
+                      <div className="mt-4 mb-4 cursor-pointer">
+                        <a
+                          className="whitespace-pre-wrap text-[var(--secondary)]"
+                          href={selectedData.apply_form_url.replace(/^"|"$/g, '')}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {selectedData.apply_form_text.replace(/^"|"$/g, '')}
+                        </a>
+                      </div>
+                    )}
+
+                    {selectedData.online_apply_text && selectedData.online_apply_url && (
+                      <div className="mt-4 mb-4 cursor-pointer">
+                        <a
+                          className="whitespace-pre-wrap text-[var(--secondary)]"
+                          href={selectedData.online_apply_url.replace(/^"|"$/g, '')}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {selectedData.online_apply_text.replace(/^"|"$/g, '')}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Contact Info */}
+                  <div className="border-b border-gray-200 pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">
+                    <div className="font-bold text-[#3A3937] mb-2">聯絡資訊</div>
+                    <div className="text-[#3A3937] space-y-1">
+                      {selectedData.contact_data && (
+                        <div className="mt-4">
+                          <div className="whitespace-pre-wrap">
+                            {selectedData.contact_data.replace(/^"|"$/g, '')}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer Button */}
+                {selectedData.url && (
                   <a
-                    href={row.url}
+                    href={selectedData.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="
-                          size-fit h-[36px] py-2 px-3 my-2
-                          min-w-[80px]
-                          text-[var(--secondary)]
-                          rounded-lg
-                          cursor-pointer
-                          flex items-center justify-center gap-1
-                          whitespace-nowrap
-                          transition-colors
-                        "
-                    title="點擊開啟官方連結"
-                    style={{ backgroundColor: '#179BC61A' }}
+                    className="h-[36px] block w-full bg-[#179BC6] py-3 rounded-lg hover:bg-[#148aa3] transition-colors mb-4 flex items-center justify-center gap-2"
                   >
-                    <Typography fontSize={16} fontWeight={400}>
-                      官方網站
+                    <Typography fontSize={16} fontWeight={400} className="text-white text-center">
+                      查看官方公告
                     </Typography>
                     <Image
                       src={getAssetPath('/icon/secondary_up_right_arrow.svg')}
                       alt=""
                       width={20}
                       height={20}
+                      className="brightness-0 invert"
                     />
                   </a>
                 )}
-              </Stack>
 
-              {/*lower part of the card*/}
-              <Stack gap="8px" p="20px">
-                <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                  <div className="text-[var(--primary)] text-nowrap mb-2">
-                    <Typography fontSize={16} fontWeight={600}>
-                      聯絡資訊
-                    </Typography>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    {row.apply_place && (
-                      <div className="flex gap-1 items-center whitespace-pre-wrap">
-                        <Image
-                          src={getAssetPath('/icon/house_icon.svg')}
-                          alt=""
-                          width={20}
-                          height={20}
-                        />
-                        <Typography fontSize={16} fontWeight={400}>
-                          {row.apply_place.replace(/^"|"$/g, '')}
-                        </Typography>
-                      </div>
-                    )}
-                    {row.office_Hours && (
-                      <div className="flex gap-1 items-center whitespace-pre-wrap">
-                        <Image
-                          src={getAssetPath('/icon/calendar_icon.svg')}
-                          alt=""
-                          width={20}
-                          height={20}
-                        />
-                        <Typography fontSize={16} fontWeight={400}>
-                          {row.office_Hours.replace(/^"|"$/g, '')}
-                        </Typography>
-                      </div>
-                    )}
-                    {row.apply_address && (
-                      <div className="flex gap-1 items-center whitespace-pre-wrap">
-                        <Image
-                          src={getAssetPath('/icon/map_point_icon.svg')}
-                          alt=""
-                          width={20}
-                          height={20}
-                        />
-                        <a
-                          href={
-                            'https://www.google.com/maps/search/?api=1&query=' + row.apply_address
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[var(--secondary)]"
-                          title="點擊開啟地址地圖資訊"
-                        >
-                          <Typography fontSize={16} fontWeight={400}>
-                            {row.apply_address.replace(/^"|"$/g, '')}
-                          </Typography>
-                        </a>
-                      </div>
-                    )}
-
-                    {row.phone &&
-                      row.phone
-                        .replace(/^"|"$/g, '')
-                        .split('\n') // 支援換行填寫多個電話
-                        .filter(phone_number => phone_number.trim() !== '')
-                        .map(phone_number => (
-                          <div
-                            key={phone_number}
-                            className="flex gap-1 items-center whitespace-pre-wrap"
-                          >
-                            <Image
-                              src={getAssetPath('/icon/call_icon.svg')}
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <Typography fontSize={16} fontWeight={400}>
-                              {phone_number}
-                            </Typography>
-                          </div>
-                        ))}
-
-                    {/* dash-line */}
-                    {row.apply_detail && (
-                      <div
-                        className="border-b border-dashed border-[var(--gray-3)]"
-                        style={{ height: '10px', marginBottom: '2px' }}
-                      ></div>
-                    )}
-                  </div>
+                {/* Report Issue */}
+                <div className="text-gray-500 text-sm">
+                  發現資訊不正確嗎？請回報給我們，我們會盡快修正。
+                  <span>
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSd5HQsSMoStkgiaC-q3bHRaLVVGNKdETWIgZVoYEsyzE486ew/viewform?usp=dialog"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#179BC6] hover:underline ml-1"
+                    >
+                      回報問題
+                    </a>
+                  </span>
                 </div>
-
-                {row.apply_detail && (
-                  <div className="text-[var(--black)] leading-[20px] items-center font-normal">
-                    <div className="text-[var(--primary)] text-nowrap mb-2">
-                      <Typography fontSize={16} fontWeight={600}>
-                        申請方式
-                      </Typography>
-                    </div>
-                    <div className="flex-1 whitespace-pre-wrap">
-                      {row.apply_detail
-                        .replace(/^"|"$/g, '')
-                        .split(/(\n)/) // 保留換行
-                        .map((part, index) => {
-                          // 偵測https開頭至換行符號結束，轉換成<a>標籤的按鈕，並將其餘文字轉為span和br
-                          const urlMatch = part.match(/https?:\/\/[^\s]+/g);
-                          if (urlMatch) {
-                            return urlMatch.map((url, i) => (
-                              <a
-                                key={`${index}-${i}`}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="
-                                size-fit h-[36px] py-2 px-3 my-2
-                                min-w-[80px]
-                                text-[var(--secondary)]
-                                rounded-lg
-                                cursor-pointer
-                                flex items-center justify-center gap-1
-                                whitespace-nowrap
-                                transition-colors
-                              "
-                                title="點擊開啟補助連結資訊"
-                                style={{ backgroundColor: '#179BC61A' }}
-                              >
-                                <Typography fontSize={16} fontWeight={400}>
-                                  連結
-                                </Typography>
-                                <Image
-                                  src={getAssetPath('/icon/secondary_up_right_arrow.svg')}
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
-                              </a>
-                            ));
-                          } else if (part === '\n') {
-                            return '';
-                          } else {
-                            return (
-                              <Typography key={index} fontSize={16} fontWeight={400}>
-                                {part}
-                              </Typography>
-                            );
-                          }
-                        })}
-                    </div>
-                  </div>
-                )}
-              </Stack>
-            </div>
-          ))}
+              </div>
+            );
+          })()}
+        </BottomSheet>
       </div>
     </>
   );
