@@ -358,6 +358,20 @@ export default function SupportInformationList() {
               </div>
             ))}
         </div>
+
+        {/* Footer */}
+        <div className="text-gray-500 text-sm">
+          發現資訊不正確嗎？請回報給我們，我們會盡快修正。
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSd5HQsSMoStkgiaC-q3bHRaLVVGNKdETWIgZVoYEsyzE486ew/viewform?usp=dialog"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#179BC6] hover:underline ml-1"
+          >
+            回報問題
+          </a>
+        </div>
+
         {/* BottomSheet：顯示底部彈跳選單 */}
         <BottomSheet
           open={isDetailCardOpen}
